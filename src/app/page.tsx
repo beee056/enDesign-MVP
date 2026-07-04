@@ -57,6 +57,48 @@ export default function Home() {
       </header>
 
       <main className="flex-1">
+        {/* JSON-LD 構造化データ */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "enDesign",
+              "url": "https://en-design-mvp.vercel.app",
+              "logo": "https://en-design-mvp.vercel.app/logo.png",
+              "description": "地域小規模事業者向けの無料Web診断と5万円からのホームページ制作サービス",
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "本当に無料診断だけで終わってもいいですか？",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "はい、完全無料です。ご自身で改善できるポイントをお伝えしますので、無理な営業等は一切行いません。"
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "月額費用はかかりますか？",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "enDesignからの月額保守費用は一切いただきません。ただし、独自ドメインの更新費用等はドメイン会社へのお支払いが発生します。"
+                  }
+                }
+              ]
+            })
+          }}
+        />
+
         {/* Hero Section */}
         <section className="w-full pt-20 pb-16 md:pt-32 md:pb-24 lg:pt-40 lg:pb-32 bg-[#F5F7F5] relative overflow-hidden border-b border-slate-200/50">
           <div className="container px-4 md:px-6 relative z-10 mx-auto max-w-5xl">
@@ -336,12 +378,15 @@ export default function Home() {
               © 2026 enDesign. All rights reserved.
             </span>
           </div>
-          <nav className="flex gap-4 sm:gap-6">
-            <Link className="text-xs text-slate-500 hover:text-slate-900 transition-colors" href="#">
+          <nav className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-4 sm:mt-0">
+            <Link className="text-xs text-slate-500 hover:text-slate-900 transition-colors" href="/terms">
               利用規約
             </Link>
-            <Link className="text-xs text-slate-500 hover:text-slate-900 transition-colors" href="#">
+            <Link className="text-xs text-slate-500 hover:text-slate-900 transition-colors" href="/privacy">
               プライバシーポリシー
+            </Link>
+            <Link className="text-xs text-slate-500 hover:text-slate-900 transition-colors" href="/legal">
+              特定商取引法表記
             </Link>
           </nav>
         </div>

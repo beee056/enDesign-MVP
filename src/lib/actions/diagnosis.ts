@@ -1,109 +1,132 @@
 "use server";
 
 import { db } from "@/db";
-import { businesses, diagnoses, tenants } from "@/db/schema";
+import { businesses, diagnoses, aiOutputs } from "@/db/schema";
 import { diagnosisSchema, type DiagnosisInput } from "@/lib/validations/diagnosis";
 import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
 
 export async function submitDiagnosis(data: DiagnosisInput) {
-  // Validate input
-  const parsed = diagnosisSchema.safeParse(data);
-  if (!parsed.success) {
-    throw new Error("Invalid form data");
+  try {
+    // Validate input
+    const parsed = diagnosisSchema.safeParse(data);
+    if (!parsed.success) {
+      throw new Error("Invalid form data");
+    }
+
+    // 1. ビジネス情報の保存
+    const [business] = await db.insert(businesses).values({
+      tenantId: "00000000-0000-0000-0000-000000000000", // guest tenant (dummy for MVP) or handle properly
+      name: data.businessName,
+      ownerName: data.contactName,
+      email: data.email,
+      phone: data.phone,
+      industry: data.industry,
+      region: data.region,
+      address: data.address,
+      hasPhysicalStore: data.hasPhysicalStore,
+      websiteUrl: data.websiteUrl,
+      googleMapsUrl: data.googleMapsUrl,
+      instagramUrl: data.instagramUrl,
+      lineUrl: data.lineUrl,
+      otherSnsUrl: data.otherSnsUrl,
+    }).returning();
+
+    // 2. AIによる診断と推奨事項の生成 (GPT-4o)
+    const prompt = `
+あなたは地域小規模事業者向けの親身なWebコンサルタントです。
+以下の事業者情報とアンケート結果に基づき、Webサイトやオンライン集客の診断結果を生成してください。
+enDesignの思想は「自分でできることは無料で、一人では不安なところだけ低価格(5万円〜)で一緒に整える」です。
+
+【事業者情報】
+- 業種: ${data.industry}
+- 地域: ${data.region}
+- 実店舗の有無: ${data.hasPhysicalStore ? "あり" : "なし"}
+- 現在のWebサイト: ${data.websiteUrl || "なし"}
+- Googleマップ: ${data.googleMapsUrl || "なし"}
+- SNS(Instagram等): ${data.instagramUrl || "なし"}
+
+【課題・要望】
+- 目的: ${data.purposes.join(", ")}
+- 悩み: ${data.pains.join(", ")}
+- 現在の業者: ${data.currentVendorStatus || "特になし"}
+- 制作姿勢: ${data.buildPreferences.join(", ")}
+- 予算感: ${data.budget || "未定"}
+- イラスト希望: ${data.wantsIllustration ? "あり (" + (data.illustrationDetails || "") + ")" : "なし"}
+
+以下の形式のJSONで結果を返してください。
+- scoreTotal: 総合スコア (0-100)
+- scoreBasicInfo: 基本情報スコア (0-100)
+- scoreGoogleMaps: Googleマップスコア (0-100)
+- scoreWebsite: サイトスコア (0-100)
+- scoreSns: SNSスコア (0-100)
+- goodPoints: 良いところ（3つ）
+- improvementPoints: もったいないところ（3つ）
+- selfHelpActions: お金をかけずに自分で直せる行動リスト（3つ）
+- freeAdvice: お金をかけなくていいことへのアドバイス（3つ）
+- recommendedPlan: おすすめのプラン（Free Check / Lite相談(5000円) / Standard Build(5万円) / Plus Build(8万円) / Max Build(12万円)）
+- summary: 親身な総評メッセージ
+    `;
+
+    const result = await generateObject({
+      model: openai("gpt-4o"),
+      schema: z.object({
+        scoreTotal: z.number().min(0).max(100),
+        scoreBasicInfo: z.number().min(0).max(100),
+        scoreGoogleMaps: z.number().min(0).max(100),
+        scoreWebsite: z.number().min(0).max(100),
+        scoreSns: z.number().min(0).max(100),
+        goodPoints: z.array(z.string()).length(3),
+        improvementPoints: z.array(z.string()).length(3),
+        selfHelpActions: z.array(z.string()).length(3),
+        freeAdvice: z.array(z.string()).length(3),
+        recommendedPlan: z.string(),
+        summary: z.string(),
+      }),
+      prompt,
+    });
+
+    const aiData = result.object;
+
+    const recommendationsJson = JSON.stringify({
+      goodPoints: aiData.goodPoints,
+      improvementPoints: aiData.improvementPoints,
+      selfHelpActions: aiData.selfHelpActions,
+      freeAdvice: aiData.freeAdvice,
+      recommendedPlan: aiData.recommendedPlan,
+      summary: aiData.summary,
+    });
+
+    // 3. 診断結果の保存
+    const [diagnosis] = await db.insert(diagnoses).values({
+      businessId: business.id,
+      purpose: data.purposes.join(","),
+      pains: data.pains.join(","),
+      buildPreference: data.buildPreferences.join(","),
+      scoreTotal: aiData.scoreTotal,
+      scoreBasicInfo: aiData.scoreBasicInfo,
+      scoreGoogleMaps: aiData.scoreGoogleMaps,
+      scoreWebsite: aiData.scoreWebsite,
+      scoreSns: aiData.scoreSns,
+      freeSummary: aiData.summary,
+      recommendations: recommendationsJson,
+      status: "completed",
+    }).returning();
+
+    // 4. AI出力のログ保存
+    await db.insert(aiOutputs).values({
+      relatedType: 'diagnosis',
+      relatedId: diagnosis.id,
+      outputType: 'diagnosis_result',
+      promptVersion: 'v2',
+      inputJson: data as any,
+      outputJson: aiData as any,
+    });
+
+    return { success: true, diagnosisId: diagnosis.id };
+  } catch (error) {
+    console.error("Diagnosis submission error:", error);
+    return { success: false, error: "診断の送信に失敗しました" };
   }
-
-  const input = parsed.data;
-
-  // 1. Rule-based scoring
-  let scoreBasicInfo = 10;
-  let scoreWebsite = input.websiteUrl ? 20 : 0;
-  let scoreGoogleMaps = input.googleMapsUrl ? 20 : 0;
-  let scoreSns = (input.instagramUrl || input.lineUrl || input.otherSnsUrl) ? 20 : 0;
-  
-  // Example logic for trust/mobile/vendorRisk
-  let scoreTrust = 10;
-  let scoreFaq = 10;
-  let scoreRecruit = 0;
-  let scoreVendorRisk = input.pains.includes("月額サービスの中身が不透明") ? -10 : 10;
-
-  const scoreTotal = scoreBasicInfo + scoreWebsite + scoreGoogleMaps + scoreSns + scoreTrust + scoreFaq + scoreRecruit + scoreVendorRisk;
-
-  // 2. AI Comment Generation
-  const promptText = `
-  以下の地域の小規模事業者からWeb診断の依頼がありました。
-  業種: ${input.industry}
-  目的: ${input.purposes.join(", ")}
-  悩み: ${input.pains.join(", ")}
-  スコア: ${scoreTotal}/100
-
-  これに基づき、以下の項目について「やさしく」「専門用語を避けて」「寄り添うような」トーンでコメントを作成してください。
-  NG表現：「危険です」「必ず集客できます」「放置すると終わりです」などの煽り文句は禁止。
-  `;
-
-  const { object: aiResult } = await generateObject({
-    model: openai("gpt-4o"),
-    schema: z.object({
-      goodPoints: z.string().describe("今の良いところ（褒めるポイント）"),
-      missedOpportunities: z.string().describe("もったいないポイント"),
-      diyFixes: z.string().describe("今すぐ自分で直せること（お金をかけなくていいこと）"),
-      recommendedPlan: z.string().describe("おすすめプランとその理由"),
-      overallSummary: z.string().describe("やさしい総評"),
-    }),
-    prompt: promptText,
-  });
-
-  // 3. Save to DB
-  // In a real app with auth, we'd wrap this in a transaction and link to a tenant if logged in.
-  // For MVP / public check, we create an orphan business/diagnosis temporarily or link to a guest session.
-  
-  // 3-0. Create Guest Tenant
-  const [newTenant] = await db.insert(tenants).values({
-    name: "Guest - " + input.businessName,
-    slug: "guest-" + Date.now() + Math.floor(Math.random() * 1000),
-    ownerUserId: "guest",
-    plan: "free_check",
-  }).returning({ id: tenants.id });
-
-  // 3-1. Create Business Record (Guest)
-  const [newBusiness] = await db.insert(businesses).values({
-    tenantId: newTenant.id,
-    name: input.businessName,
-    ownerName: input.contactName,
-    email: input.email,
-    phone: input.phone,
-    industry: input.industry,
-    region: input.region,
-    hasPhysicalStore: input.hasPhysicalStore,
-    websiteUrl: input.websiteUrl,
-    googleMapsUrl: input.googleMapsUrl,
-    instagramUrl: input.instagramUrl,
-    lineUrl: input.lineUrl,
-    otherSnsUrl: input.otherSnsUrl,
-  }).returning({ id: businesses.id });
-
-  // 3-2. Create Diagnosis Record
-  const [newDiagnosis] = await db.insert(diagnoses).values({
-    tenantId: newTenant.id,
-    businessId: newBusiness.id,
-    purpose: input.purposes.join(","),
-    pains: input.pains.join(","),
-    buildPreference: input.buildPreferences.join(","),
-    scoreTotal,
-    scoreBasicInfo,
-    scoreGoogleMaps,
-    scoreWebsite,
-    scoreMobile: 10,
-    scoreSns,
-    scoreTrust,
-    scoreFaq,
-    scoreRecruit,
-    scoreVendorRisk,
-    freeSummary: aiResult.overallSummary,
-    recommendations: JSON.stringify(aiResult),
-    status: "completed",
-  }).returning({ id: diagnoses.id });
-
-  return { success: true, diagnosisId: newDiagnosis.id };
 }

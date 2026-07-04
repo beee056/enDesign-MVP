@@ -3,22 +3,33 @@ import * as z from "zod";
 export const diagnosisSchema = z.object({
   businessName: z.string().min(1, "事業者名を入力してください"),
   contactName: z.string().min(1, "担当者名を入力してください"),
-  email: z.string().email("正しいメールアドレスを入力してください"),
+  email: z.string().email("有効なメールアドレスを入力してください"),
   phone: z.string().optional(),
-  industry: z.string().min(1, "業種を選択・入力してください"),
-  region: z.string().min(1, "地域を選択・入力してください"),
-  hasPhysicalStore: z.boolean(),
+  industry: z.string().min(1, "業種を入力してください"),
+  region: z.string().min(1, "地域を入力してください"),
+  hasPhysicalStore: z.boolean().default(false),
   address: z.string().optional(),
-  websiteUrl: z.string().url("正しいURL形式で入力してください").optional().or(z.literal("")),
-  googleMapsUrl: z.string().url("正しいURL形式で入力してください").optional().or(z.literal("")),
-  instagramUrl: z.string().url("正しいURL形式で入力してください").optional().or(z.literal("")),
-  lineUrl: z.string().url("正しいURL形式で入力してください").optional().or(z.literal("")),
-  otherSnsUrl: z.string().url("正しいURL形式で入力してください").optional().or(z.literal("")),
   
-  purposes: z.array(z.string()).min(1, "目的を1つ以上選択してください"),
-  pains: z.array(z.string()).min(1, "悩みを1つ以上選択してください"),
-  buildPreferences: z.array(z.string()).min(1, "制作希望を選択してください"),
-  designTones: z.array(z.string()).min(1, "希望のトーンを選択してください"),
+  // URL情報
+  websiteUrl: z.string().optional(),
+  googleMapsUrl: z.string().optional(),
+  instagramUrl: z.string().optional(),
+  lineUrl: z.string().optional(),
+  otherSnsUrl: z.string().optional(),
+
+  // アンケート・悩み
+  purposes: z.array(z.string()).min(1, "少なくとも1つの目的を選択してください"),
+  pains: z.array(z.string()).min(1, "少なくとも1つの悩みを選択してください"),
+  
+  // 新規追加: セカンドオピニオン・制作姿勢・素材・イラスト
+  currentVendorStatus: z.string().optional(),
+  buildPreferences: z.array(z.string()).default([]),
+  budget: z.string().optional(),
+  designTones: z.array(z.string()).default([]),
+  wantsIllustration: z.boolean().default(false),
+  illustrationDetails: z.string().optional(),
+  materialsAvailable: z.array(z.string()).default([]),
+  referralCode: z.string().optional(),
 });
 
 export type DiagnosisInput = z.infer<typeof diagnosisSchema>;
