@@ -45,11 +45,11 @@ export default async function DiagnosisResultPage({ params }: { params: { id: st
         <p className="text-primary font-semibold tracking-wider text-sm">FREE WEB DIAGNOSIS</p>
         <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900">{businessRecord?.name} 様のWeb診断結果</h1>
         
-        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 max-w-2xl mx-auto mt-8">
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 md:p-8 max-w-2xl mx-auto mt-8">
           <p className="text-lg text-slate-500 mb-2 font-medium">総合スコア</p>
           <div className="flex items-center justify-center">
-            <span className="text-6xl font-extrabold text-primary">{diagnosisRecord.scoreTotal || 0}</span>
-            <span className="text-2xl text-slate-400 ml-2 mt-4">/ 100</span>
+            <span className="text-5xl md:text-6xl font-extrabold text-primary">{diagnosisRecord.scoreTotal || 0}</span>
+            <span className="text-xl md:text-2xl text-slate-400 ml-2 mt-2 md:mt-4">/ 100</span>
           </div>
         </div>
         
@@ -70,7 +70,7 @@ export default async function DiagnosisResultPage({ params }: { params: { id: st
               <CardTitle className="text-sm text-slate-500 font-medium">基本情報・インフラ</CardTitle>
             </CardHeader>
             <CardContent className="p-4 pt-0">
-              <div className="text-3xl font-bold text-slate-800">{diagnosisRecord.scoreBasicInfo || 0}<span className="text-base text-slate-400 font-normal ml-1">点</span></div>
+              <div className="text-2xl md:text-3xl font-bold text-slate-800">{diagnosisRecord.scoreBasicInfo || 0}<span className="text-sm md:text-base text-slate-400 font-normal ml-1">点</span></div>
             </CardContent>
           </Card>
           <Card className="shadow-none border-slate-200">
@@ -80,7 +80,7 @@ export default async function DiagnosisResultPage({ params }: { params: { id: st
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 pt-0">
-              <div className="text-3xl font-bold text-slate-800">{diagnosisRecord.scoreGoogleMaps || 0}<span className="text-base text-slate-400 font-normal ml-1">点</span></div>
+              <div className="text-2xl md:text-3xl font-bold text-slate-800">{diagnosisRecord.scoreGoogleMaps || 0}<span className="text-sm md:text-base text-slate-400 font-normal ml-1">点</span></div>
             </CardContent>
           </Card>
           <Card className="shadow-none border-slate-200">
@@ -90,7 +90,7 @@ export default async function DiagnosisResultPage({ params }: { params: { id: st
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 pt-0">
-              <div className="text-3xl font-bold text-slate-800">{diagnosisRecord.scoreWebsite || 0}<span className="text-base text-slate-400 font-normal ml-1">点</span></div>
+              <div className="text-2xl md:text-3xl font-bold text-slate-800">{diagnosisRecord.scoreWebsite || 0}<span className="text-sm md:text-base text-slate-400 font-normal ml-1">点</span></div>
             </CardContent>
           </Card>
           <Card className="shadow-none border-slate-200">
@@ -98,7 +98,7 @@ export default async function DiagnosisResultPage({ params }: { params: { id: st
               <CardTitle className="text-sm text-slate-500 font-medium">SNS連携</CardTitle>
             </CardHeader>
             <CardContent className="p-4 pt-0">
-              <div className="text-3xl font-bold text-slate-800">{diagnosisRecord.scoreSns || 0}<span className="text-base text-slate-400 font-normal ml-1">点</span></div>
+              <div className="text-2xl md:text-3xl font-bold text-slate-800">{diagnosisRecord.scoreSns || 0}<span className="text-sm md:text-base text-slate-400 font-normal ml-1">点</span></div>
             </CardContent>
           </Card>
         </div>
@@ -197,14 +197,14 @@ export default async function DiagnosisResultPage({ params }: { params: { id: st
         <CardContent className="space-y-6 pt-4 px-6 md:px-12 pb-10">
           <p className="whitespace-pre-wrap text-center text-slate-700 text-lg">{aiComments.recommendedPlan}</p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-            <Link href="/support" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="w-full bg-white border-primary/30 hover:bg-primary/5">
+          <div className="flex flex-col gap-4 justify-center pt-6 max-w-sm mx-auto">
+            <Link href="/support" className="w-full">
+              <Button variant="outline" size="lg" className="w-full bg-white border-primary/30 hover:bg-primary/5 h-14">
                 チャットで無料相談する
               </Button>
             </Link>
-            <Link href="/#pricing" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full shadow-lg">
+            <Link href="/#pricing" className="w-full">
+              <Button size="lg" className="w-full shadow-lg h-14">
                 料金プランを見る
               </Button>
             </Link>

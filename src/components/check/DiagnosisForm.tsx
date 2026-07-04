@@ -103,11 +103,11 @@ export function DiagnosisForm() {
             {/* Step 1: 基本情報 */}
             <div className="space-y-6">
               <div className="flex items-center">
-                <div className="bg-primary/10 text-primary font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3">1</div>
+                <div className="bg-primary/10 text-primary font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3 shrink-0">1</div>
                 <h3 className="text-xl font-bold text-slate-900">基本情報</h3>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pl-11">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pl-4 md:pl-11">
                 <FormField control={form.control} name="businessName" render={({ field }) => (
                   <FormItem>
                     <FormLabel>事業者名 (必須)</FormLabel>
@@ -167,11 +167,11 @@ export function DiagnosisForm() {
             {/* Step 2: 現在のWeb状況 */}
             <div className="space-y-6">
               <div className="flex items-center">
-                <div className="bg-primary/10 text-primary font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3">2</div>
+                <div className="bg-primary/10 text-primary font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3 shrink-0">2</div>
                 <h3 className="text-xl font-bold text-slate-900">現在のWeb状況</h3>
               </div>
               
-              <div className="grid grid-cols-1 gap-4 pl-11">
+              <div className="grid grid-cols-1 gap-4 pl-4 md:pl-11">
                 <FormField control={form.control} name="websiteUrl" render={({ field }) => (
                   <FormItem>
                     <FormLabel>現在のWebサイトURL (任意)</FormLabel>
@@ -204,26 +204,26 @@ export function DiagnosisForm() {
             {/* Step 3: 目的と悩み */}
             <div className="space-y-6">
               <div className="flex items-center">
-                <div className="bg-primary/10 text-primary font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3">3</div>
+                <div className="bg-primary/10 text-primary font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3 shrink-0">3</div>
                 <h3 className="text-xl font-bold text-slate-900">目的と悩み</h3>
               </div>
               
-              <div className="space-y-8 pl-11">
+              <div className="space-y-8 pl-4 md:pl-11">
                 <FormField control={form.control} name="purposes" render={() => (
                   <FormItem>
                     <div className="mb-3"><FormLabel className="text-base font-bold text-slate-800">目的 (複数選択可)</FormLabel></div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {PURPOSES.map((item) => (
                         <FormField key={item} control={form.control} name="purposes" render={({ field }) => (
-                          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border border-slate-200 p-3 hover:bg-slate-50 transition-colors cursor-pointer">
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-lg border border-slate-200 p-4 hover:bg-slate-50 transition-colors cursor-pointer w-full">
                             <FormControl>
                               <Checkbox checked={field.value?.includes(item)} onCheckedChange={(checked) => {
                                 return checked
                                   ? field.onChange([...field.value, item])
                                   : field.onChange(field.value?.filter((value) => value !== item))
-                              }} />
+                              }} className="mt-0.5" />
                             </FormControl>
-                            <FormLabel className="font-normal cursor-pointer w-full">{item}</FormLabel>
+                            <FormLabel className="font-normal cursor-pointer w-full text-sm md:text-base">{item}</FormLabel>
                           </FormItem>
                         )} />
                       ))}
@@ -238,15 +238,15 @@ export function DiagnosisForm() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {PAINS.map((item) => (
                         <FormField key={item} control={form.control} name="pains" render={({ field }) => (
-                          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border border-slate-200 p-3 hover:bg-slate-50 transition-colors cursor-pointer">
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-lg border border-slate-200 p-4 hover:bg-slate-50 transition-colors cursor-pointer w-full">
                             <FormControl>
                               <Checkbox checked={field.value?.includes(item)} onCheckedChange={(checked) => {
                                 return checked
                                   ? field.onChange([...field.value, item])
                                   : field.onChange(field.value?.filter((value) => value !== item))
-                              }} />
+                              }} className="mt-0.5" />
                             </FormControl>
-                            <FormLabel className="font-normal cursor-pointer w-full">{item}</FormLabel>
+                            <FormLabel className="font-normal cursor-pointer w-full text-sm md:text-base">{item}</FormLabel>
                           </FormItem>
                         )} />
                       ))}
@@ -260,11 +260,11 @@ export function DiagnosisForm() {
             {/* Step 4: 制作のご希望 */}
             <div className="space-y-6 border-t border-slate-100 pt-8">
               <div className="flex items-center">
-                <div className="bg-primary/10 text-primary font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3">4</div>
+                <div className="bg-primary/10 text-primary font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3 shrink-0">4</div>
                 <h3 className="text-xl font-bold text-slate-900">制作・サポートのご希望</h3>
               </div>
               
-              <div className="space-y-6 pl-11">
+              <div className="space-y-6 pl-4 md:pl-11">
                 <FormField control={form.control} name="currentVendorStatus" render={({ field }) => (
                   <FormItem>
                     <FormLabel>現在のWeb業者の有無・不満など (任意)</FormLabel>
@@ -278,15 +278,15 @@ export function DiagnosisForm() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {BUILD_PREFERENCES.map((item) => (
                         <FormField key={item} control={form.control} name="buildPreferences" render={({ field }) => (
-                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-lg border border-slate-200 p-4 hover:bg-slate-50 transition-colors cursor-pointer w-full">
                             <FormControl>
                               <Checkbox checked={field.value?.includes(item)} onCheckedChange={(checked) => {
                                 return checked
                                   ? field.onChange([...field.value, item])
                                   : field.onChange(field.value?.filter((value) => value !== item))
-                              }} />
+                              }} className="mt-0.5" />
                             </FormControl>
-                            <FormLabel className="font-normal">{item}</FormLabel>
+                            <FormLabel className="font-normal cursor-pointer w-full text-sm md:text-base">{item}</FormLabel>
                           </FormItem>
                         )} />
                       ))}
