@@ -16,9 +16,10 @@ export const metadata: Metadata = {
     siteName: "enDesign",
     images: [
       {
-        url: "/ogp-image.jpg",
+        url: "/opengraph-image.png",
         width: 1200,
         height: 630,
+        alt: "enDesign - 地域事業者のための無料Web診断・ホームページ制作",
       },
     ],
     locale: "ja_JP",
