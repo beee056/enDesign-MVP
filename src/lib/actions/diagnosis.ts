@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db";
-import { businesses, diagnoses } from "@/db/schema";
+import { businesses, diagnoses, tenants } from "@/db/schema";
 import { diagnosisSchema, type DiagnosisInput } from "@/lib/validations/diagnosis";
 import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";

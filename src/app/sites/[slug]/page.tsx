@@ -4,6 +4,8 @@ import { eq, asc } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
 
+export const dynamic = "force-dynamic";
+
 export default async function TenantSitePage({ params }: { params: { slug: string } }) {
   // スラグからサイト情報を取得
   const siteRecord = await db.query.sites.findFirst({

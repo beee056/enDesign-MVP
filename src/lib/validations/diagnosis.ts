@@ -7,7 +7,7 @@ export const diagnosisSchema = z.object({
   phone: z.string().optional(),
   industry: z.string().min(1, "業種を選択・入力してください"),
   region: z.string().min(1, "地域を選択・入力してください"),
-  hasPhysicalStore: z.boolean().default(false),
+  hasPhysicalStore: z.boolean(),
   address: z.string().optional(),
   websiteUrl: z.string().url("正しいURL形式で入力してください").optional().or(z.literal("")),
   googleMapsUrl: z.string().url("正しいURL形式で入力してください").optional().or(z.literal("")),

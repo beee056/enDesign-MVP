@@ -13,6 +13,8 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDiagnosesPage() {
   const records = await db.select({
     id: diagnoses.id,
@@ -62,9 +64,9 @@ export default async function AdminDiagnosesPage() {
                   </Badge>
                 </TableCell>
                 <TableCell className="text-right">
-                  <Button variant="outline" size="sm" asChild>
-                    <Link href={`/check/result/${record.id}`}>結果を見る</Link>
-                  </Button>
+                  <Link href={`/check/result/${record.id}`}>
+                    <Button variant="outline" size="sm">結果を見る</Button>
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}

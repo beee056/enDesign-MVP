@@ -31,7 +31,7 @@ export default function AdminLayout({
           </Link>
         </nav>
         <div className="p-4 border-t flex items-center space-x-4">
-          <UserButton afterSignOutUrl="/" />
+          <UserButton />
           <span className="text-sm font-medium text-muted-foreground">アカウント</span>
         </div>
       </aside>

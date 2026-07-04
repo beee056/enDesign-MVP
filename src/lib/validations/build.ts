@@ -12,7 +12,7 @@ export const buildSchema = z.object({
   contactMethod: z.string().min(1, "予約/問い合わせ方法を入力してください"),
   designTone: z.string().min(1, "好きな雰囲気を入力してください"),
   referenceUrl: z.string().optional(),
-  wantsIllustration: z.boolean().default(false),
+  wantsIllustration: z.boolean(),
   // photos: z.any().optional(), // For MVP, we skip complex file upload validation in Zod
 });
 

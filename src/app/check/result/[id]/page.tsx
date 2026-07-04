@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default async function DiagnosisResultPage({ params }: { params: { id: string } }) {
   // DBから診断結果と事業者情報を取得
   const diagnosisRecord = await db.query.diagnoses.findFirst({
@@ -77,12 +79,12 @@ export default async function DiagnosisResultPage({ params }: { params: { id: st
           <p className="whitespace-pre-wrap">{aiComments.recommendedPlan}</p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button variant="outline" size="lg" asChild>
-              <Link href="/support">Lite相談する (¥5,000)</Link>
-            </Button>
-            <Button size="lg" asChild>
-              <Link href="/build/start">5万円プランで一緒に作る</Link>
-            </Button>
+            <Link href="/support">
+              <Button variant="outline" size="lg">Lite相談する (¥5,000)</Button>
+            </Link>
+            <Link href="/build/start">
+              <Button size="lg">5万円プランで一緒に作る</Button>
+            </Link>
           </div>
         </CardContent>
       </Card>

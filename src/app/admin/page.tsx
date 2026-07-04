@@ -3,6 +3,8 @@ import { db } from "@/db";
 import { diagnoses, businesses, tenants } from "@/db/schema";
 import { sql } from "drizzle-orm";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboardPage() {
   // 統計データの簡易取得
   const stats = await db.select({

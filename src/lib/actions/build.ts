@@ -44,7 +44,7 @@ export async function submitBuild(data: BuildInput) {
       blocks: z.array(z.object({
         blockType: z.string(),
         sortOrder: z.number(),
-        content: z.record(z.any()).describe("ブロック固有のテキストデータ（見出し、本文など）"),
+        content: z.record(z.string(), z.any()).describe("ブロック固有のテキストデータ（見出し、本文など）"),
       })).max(blockLimit)
     }),
     prompt: promptText,
@@ -58,7 +58,7 @@ export async function submitBuild(data: BuildInput) {
     slug: "site-" + Date.now() + Math.floor(Math.random() * 1000),
     ownerUserId: "guest",
     plan: input.planId,
-  }).returning({ id: tenants.id });
+  }).returning({ id: tenants.id, slug: tenants.slug });
 
   const [newBusiness] = await db.insert(businesses).values({
     tenantId: newTenant.id,
@@ -73,7 +73,7 @@ export async function submitBuild(data: BuildInput) {
     title: aiResult.siteTitle,
     slug: newTenant.slug,
     themePreset: aiResult.themePreset,
-  }).returning({ id: sites.id });
+  }).returning({ id: sites.id, slug: sites.slug });
 
   const [newPage] = await db.insert(pages).values({
     tenantId: newTenant.id,
