@@ -39,7 +39,7 @@ export default function AdminLayout({
         
         <div className="p-4 border-t border-slate-800">
           <div className="flex items-center px-2">
-            <UserButton afterSignOutUrl="/" />
+            <UserButton />
             <span className="ml-3 text-sm font-medium">アカウント</span>
           </div>
         </div>
@@ -53,7 +53,7 @@ export default function AdminLayout({
             <HeartHandshake className="h-5 w-5 text-primary mr-2" />
             <span className="font-bold text-lg">Admin</span>
           </Link>
-          <UserButton afterSignOutUrl="/" />
+          <UserButton />
         </header>
 
         {/* ページコンテンツ */}
