@@ -44,7 +44,7 @@ export function DiagnosisForm() {
   const router = useRouter();
 
   const form = useForm<DiagnosisInput>({
-    resolver: zodResolver(diagnosisSchema),
+    resolver: zodResolver(diagnosisSchema) as any,
     defaultValues: {
       businessName: "",
       contactName: "",
