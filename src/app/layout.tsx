@@ -1,10 +1,24 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Inter } from "next/font/google";
+import { Inter, Noto_Sans_JP } from "next/font/google";
 import { jaJP } from "@clerk/localizations";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+// Nexus Suite Design System — Inter as the single SaaS typeface
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+// Japanese character supplement
+const notoSansJP = Noto_Sans_JP({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-noto-sans-jp",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "enDesign｜地域事業者のための無料Web診断・5万円からのホームページ制作",
@@ -36,7 +50,8 @@ export default function RootLayout({
     <ClerkProvider localization={jaJP}>
       <html
         lang="ja"
-        className={`${inter.className} h-full antialiased`}
+        className={`${inter.variable} ${notoSansJP.variable} h-full antialiased`}
+        style={{ fontFamily: "var(--font-inter), var(--font-noto-sans-jp), ui-sans-serif, system-ui, sans-serif" }}
       >
         <body className="min-h-full flex flex-col">{children}</body>
       </html>
