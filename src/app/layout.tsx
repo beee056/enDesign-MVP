@@ -21,8 +21,12 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://en-design-mvp.vercel.app"),
   title: "enDesign｜地域事業者のための無料Web診断・5万円からのホームページ制作",
   description: "いい仕事が、ちゃんと届くように。Webに詳しくない地域事業者のための無料Web診断と、5万円からの明朗会計ホームページ制作。自分でできることは無料で、一人では不安なところだけを低価格で一緒に整えます。",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "enDesign｜地域事業者のための無料Web診断・ホームページ制作",
     description: "自分でできることは無料で。一人では不安なところだけ、低価格で一緒に整えます。",

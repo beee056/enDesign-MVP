@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
+import type { Variants } from "framer-motion";
 import { 
   ArrowRight, 
   CheckCircle2, 
@@ -18,15 +19,16 @@ import {
   Tractor, 
   Wrench,
   Search,
-  HeartHandshake
+  HeartHandshake,
+  ExternalLink
 } from "lucide-react";
 
-const fadeIn: any = {
+const fadeIn: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
 };
 
-const staggerContainer: any = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -36,6 +38,7 @@ const staggerContainer: any = {
 
 export default function Home() {
   return (
+    <MotionConfig reducedMotion="user">
     <div className="flex flex-col min-h-screen bg-[#FAFAFA] text-slate-800 font-sans selection:bg-primary/20">
       
       {/* JSON-LD 構造化データ (Client Component内でもNext.jsのSSR時にレンダリングされます) */}
@@ -50,6 +53,7 @@ export default function Home() {
             "logo": "https://en-design-mvp.vercel.app/logo.png",
             "description": "地域小規模事業者向けの無料Web診断と5万円からのホームページ制作サービス",
           })
+            .replace(/</g, "\\u003c")
         }}
       />
 
@@ -64,6 +68,7 @@ export default function Home() {
         <nav className="ml-auto hidden md:flex gap-8">
           <Link className="text-sm font-bold text-slate-600 hover:text-primary transition-colors" href="#features">選ばれる理由</Link>
           <Link className="text-sm font-bold text-slate-600 hover:text-primary transition-colors" href="#free-value">無料でできること</Link>
+          <Link className="text-sm font-bold text-slate-600 hover:text-primary transition-colors" href="#works">制作実績</Link>
           <Link className="text-sm font-bold text-slate-600 hover:text-primary transition-colors" href="#pricing">料金プラン</Link>
         </nav>
         <div className="ml-auto md:ml-8 flex items-center gap-4">
@@ -72,7 +77,7 @@ export default function Home() {
           </Link>
           <Link href="/check">
             <Button size="sm" className="rounded-full px-6 shadow-md hover:shadow-lg transition-all bg-slate-900 text-white hover:bg-slate-800">
-              無料診断へ
+              無料Web診断
             </Button>
           </Link>
         </div>
@@ -175,8 +180,23 @@ export default function Home() {
         </section>
 
         {/* Support & Community */}
-        <section className="w-full py-24 bg-slate-50 border-y border-slate-200/50">
+        <section id="free-value" className="w-full scroll-mt-16 py-24 bg-slate-50 border-y border-slate-200/50">
           <div className="container px-4 md:px-6 mx-auto max-w-5xl">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="text-center mb-16"
+            >
+              <p className="text-sm font-bold tracking-[0.18em] text-primary">FREE SUPPORT</p>
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl text-slate-900">
+                まずは無料の範囲で、課題を整理。
+              </h2>
+              <p className="mt-6 text-slate-500 md:text-lg max-w-2xl mx-auto font-medium">
+                相談や診断だけでも大丈夫です。自分で直せることと、手を借りたいことを分けられます。
+              </p>
+            </motion.div>
             <div className="grid md:grid-cols-2 gap-16 items-center">
               <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="space-y-6">
                 <div className="inline-flex items-center p-2 bg-white rounded-xl shadow-sm border border-slate-100 mb-2">
@@ -213,13 +233,65 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Works Section */}
+        <section id="works" className="w-full scroll-mt-16 py-24 lg:py-32 bg-white relative">
+          <div className="container px-4 md:px-6 mx-auto max-w-6xl">
+            <motion.div
+              initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="text-center mb-20"
+            >
+              <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl text-slate-900">制作実績</h2>
+              <p className="mt-6 text-slate-500 md:text-lg max-w-2xl mx-auto font-medium">
+                幅広い業種のWebサイト・LPを制作しています。実際の制作事例をご覧ください。
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
+              variants={staggerContainer}
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {[
+                { name: "PIVOT&QUEST", type: "コーポレートサイト", industry: "教育支援", desc: "理念から事業実績まで、論理的な構成で信頼を伝えるコーポレートサイト。", url: "https://p-quest.com/" },
+                { name: "LIGHTHOUSE", type: "ランディングページ", industry: "学習塾", desc: "合格者の声と実績数で説得力を持たせた、無料診断ツール付きの塾LP。", url: "https://lp.p-quest.com/" },
+                { name: "BizDex", type: "ポータルサイト", industry: "人材・キャリア", desc: "年収データを3Dマップで可視化する、データ活用型のキャリア支援ポータル。", url: "https://bizdex.p-quest.com/" },
+                { name: "第一モンゴル観光", type: "ランディングページ", industry: "旅行・ツアー", desc: "大自然の開放感を大型ビジュアルで訴求する、ツアー予約向けLP。", url: "https://mongol.p-quest.com/" },
+                { name: "nicoas", type: "ランディングページ", industry: "学習塾", desc: "親しみやすいブランドカラーで個性を表現した、コーチング塾のLP。", url: "https://nicoas.p-quest.com/" },
+                // 将来サムネイル画像を追加する場合は各要素に thumbnail: string を足して <img> を描画する
+              ].map((work) => (
+                <motion.a
+                  key={work.url}
+                  href={work.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${work.name}のサイトを見る（新しいタブで開きます）`}
+                  variants={fadeIn}
+                  className="group flex flex-col p-8 rounded-3xl glass-card relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                >
+                  <div className="flex items-center gap-2 mb-5">
+                    <span className="inline-flex items-center rounded-full bg-slate-900 text-white px-3 py-1 text-xs font-bold">{work.type}</span>
+                    <span className="inline-flex items-center rounded-full bg-slate-100 text-slate-600 px-3 py-1 text-xs font-bold border border-slate-200">{work.industry}</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-slate-900">{work.name}</h3>
+                  <p className="text-slate-500 text-sm leading-relaxed font-medium flex-1">{work.desc}</p>
+                  <span className="mt-6 inline-flex items-center text-sm font-bold text-primary">
+                    サイトを見る
+                    <ExternalLink className="ml-1.5 h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </span>
+                </motion.a>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
         {/* Pricing Section */}
-        <section id="pricing" className="w-full py-24 lg:py-32 bg-white">
+        <section id="pricing" className="w-full scroll-mt-16 py-24 lg:py-32 bg-white">
           <div className="container px-4 md:px-6 mx-auto max-w-6xl">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-center mb-20">
               <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl text-slate-900">料金プラン</h2>
               <p className="mt-6 text-slate-500 md:text-lg max-w-2xl mx-auto font-medium">
-                必要なものを、必要なぶんだけ。明朗会計をお約束します。
+                無料診断の結果を見てから、制作を頼むか決められます。診断だけなら0円です。
               </p>
             </motion.div>
             
@@ -241,10 +313,10 @@ export default function Home() {
               {/* Standard */}
               <motion.div variants={fadeIn} className="flex flex-col p-8 rounded-3xl bg-slate-900 text-white shadow-2xl relative transform md:-translate-y-8 border border-slate-800">
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-blue-500 text-white px-6 py-1.5 rounded-full text-sm font-bold shadow-lg">
-                  一番人気
+                  基本プラン
                 </div>
                 <h3 className="text-2xl font-bold">Standard Build</h3>
-                <p className="text-sm text-slate-400 mt-2 font-medium">すべておまかせの基本プラン</p>
+                <p className="text-sm text-slate-400 mt-2 font-medium">必要な情報を1ページにまとめる制作プラン</p>
                 <div className="mt-6 mb-8">
                   <span className="text-5xl font-extrabold text-white">¥50,000</span>
                 </div>
@@ -255,7 +327,7 @@ export default function Home() {
                   <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 shrink-0" /><span className="text-slate-300 text-sm font-medium">修正2回まで</span></li>
                 </ul>
                 <Link href="/check">
-                  <Button className="w-full rounded-full h-12 bg-white text-slate-900 hover:bg-slate-100 font-bold">このプランで診断する</Button>
+                  <Button className="w-full rounded-full h-12 bg-white text-slate-900 hover:bg-slate-100 font-bold">無料Web診断をはじめる</Button>
                 </Link>
               </motion.div>
 
@@ -274,24 +346,54 @@ export default function Home() {
               </motion.div>
             </motion.div>
 
-            {/* Scope / Not to do */}
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="bg-red-50/30 border border-red-100 rounded-3xl p-8 md:p-10 max-w-4xl mx-auto backdrop-blur-sm">
-              <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center">
-                <Wrench className="h-6 w-6 mr-3 text-red-500" />
-                5万円プランで「やらないこと」のお約束
-              </h3>
-              <p className="text-slate-600 text-sm mb-6 font-medium leading-relaxed">
-                低価格と高品質を両立させるため、以下の作業は5万円プランの対象外となります。あらかじめご了承ください。
-              </p>
-              <ul className="grid sm:grid-cols-2 gap-4 text-sm font-medium text-slate-700">
-                <li className="flex items-center"><span className="w-1.5 h-1.5 rounded-full bg-red-400 mr-3" />複雑なアニメーションの実装</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 rounded-full bg-red-400 mr-3" />完全オリジナルデザイン</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 rounded-full bg-red-400 mr-3" />EC（ネットショップ）機能の構築</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 rounded-full bg-red-400 mr-3" />独自の予約システム自作</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 rounded-full bg-red-400 mr-3" />SNS運用代行・広告運用</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 rounded-full bg-red-400 mr-3" />大量のページ制作</li>
-                <li className="flex items-center"><span className="w-1.5 h-1.5 rounded-full bg-red-400 mr-3" />無制限の修正</li>
-              </ul>
+            {/* Standard plan boundary */}
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm max-w-5xl mx-auto">
+              <div className="border-b border-slate-200 bg-slate-50 px-8 py-7 md:px-10">
+                <p className="text-sm font-bold tracking-[0.18em] text-primary">SCOPE</p>
+                <h3 className="mt-2 text-2xl font-extrabold text-slate-900 flex items-center">
+                  <Wrench className="h-6 w-6 mr-3 text-primary" />
+                  5万円でできること、できないこと
+                </h3>
+                <p className="mt-3 text-slate-600 text-sm font-medium leading-relaxed">
+                  追加費用が膨らまないよう、基本プランの境界を先にお伝えします。
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2">
+                <div className="p-8 md:p-10">
+                  <p className="mb-6 text-sm font-bold text-emerald-700">基本料金に含まれるもの</p>
+                  <ul className="space-y-4 text-sm font-medium text-slate-700">
+                    {[
+                      "1ページ・6ブロックのLP型サイト",
+                      "写真10枚・簡易イラスト1点",
+                      "公開前の修正2回まで",
+                      "不要な月額保守契約なし",
+                    ].map((item) => (
+                      <li key={item} className="flex items-start">
+                        <CheckCircle2 className="h-5 w-5 text-primary mr-3 shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="border-t border-slate-200 bg-slate-50/70 p-8 md:border-l md:border-t-0 md:p-10">
+                  <p className="mb-6 text-sm font-bold text-slate-600">基本料金に含まれないもの</p>
+                  <ul className="grid gap-4 text-sm font-medium text-slate-700">
+                    {[
+                      "完全オリジナルデザイン",
+                      "EC・独自予約システムの構築",
+                      "複雑なアニメーション",
+                      "大量のページ制作",
+                      "SNS・広告の運用代行",
+                      "回数無制限の修正",
+                    ].map((item) => (
+                      <li key={item} className="flex items-start">
+                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 mr-3 shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -328,7 +430,7 @@ export default function Home() {
                 さあ、まずは無料診断から。
               </h2>
               <p className="text-slate-300 md:text-xl font-medium">
-                質問に答えるだけで、あなたのビジネスのWeb課題が見えてきます。
+                質問に答えるだけで、Web課題と優先順位が見えてきます。まず自分で直すところからでも大丈夫です。
               </p>
               <Link href="/check" className="mt-8">
                 <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100 rounded-full h-16 px-12 text-lg font-bold shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_-15px_rgba(255,255,255,0.5)] transition-all hover:-translate-y-1">
@@ -360,5 +462,6 @@ export default function Home() {
         </div>
       </footer>
     </div>
+    </MotionConfig>
   );
 }
