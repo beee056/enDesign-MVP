@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion, MotionConfig } from "framer-motion";
 import type { Variants } from "framer-motion";
+import { track } from "@vercel/analytics";
 import { 
   ArrowRight, 
   CheckCircle2, 
@@ -75,7 +76,7 @@ export default function Home() {
           <Link href="/admin" className="text-sm font-bold text-slate-600 hover:text-primary transition-colors hidden sm:block">
             ログイン
           </Link>
-          <Link href="/check">
+          <Link href="/check" onClick={() => track("diagnosis_cta_clicked", { location: "header" })}>
             <Button size="sm" className="rounded-full px-6 shadow-md hover:shadow-lg transition-all bg-slate-900 text-white hover:bg-slate-800">
               無料Web診断
             </Button>
@@ -110,7 +111,11 @@ export default function Home() {
               </motion.div>
               
               <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 w-full max-w-md justify-center mt-8">
-                <Link href="/check" className="w-full sm:w-auto">
+                <Link
+                  href="/check"
+                  className="w-full sm:w-auto"
+                  onClick={() => track("diagnosis_cta_clicked", { location: "hero" })}
+                >
                   <Button size="lg" className="w-full text-base h-14 px-8 rounded-full shadow-[0_0_40px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)] transition-all hover:-translate-y-1 bg-slate-900 text-white hover:bg-slate-800 group">
                     無料Web診断をはじめる 
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -176,6 +181,66 @@ export default function Home() {
                 </motion.div>
               ))}
             </motion.div>
+          </div>
+        </section>
+
+        {/* Human-in-the-loop process */}
+        <section className="w-full border-y border-slate-200 bg-slate-950 py-24 text-white lg:py-32">
+          <div className="container mx-auto max-w-6xl px-4 md:px-6">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="max-w-3xl"
+            >
+              <p className="text-sm font-bold tracking-[0.18em] text-primary">HOW WE BUILD</p>
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
+                速さはAIに。<br />
+                最後の判断は、人に。
+              </h2>
+              <p className="mt-6 max-w-2xl text-base font-medium leading-relaxed text-slate-400 md:text-lg">
+                AIに全部を任せて公開するのではなく、整理と下書きに活用します。お客様に伝わる言葉と導線は、人が確認して仕上げます。
+              </p>
+            </motion.div>
+
+            <motion.ol
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={staggerContainer}
+              className="mt-16 grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 md:grid-cols-3"
+            >
+              {[
+                {
+                  step: "01",
+                  icon: Search,
+                  title: "無料診断で整理",
+                  desc: "いま困っていることと、優先して直す場所を言葉にします。",
+                },
+                {
+                  step: "02",
+                  icon: Sparkles,
+                  title: "AIで下書き",
+                  desc: "診断内容をもとに、サイト構成と文章のたたき台を素早く作ります。",
+                },
+                {
+                  step: "03",
+                  icon: HeartHandshake,
+                  title: "人が仕上げる",
+                  desc: "言葉の温度、写真の見せ方、問い合わせまでの導線を確認します。",
+                },
+              ].map((item) => (
+                <motion.li key={item.step} variants={fadeIn} className="relative bg-slate-950 p-8 md:p-10">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs font-bold tracking-[0.2em] text-slate-600">{item.step}</span>
+                    <item.icon className="h-5 w-5 text-primary" aria-hidden="true" />
+                  </div>
+                  <h3 className="mt-10 text-xl font-bold text-white">{item.title}</h3>
+                  <p className="mt-3 text-sm font-medium leading-relaxed text-slate-400">{item.desc}</p>
+                </motion.li>
+              ))}
+            </motion.ol>
           </div>
         </section>
 
@@ -326,7 +391,7 @@ export default function Home() {
                   <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 shrink-0" /><span className="text-slate-300 text-sm font-medium">写真10枚・簡易イラスト1点</span></li>
                   <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 shrink-0" /><span className="text-slate-300 text-sm font-medium">修正2回まで</span></li>
                 </ul>
-                <Link href="/check">
+                <Link href="/check" onClick={() => track("diagnosis_cta_clicked", { location: "pricing" })}>
                   <Button className="w-full rounded-full h-12 bg-white text-slate-900 hover:bg-slate-100 font-bold">無料Web診断をはじめる</Button>
                 </Link>
               </motion.div>
@@ -432,7 +497,11 @@ export default function Home() {
               <p className="text-slate-300 md:text-xl font-medium">
                 質問に答えるだけで、Web課題と優先順位が見えてきます。まず自分で直すところからでも大丈夫です。
               </p>
-              <Link href="/check" className="mt-8">
+              <Link
+                href="/check"
+                className="mt-8"
+                onClick={() => track("diagnosis_cta_clicked", { location: "bottom" })}
+              >
                 <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100 rounded-full h-16 px-12 text-lg font-bold shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_-15px_rgba(255,255,255,0.5)] transition-all hover:-translate-y-1">
                   無料でWeb診断をはじめる
                 </Button>

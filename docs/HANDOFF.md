@@ -191,3 +191,97 @@
 3. push / デプロイの可否を依頼者に確認。
 4. ②に着手するなら、LP改稿より先に認証・認可・テナント境界を修正。
 5. 委譲を使う場合は、**完了報告を必ず git diff / ビルドで裏取り**(§0-2 のインシデント参照)。
+
+---
+
+## 9. 2026-07-10 続行セッション追記(Codex)
+
+### 参照デザイン運用
+
+- 依頼者から `VoltAgent/awesome-design-md` を参考にできるか確認があり、方式を採用。
+- 外部ブランドの見た目はコピーせず、**DESIGN.mdで色・余白・部品・Do/Don'tを固定する運用**として取り込んだ。
+- ①に `DESIGN.md` を新規追加:
+  - テーマ: 地域事業者向けの「Web診断カルテ」
+  - 主要トークン: slate / white / emerald
+  - ルール: 無料診断CTA、明朗会計、AI+人間仕上げ、未検証実績表現を避ける
+- ②にも `C:\Users\beee0\.gemini\antigravity\worktrees\ai-message-assistant\DESIGN.md` を新規追加:
+  - テーマ: 個人塾・スクール向けの「面談後送付管制塔」
+  - ルール: 汎用AI文書生成SaaSへ戻さない、外部リンク前提を明示、AI出力は下書き扱い
+
+### ① enDesign の追加実装
+
+- `@vercel/analytics` を追加し、`src/app/layout.tsx` に `<Analytics />` を設置。
+- LPの主要 `/check` CTAにカスタムイベント `diagnosis_cta_clicked` を追加。
+  - `header` / `hero` / `pricing` / `bottom` をlocationとして送る。
+- LPに「速さはAIに。最後の判断は、人に。」セクションを追加。
+  - 無料診断 → AI下書き → 人が仕上げる、の3工程を視覚化。
+- `src/components/check/DiagnosisForm.tsx` に診断フォームのローカル途中保存を追加。
+  - `localStorage`キー: `endesign-diagnosis-draft-v1`
+  - 7日で期限切れ。
+  - 成功送信時は破棄。
+  - `入力内容を破棄`ボタンを追加。
+- 診断フォームにAnalyticsイベントを追加。
+  - `diagnosis_draft_restored`
+  - `diagnosis_started`
+  - `diagnosis_submitted`
+  - `diagnosis_completed`
+  - `diagnosis_failed`
+- 検証:
+  - 変更TS/TSXのESLint成功。
+  - `npm run build` 成功。
+  - `git diff --check` 成功。
+- 既知警告:
+  - Next.jsが複数lockfileによりworkspace root推定警告を出す。
+  - `middleware` file convention deprecated。Next 16系では将来 `proxy` 移行が必要。
+- 依存audit:
+  - 直近確認済みのproduction auditでは moderate が4件。
+  - 主に `next` / `postcss` / Clerk / Vercel Analytics 系。
+  - `npm audit fix --force` はNext/Clerk制約を壊す可能性があるため未実行。
+  - 2026-07-10の再auditは、依存メタデータ外部送信の明示承認が必要として承認レビューで停止。迂回しないこと。
+
+### ② AI Message Assistant の追加実装・調査結果
+
+- ②は `C:\Users\beee0\.gemini\antigravity\worktrees\ai-message-assistant` で作業。
+- `npm ci` を実施し、ローカルbuild可能状態にした。
+- 依然としてGit remoteは未設定。
+- P0セキュリティを修正:
+  - `src/middleware.ts` から `/console(.*)` と `/api/console(.*)` の公開指定を削除。
+  - `src/lib/console-auth.ts` を追加し、Clerk user → users → memberships → tenants を解決。
+  - `requireConsoleContext()` で未認証は `/sign-in`、membershipなしは `/console/onboarding` へ誘導。
+  - `/console`画面、Server Actions、console系APIにtenant境界を適用。
+  - `/docs/[id]` と `/p/[id]` もtenant-scopedに変更。
+- BYOK平文保存UIを停止:
+  - `src/components/console/ApiKeysForm.tsx` を削除。
+  - `src/app/console/settings/actions.ts` を削除。
+  - 設定画面には「APIキーは運営側サーバー環境変数で管理」と表示。
+  - 注意: DBカラム自体は残っているため、既存DBに平文キーがあれば手動削除/ローテーションが必要。
+- onboardingを追加:
+  - `src/app/console/onboarding/page.tsx`
+  - `src/app/console/onboarding/actions.ts`
+  - 初回ユーザーがtenant/membership/consoleSettingsを作成できる。
+- LP/ブランドを当初要件へ戻した:
+  - `AI Document Builder` から `AI Message Assistant` へ変更。
+  - Heroは「面談が終わったあと、もう迷わない。」。
+  - 個人塾・スクール、面談後案内、外部リンク前提、送付チェックリストを主役にした。
+  - README / package名 / metadata / sign-in文言も更新。
+- 検証:
+  - 変更TS/TSXのESLint成功。
+  - `npm run build` 成功。
+  - `git diff --check` 成功。
+  - 全体 `npx eslint .` は、今回未変更の既存ファイルにある `any` / CommonJS script / 未使用import等で失敗するため、全体lintの正常化は別タスク。
+- ローカルHTTP/ブラウザ確認:
+  - 3001は別プロジェクト(BizDex)が使用。
+  - 3002で起動は確認したがHTTPリクエストがハングし、視覚確認は未完了。
+  - 本セッションではproduction build成功を主検証とした。
+- 依存audit:
+  - `npm ci` 時点でmoderate 7件を確認。
+  - 2026-07-10の再auditは、依存メタデータ外部送信の明示承認が必要として承認レビューで停止。迂回しないこと。
+
+### 次の安全なTODO
+
+1. ① `master` のpush / Vercelデプロイ可否を依頼者に確認して実行。
+2. ① 特商法表記の氏名・住所・返金条件を依頼者から受け取り反映。
+3. ② Git remoteをどこへ設定するか決める。
+4. ② 既存DBに保存済みAPIキーがあれば削除・ローテーション。
+5. ② 全体lintの既存負債(`any`等)を別コミットで整理。
+6. Next 16の `middleware` → `proxy` 移行は、Clerk公式/Nextローカルdocsを確認してから別途実施。

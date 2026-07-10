@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter, Noto_Sans_JP } from "next/font/google";
 import { jaJP } from "@clerk/localizations";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 // Nexus Suite Design System — Inter as the single SaaS typeface
@@ -57,7 +58,10 @@ export default function RootLayout({
         className={`${inter.variable} ${notoSansJP.variable} h-full antialiased`}
         style={{ fontFamily: "var(--font-inter), var(--font-noto-sans-jp), ui-sans-serif, system-ui, sans-serif" }}
       >
-        <body className="min-h-full flex flex-col">{children}</body>
+        <body className="min-h-full flex flex-col">
+          {children}
+          <Analytics />
+        </body>
       </html>
     </ClerkProvider>
   );

@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useRef, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
+import type { Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { diagnosisSchema, type DiagnosisInput } from "@/lib/validations/diagnosis";
+import { track } from "@vercel/analytics";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -38,48 +40,129 @@ const BUILD_PREFERENCES = [
   "自分で作りたい(費用を抑えたい)", "プロと一緒に作りたい(費用と手間のバランス)", "ほとんど任せたい(プロにお願いしたい)", "まず診断だけでいい"
 ];
 
+const DRAFT_STORAGE_KEY = "endesign-diagnosis-draft-v1";
+const DRAFT_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
+
+const DEFAULT_VALUES: DiagnosisInput = {
+  businessName: "",
+  contactName: "",
+  email: "",
+  phone: "",
+  industry: "",
+  region: "",
+  hasPhysicalStore: false,
+  address: "",
+  websiteUrl: "",
+  googleMapsUrl: "",
+  instagramUrl: "",
+  lineUrl: "",
+  otherSnsUrl: "",
+  purposes: [],
+  pains: [],
+  currentVendorStatus: "",
+  buildPreferences: [],
+  budget: "",
+  designTones: [],
+  wantsIllustration: false,
+  illustrationDetails: "",
+  materialsAvailable: [],
+  referralCode: "",
+};
+
+interface SavedDiagnosisDraft {
+  savedAt: number;
+  values: Partial<DiagnosisInput>;
+}
+
 export function DiagnosisForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [draftMessage, setDraftMessage] = useState<string | null>(null);
+  const hasTrackedStart = useRef(false);
   const router = useRouter();
 
   const form = useForm<DiagnosisInput>({
-    resolver: zodResolver(diagnosisSchema) as any,
-    defaultValues: {
-      businessName: "",
-      contactName: "",
-      email: "",
-      phone: "",
-      industry: "",
-      region: "",
-      hasPhysicalStore: false,
-      address: "",
-      websiteUrl: "",
-      googleMapsUrl: "",
-      instagramUrl: "",
-      lineUrl: "",
-      otherSnsUrl: "",
-      purposes: [],
-      pains: [],
-      currentVendorStatus: "",
-      buildPreferences: [],
-      budget: "",
-      designTones: [],
-      wantsIllustration: false,
-      illustrationDetails: "",
-      materialsAvailable: [],
-      referralCode: "",
-    },
+    resolver: zodResolver(diagnosisSchema) as Resolver<DiagnosisInput>,
+    defaultValues: DEFAULT_VALUES,
   });
+  const wantsIllustration = useWatch({
+    control: form.control,
+    name: "wantsIllustration",
+  });
+
+  useEffect(() => {
+    const storedDraft = window.localStorage.getItem(DRAFT_STORAGE_KEY);
+    if (!storedDraft) return;
+
+    try {
+      const draft = JSON.parse(storedDraft) as SavedDiagnosisDraft;
+      const isExpired = !Number.isFinite(draft.savedAt) || Date.now() - draft.savedAt > DRAFT_MAX_AGE_MS;
+      const parsedValues = diagnosisSchema.partial().safeParse(draft.values);
+
+      if (isExpired || !parsedValues.success) {
+        window.localStorage.removeItem(DRAFT_STORAGE_KEY);
+        return;
+      }
+
+      form.reset({ ...DEFAULT_VALUES, ...parsedValues.data });
+      track("diagnosis_draft_restored");
+    } catch {
+      window.localStorage.removeItem(DRAFT_STORAGE_KEY);
+    }
+  }, [form]);
+
+  useEffect(() => {
+    let saveTimer: ReturnType<typeof setTimeout> | undefined;
+    const unsubscribe = form.subscribe({
+      formState: { values: true },
+      callback: ({ values, name }) => {
+        if (!name) return;
+
+        if (!hasTrackedStart.current) {
+          hasTrackedStart.current = true;
+          track("diagnosis_started");
+        }
+
+        if (saveTimer) clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => {
+          const draft: SavedDiagnosisDraft = {
+            savedAt: Date.now(),
+            values,
+          };
+          window.localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
+          setDraftMessage("入力内容をこの端末に保存しました");
+        }, 600);
+      },
+    });
+
+    return () => {
+      if (saveTimer) clearTimeout(saveTimer);
+      unsubscribe();
+    };
+  }, [form]);
+
+  function clearDraft() {
+    if (!window.confirm("入力内容をすべて消しますか？")) return;
+    window.localStorage.removeItem(DRAFT_STORAGE_KEY);
+    form.reset(DEFAULT_VALUES);
+    setDraftMessage("保存した入力内容を削除しました");
+  }
 
   async function onSubmit(data: DiagnosisInput) {
     setIsSubmitting(true);
+    track("diagnosis_submitted");
     try {
       const result = await submitDiagnosis(data);
       if (result.success) {
+        window.localStorage.removeItem(DRAFT_STORAGE_KEY);
+        track("diagnosis_completed");
         router.push(`/check/result/${result.diagnosisId}`);
+      } else {
+        track("diagnosis_failed", { reason: "server_response" });
+        alert(result.error || "診断の送信に失敗しました。もう一度お試しください。");
       }
     } catch (error) {
       console.error(error);
+      track("diagnosis_failed", { reason: "unexpected_error" });
       alert("エラーが発生しました。もう一度お試しください。");
     } finally {
       setIsSubmitting(false);
@@ -94,6 +177,18 @@ export function DiagnosisForm() {
         <p className="text-sm text-[#475569]">
           現状の課題やご希望をお聞かせください。入力内容をもとにAIと専門スタッフが無料で診断し、「自分で直せること」「お金をかけなくていいこと」をアドバイスします。
         </p>
+        <div className="mt-4 flex flex-col gap-2 border-t border-[#e2e8f0] pt-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs leading-relaxed text-[#64748b]" role="status">
+            {draftMessage || "入力内容はこの端末にだけ自動保存され、7日後に無効になります。"}
+          </p>
+          <button
+            type="button"
+            onClick={clearDraft}
+            className="shrink-0 text-left text-xs font-medium text-[#64748b] underline decoration-[#cbd5e1] underline-offset-4 hover:text-[#0f172a]"
+          >
+            入力内容を破棄
+          </button>
+        </div>
       </div>
 
       <Form {...form}>
@@ -305,7 +400,7 @@ export function DiagnosisForm() {
                   </div>
                 </FormItem>
               )} />
-              {form.watch("wantsIllustration") && (
+              {wantsIllustration && (
                 <FormField control={form.control} name="illustrationDetails" render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-xs font-medium text-[#475569]">イラストのご要望</FormLabel>
