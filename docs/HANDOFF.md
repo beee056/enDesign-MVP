@@ -213,6 +213,10 @@
 - `@vercel/analytics` を追加し、`src/app/layout.tsx` に `<Analytics />` を設置。
 - LPの主要 `/check` CTAにカスタムイベント `diagnosis_cta_clicked` を追加。
   - `header` / `hero` / `pricing` / `bottom` をlocationとして送る。
+- `VoltAgent/awesome-design-md` のDESIGN.md運用を参考に、LPファーストビューへ「無料Web診断カルテ」モックを適用。
+  - 左: 強いヒーローコピー。
+  - 右: 診断スコア、改善チェック、次の一手を見せる紙面UI。
+  - 背景に淡い方眼紙グリッドを入れ、診断カルテ感を強化。
 - LPに「速さはAIに。最後の判断は、人に。」セクションを追加。
   - 無料診断 → AI下書き → 人が仕上げる、の3工程を視覚化。
 - `src/components/check/DiagnosisForm.tsx` に診断フォームのローカル途中保存を追加。
@@ -230,6 +234,7 @@
   - 変更TS/TSXのESLint成功。
   - `npm run build` 成功。
   - `git diff --check` 成功。
+  - 127.0.0.1:3100 のローカル本番起動でLP表示確認。ブラウザconsoleエラーなし。
 - 既知警告:
   - Next.jsが複数lockfileによりworkspace root推定警告を出す。
   - `middleware` file convention deprecated。Next 16系では将来 `proxy` 移行が必要。

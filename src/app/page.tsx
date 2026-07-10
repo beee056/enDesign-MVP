@@ -59,7 +59,7 @@ export default function Home() {
       />
 
       {/* Header (Glassmorphism) */}
-      <header className="px-4 lg:px-8 h-16 flex items-center bg-white/70 backdrop-blur-md sticky top-0 z-50 border-b border-white/20 shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
+      <header className="px-4 lg:px-8 h-16 flex items-center bg-white/85 backdrop-blur-xl sticky top-0 z-50 border-b border-slate-200/70 shadow-[0_8px_30px_rgba(15,23,42,0.04)]">
         <Link className="flex items-center justify-center transition-opacity hover:opacity-80" href="/">
           <div className="bg-gradient-to-br from-primary to-blue-500 p-2 rounded-xl mr-2 shadow-sm">
             <HeartHandshake className="h-5 w-5 text-white" />
@@ -86,60 +86,124 @@ export default function Home() {
 
       <main className="flex-1">
         
-        {/* Hero Section (Aurora & Framer Motion) */}
-        <section className="w-full pt-24 pb-20 md:pt-36 md:pb-32 lg:pt-48 lg:pb-40 relative overflow-hidden aurora-bg border-b border-slate-200/50">
-          <div className="container px-4 md:px-6 relative z-10 mx-auto max-w-5xl">
+        {/* Hero Section (Diagnosis paper mockup) */}
+        <section className="w-full overflow-hidden border-b border-slate-200/70 bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_72%,#f8fafc_100%)] pt-20 pb-16 md:pt-28 md:pb-24 lg:pt-36 lg:pb-28 relative">
+          <div className="absolute inset-0 paper-grid opacity-70" aria-hidden="true" />
+          <div className="absolute -right-20 top-20 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl" aria-hidden="true" />
+          <div className="absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-sky-100/80 blur-3xl" aria-hidden="true" />
+          <div className="container px-4 md:px-6 relative z-10 mx-auto max-w-6xl">
             <motion.div 
               initial="hidden" 
               animate="visible" 
               variants={staggerContainer}
-              className="flex flex-col items-center space-y-10 text-center"
+              className="grid gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:items-center"
             >
-              <motion.div variants={fadeIn} className="space-y-6 max-w-4xl flex flex-col items-center">
-                <div className="inline-flex items-center rounded-full border border-white/50 bg-white/50 backdrop-blur-md px-4 py-1.5 text-sm font-bold text-primary shadow-sm mb-4">
+              <motion.div variants={fadeIn} className="space-y-7 text-center lg:text-left">
+                <div className="inline-flex items-center rounded-full border border-emerald-200 bg-white/80 px-4 py-1.5 text-sm font-bold text-primary shadow-sm">
                   <Sparkles className="w-4 h-4 mr-2" />
-                  地域密着型のWebサポート
+                  無料診断 → AI下書き → 人が仕上げる
                 </div>
-                <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] text-slate-900">
+                <h1 className="text-5xl font-extrabold tracking-[-0.055em] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.03] text-slate-950">
                   いい仕事が、<br />
                   <span className="text-gradient">ちゃんと届くように。</span>
                 </h1>
-                <p className="mx-auto max-w-[800px] text-slate-600 md:text-xl leading-relaxed font-medium mt-6">
+                <p className="mx-auto max-w-[760px] text-slate-600 md:text-xl leading-relaxed font-medium lg:mx-0">
                   Webに詳しくない地域事業者のための、無料Web診断と5万円からのホームページ制作。<br className="hidden md:block" />
                   自分でできることは無料で。一人では不安なところだけ、低価格で一緒に整えます。
                 </p>
+
+                <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
+                  <Link
+                    href="/check"
+                    className="w-full sm:w-auto"
+                    onClick={() => track("diagnosis_cta_clicked", { location: "hero" })}
+                  >
+                    <Button size="lg" className="w-full text-base h-14 px-8 rounded-full shadow-[0_18px_45px_-22px_rgba(15,23,42,0.8)] hover:shadow-[0_22px_55px_-24px_rgba(15,23,42,0.9)] transition-all hover:-translate-y-1 bg-slate-950 text-white hover:bg-slate-800 group">
+                      無料Web診断をはじめる
+                      <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
+                  <Link href="#pricing" className="w-full sm:w-auto">
+                    <Button size="lg" variant="outline" className="w-full text-base h-14 px-8 rounded-full bg-white/80 hover:bg-white transition-all border-slate-200">
+                      料金を見る
+                    </Button>
+                  </Link>
+                </div>
+
+                <dl className="grid grid-cols-3 gap-px overflow-hidden rounded-3xl border border-slate-200 bg-slate-200 text-left shadow-sm">
+                  {[
+                    ["0円", "診断だけOK"],
+                    ["5万円〜", "明朗会計"],
+                    ["月額なし", "不要な固定費なし"],
+                  ].map(([value, label]) => (
+                    <div key={label} className="bg-white/90 p-4 md:p-5">
+                      <dt className="text-lg font-extrabold tracking-tight text-slate-950 md:text-2xl">{value}</dt>
+                      <dd className="mt-1 text-xs font-bold text-slate-500 md:text-sm">{label}</dd>
+                    </div>
+                  ))}
+                </dl>
               </motion.div>
-              
-              <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 w-full max-w-md justify-center mt-8">
-                <Link
-                  href="/check"
-                  className="w-full sm:w-auto"
-                  onClick={() => track("diagnosis_cta_clicked", { location: "hero" })}
-                >
-                  <Button size="lg" className="w-full text-base h-14 px-8 rounded-full shadow-[0_0_40px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)] transition-all hover:-translate-y-1 bg-slate-900 text-white hover:bg-slate-800 group">
-                    無料Web診断をはじめる 
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-                <Link href="#pricing" className="w-full sm:w-auto">
-                  <Button size="lg" variant="outline" className="w-full text-base h-14 px-8 rounded-full bg-white/50 backdrop-blur-md hover:bg-white transition-all border-slate-200">
-                    料金を見る
-                  </Button>
-                </Link>
+
+              <motion.div variants={fadeIn} className="relative">
+                <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-emerald-200/50 via-white to-sky-100/70 blur-2xl" aria-hidden="true" />
+                <div className="diagnosis-paper relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_30px_80px_-45px_rgba(15,23,42,0.8)]">
+                  <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50/90 px-5 py-4">
+                    <div>
+                      <p className="text-xs font-bold tracking-[0.18em] text-primary">FREE CHECK</p>
+                      <p className="mt-1 text-sm font-extrabold text-slate-900">無料Web診断カルテ</p>
+                    </div>
+                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">途中保存OK</span>
+                  </div>
+
+                  <div className="p-5 md:p-6">
+                    <div className="grid gap-4 rounded-3xl bg-slate-950 p-5 text-white">
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="text-xs font-bold text-slate-400">診断サマリー</p>
+                          <p className="mt-2 text-2xl font-extrabold tracking-tight">問い合わせ導線を先に整理</p>
+                        </div>
+                        <div className="rounded-2xl bg-white/10 px-4 py-3 text-center">
+                          <p className="text-[10px] font-bold tracking-[0.16em] text-slate-400">SCORE</p>
+                          <p className="text-3xl font-extrabold text-primary">72</p>
+                        </div>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-white/10">
+                        <div className="h-full w-[72%] rounded-full bg-primary" />
+                      </div>
+                    </div>
+
+                    <div className="mt-5 grid gap-3">
+                      {[
+                        ["Googleマップ", "店舗情報と写真を更新", "自分で直せる"],
+                        ["ファーストビュー", "料金・対象者を上部に追加", "制作で対応"],
+                        ["問い合わせ導線", "LINE/電話/フォームを一本化", "優先度高"],
+                      ].map(([title, desc, tag]) => (
+                        <div key={title} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white/85 p-4">
+                          <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-50">
+                            <CheckCircle2 className="h-4 w-4 text-primary" aria-hidden="true" />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <p className="text-sm font-extrabold text-slate-900">{title}</p>
+                              <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-600">{tag}</span>
+                            </div>
+                            <p className="mt-1 text-xs font-medium leading-relaxed text-slate-500">{desc}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-5 rounded-3xl border border-emerald-200 bg-emerald-50 p-4">
+                      <p className="text-xs font-bold tracking-[0.16em] text-emerald-700">NEXT STEP</p>
+                      <p className="mt-2 text-sm font-bold leading-relaxed text-slate-900">
+                        まず無料診断で「自分で直すこと」と「任せること」を分けましょう。
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             </motion.div>
           </div>
-          {/* Decorative Floater */}
-          <motion.div 
-            className="absolute top-20 right-10 md:top-40 md:right-32 w-64 h-64 bg-blue-400/20 rounded-full blur-3xl -z-10"
-            animate={{ y: [0, 50, 0], scale: [1, 1.1, 1] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div 
-            className="absolute bottom-10 left-10 md:bottom-20 md:left-32 w-72 h-72 bg-purple-400/20 rounded-full blur-3xl -z-10"
-            animate={{ y: [0, -40, 0], scale: [1, 1.2, 1] }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          />
         </section>
 
         {/* Features Section (Glassmorphism & Stagger) */}

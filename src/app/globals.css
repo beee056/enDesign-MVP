@@ -216,4 +216,18 @@
   .aurora-bg {
     background: #f8fafc;
   }
+
+  .paper-grid {
+    background-image:
+      linear-gradient(rgba(16, 185, 129, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16, 185, 129, 0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+  }
+
+  .diagnosis-paper {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.9)),
+      repeating-linear-gradient(0deg, rgba(226,232,240,0.5) 0, rgba(226,232,240,0.5) 1px, transparent 1px, transparent 38px);
+  }
 }
