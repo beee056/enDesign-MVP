@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0v48" fill="none" stroke="#10b981" stroke-opacity=".09" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="emerald" cx="75%" cy="25%" r="45%">
+      <stop offset="0" stop-color="#bbf7d0" stop-opacity=".70"/>
+      <stop offset=".58" stop-color="#ecfdf5" stop-opacity=".26"/>
+      <stop offset="1" stop-color="#f8fafc" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="sky" cx="15%" cy="82%" r="38%">
+      <stop offset="0" stop-color="#bae6fd" stop-opacity=".55"/>
+      <stop offset=".62" stop-color="#eff6ff" stop-opacity=".20"/>
+      <stop offset="1" stop-color="#f8fafc" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="#f8fafc"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <rect width="1600" height="900" fill="url(#emerald)"/>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M1050 620c70-44 132-26 184-64 50-37 63-110 121-128 34-11 66 4 92 23" stroke="#10b981" stroke-opacity=".18" stroke-width="9"/>
+    <path d="M110 262c88-50 168-50 239 0 42 29 86 41 133 34" stroke="#0f172a" stroke-opacity=".08" stroke-width="7"/>
+  </g>
+  <g fill="#10b981" opacity=".12">
+    <circle cx="1295" cy="238" r="14"/>
+    <circle cx="1343" cy="238" r="14"/>
+    <circle cx="1391" cy="238" r="14"/>
+    <circle cx="1295" cy="286" r="14"/>
+    <circle cx="1343" cy="286" r="14"/>
+    <circle cx="1391" cy="286" r="14"/>
+  </g>
+</svg>

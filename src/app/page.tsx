@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { motion, MotionConfig } from "framer-motion";
 import type { Variants } from "framer-motion";
@@ -61,8 +62,8 @@ export default function Home() {
       {/* Header (Glassmorphism) */}
       <header className="px-4 lg:px-8 h-16 flex items-center bg-white/85 backdrop-blur-xl sticky top-0 z-50 border-b border-slate-200/70 shadow-[0_8px_30px_rgba(15,23,42,0.04)]">
         <Link className="flex items-center justify-center transition-opacity hover:opacity-80" href="/">
-          <div className="bg-gradient-to-br from-primary to-blue-500 p-2 rounded-xl mr-2 shadow-sm">
-            <HeartHandshake className="h-5 w-5 text-white" />
+          <div className="mr-2 flex h-9 w-9 items-center justify-center rounded-xl bg-slate-950 shadow-sm">
+            <Image src="/brand/en-symbol.svg" alt="" width={28} height={28} className="h-7 w-7" priority />
           </div>
           <span className="font-extrabold text-xl tracking-tight text-slate-900">enDesign</span>
         </Link>
@@ -88,7 +89,8 @@ export default function Home() {
         
         {/* Hero Section (Diagnosis paper mockup) */}
         <section className="w-full overflow-hidden border-b border-slate-200/70 bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_72%,#f8fafc_100%)] pt-20 pb-16 md:pt-28 md:pb-24 lg:pt-36 lg:pb-28 relative">
-          <div className="absolute inset-0 paper-grid opacity-70" aria-hidden="true" />
+          <div className="absolute inset-0 bg-cover bg-center opacity-95" style={{ backgroundImage: "url('/brand/hero-background.svg')" }} aria-hidden="true" />
+          <div className="absolute inset-0 paper-grid opacity-45" aria-hidden="true" />
           <div className="absolute -right-20 top-20 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl" aria-hidden="true" />
           <div className="absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-sky-100/80 blur-3xl" aria-hidden="true" />
           <div className="container px-4 md:px-6 relative z-10 mx-auto max-w-6xl">
@@ -146,6 +148,14 @@ export default function Home() {
 
               <motion.div variants={fadeIn} className="relative">
                 <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-emerald-200/50 via-white to-sky-100/70 blur-2xl" aria-hidden="true" />
+                <Image
+                  src="/brand/hero-illustration.svg"
+                  alt=""
+                  width={360}
+                  height={210}
+                  className="pointer-events-none relative z-20 mx-auto mb-5 hidden w-64 drop-shadow-xl md:block lg:absolute lg:-right-10 lg:-top-24 lg:mb-0 lg:w-72"
+                  priority
+                />
                 <div className="diagnosis-paper relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_30px_80px_-45px_rgba(15,23,42,0.8)]">
                   <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50/90 px-5 py-4">
                     <div>
@@ -404,6 +414,9 @@ export default function Home() {
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-slate-900">{work.name}</h3>
                   <p className="text-slate-500 text-sm leading-relaxed font-medium flex-1">{work.desc}</p>
+                  <span className="mt-5 block break-all rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-[11px] font-semibold text-slate-500">
+                    {work.url.replace("https://", "")}
+                  </span>
                   <span className="mt-6 inline-flex items-center text-sm font-bold text-primary">
                     サイトを見る
                     <ExternalLink className="ml-1.5 h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -581,7 +594,7 @@ export default function Home() {
       <footer className="py-10 w-full bg-white border-t border-slate-100">
         <div className="container mx-auto px-4 md:px-6 flex flex-col sm:flex-row items-center justify-between">
           <div className="flex items-center mb-6 sm:mb-0">
-            <HeartHandshake className="h-5 w-5 text-primary mr-2" />
+            <Image src="/brand/en-symbol.svg" alt="" width={22} height={22} className="mr-2 h-5 w-5 rounded-md" />
             <span className="font-extrabold text-slate-900 text-lg">enDesign</span>
             <span className="ml-4 text-xs font-medium text-slate-400">
               © 2026 enDesign. All rights reserved.

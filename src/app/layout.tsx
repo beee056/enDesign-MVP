@@ -28,6 +28,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "1024x1024" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", type: "image/png", sizes: "180x180" },
+    ],
+  },
   openGraph: {
     title: "enDesign｜地域事業者のための無料Web診断・ホームページ制作",
     description: "自分でできることは無料で。一人では不安なところだけ、低価格で一緒に整えます。",
@@ -43,6 +52,12 @@ export const metadata: Metadata = {
     ],
     locale: "ja_JP",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "enDesign｜地域事業者のための無料Web診断・ホームページ制作",
+    description: "無料診断から、5万円〜の明朗会計ホームページ制作へ。",
+    images: ["/twitter-image.png"],
   },
 };
 

@@ -217,6 +217,13 @@
   - 左: 強いヒーローコピー。
   - 右: 診断スコア、改善チェック、次の一手を見せる紙面UI。
   - 背景に淡い方眼紙グリッドを入れ、診断カルテ感を強化。
+- 仮ブランド画像を追加・接続。
+  - `public/brand/hero-background.svg`
+  - `public/brand/hero-illustration.svg`（後から正式イラストに差し替える想定）
+  - `public/brand/en-symbol.svg`
+  - `src/app/favicon.ico` / `icon.png` / `apple-icon.png` / `opengraph-image.png` / `twitter-image.png`
+  - 生成元: `scripts/generate-brand-assets.mjs`
+- 制作実績カードにURL文字列を明示表示。以前もカード全体はリンクだったが、URLが見えず掲載されていないように見えた。
 - LPに「速さはAIに。最後の判断は、人に。」セクションを追加。
   - 無料診断 → AI下書き → 人が仕上げる、の3工程を視覚化。
 - `src/components/check/DiagnosisForm.tsx` に診断フォームのローカル途中保存を追加。
@@ -235,6 +242,7 @@
   - `npm run build` 成功。
   - `git diff --check` 成功。
   - 127.0.0.1:3100 のローカル本番起動でLP表示確認。ブラウザconsoleエラーなし。
+  - 画像アセット `/favicon.ico` `/icon.png` `/apple-icon.png` `/opengraph-image.png` `/twitter-image.png` `/brand/*` のHTTP 200確認。
 - 既知警告:
   - Next.jsが複数lockfileによりworkspace root推定警告を出す。
   - `middleware` file convention deprecated。Next 16系では将来 `proxy` 移行が必要。

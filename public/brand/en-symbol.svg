@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">enDesign symbol</title>
+  <desc id="desc">A rounded emerald check mark and heart-shaped connection mark for enDesign.</desc>
+  <defs>
+    <linearGradient id="g" x1="42" y1="34" x2="214" y2="222" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#34d399"/>
+      <stop offset="0.55" stop-color="#10b981"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0f172a" flood-opacity=".20"/>
+    </filter>
+  </defs>
+  <rect width="256" height="256" rx="64" fill="#0f172a"/>
+  <rect x="18" y="18" width="220" height="220" rx="54" fill="url(#g)" filter="url(#shadow)"/>
+  <path fill="#fff" fill-rule="evenodd" d="M86.8 82.4c-19.1 0-34.6 15.5-34.6 34.6 0 38.3 53.3 62.2 73.6 77.4a8 8 0 0 0 9.6 0c20.3-15.2 73.6-39.1 73.6-77.4 0-19.1-15.5-34.6-34.6-34.6-16 0-27.2 9.2-35.4 20.2-3.6 4.8-10.8 4.8-14.4 0-8.2-11-19.4-20.2-37.8-20.2Zm73.7 35.9a11.8 11.8 0 0 1 16.7 16.7l-46.5 46.5a11.8 11.8 0 0 1-16.7 0l-26.7-26.7a11.8 11.8 0 1 1 16.7-16.7l18.4 18.4 38.1-38.2Z" opacity=".96"/>
+  <path fill="#0f172a" d="M77 109h34v10H77zm0 28h24v10H77zm82-28h21v10h-21z" opacity=".14"/>
+</svg>
