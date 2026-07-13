@@ -1,11 +1,14 @@
 "use server";
 
 import { db } from "@/db";
-import { businesses, diagnoses, aiOutputs } from "@/db/schema";
+import { businesses, diagnoses, aiOutputs, tenants } from "@/db/schema";
 import { diagnosisSchema, type DiagnosisInput } from "@/lib/validations/diagnosis";
 import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
+
+// 無料診断はログイン不要のため、ゲスト用の固定テナントに紐づける。
+const GUEST_TENANT_ID = "00000000-0000-0000-0000-000000000000";
 
 export async function submitDiagnosis(data: DiagnosisInput) {
   try {
@@ -15,9 +18,22 @@ export async function submitDiagnosis(data: DiagnosisInput) {
       throw new Error("Invalid form data");
     }
 
+    // 0. ゲストテナントを冪等に用意(存在しなければ作成)。
+    //    businesses.tenant_id は tenants への外部キー(NOT NULL)のため、
+    //    これが無いと business の INSERT が外部キー違反で失敗する。
+    await db
+      .insert(tenants)
+      .values({
+        id: GUEST_TENANT_ID,
+        name: "ゲスト診断",
+        slug: "guest",
+        ownerUserId: "system",
+      })
+      .onConflictDoNothing();
+
     // 1. ビジネス情報の保存
     const [business] = await db.insert(businesses).values({
-      tenantId: "00000000-0000-0000-0000-000000000000", // guest tenant (dummy for MVP) or handle properly
+      tenantId: GUEST_TENANT_ID, // ゲスト診断用の固定テナント
       name: data.businessName,
       ownerName: data.contactName,
       email: data.email,
