@@ -21,11 +21,11 @@ export default function LegalPage() {
               <tbody>
                 <tr className="border-b border-slate-200">
                   <th className="py-4 px-4 bg-slate-50 w-1/3 font-semibold text-slate-900">販売事業者名</th>
-                  <td className="py-4 px-4">enDesign（エンデザイン）</td>
+                  <td className="py-4 px-4">株式会社PIVOT&amp;QUEST（サービス名: enDesign）</td>
                 </tr>
                 <tr className="border-b border-slate-200">
                   <th className="py-4 px-4 bg-slate-50 font-semibold text-slate-900">代表責任者名</th>
-                  <td className="py-4 px-4">田邊 勇人</td>
+                  <td className="py-4 px-4">田邊 勇人（代表取締役）</td>
                 </tr>
                 <tr className="border-b border-slate-200">
                   <th className="py-4 px-4 bg-slate-50 font-semibold text-slate-900">所在地</th>
