@@ -1,12 +1,20 @@
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { LayoutDashboard, Users, FileText, Settings, HeartHandshake } from "lucide-react";
+import { isAdminUser } from "@/lib/auth/admin";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // 認可ガード: ログイン済みでも管理者(ADMIN_EMAILS)でなければ管理画面に入れない。
+  // middleware は認証(ログイン)のみを担保するため、権限チェックはここで行う。
+  if (!(await isAdminUser())) {
+    redirect("/");
+  }
+
   return (
     <div className="flex min-h-screen bg-slate-50">
       {/* サイドバー */}
