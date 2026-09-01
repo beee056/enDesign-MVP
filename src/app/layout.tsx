@@ -73,18 +73,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <ClerkProvider localization={jaJP}>
-      <html
-        lang="ja"
-        className={`${inter.variable} ${notoSansJP.variable} ${notoSerifJP.variable} h-full antialiased`}
-        style={{ fontFamily: "var(--font-inter), var(--font-noto-sans-jp), ui-sans-serif, system-ui, sans-serif" }}
-      >
-        <body className="min-h-full flex flex-col">
-          {children}
-          <Analytics />
-        </body>
-      </html>
-    </ClerkProvider>
+  const document = (
+    <html
+      lang="ja"
+      className={`${inter.variable} ${notoSansJP.variable} ${notoSerifJP.variable} h-full antialiased`}
+      style={{ fontFamily: "var(--font-inter), var(--font-noto-sans-jp), ui-sans-serif, system-ui, sans-serif" }}
+    >
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Analytics />
+      </body>
+    </html>
   );
+
+  if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) return document;
+
+  return <ClerkProvider localization={jaJP}>{document}</ClerkProvider>;
 }
