@@ -379,7 +379,7 @@ export function DiagnosisForm() {
                 <FormField control={form.control} name="budget" render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-xs font-medium text-[#475569]">想定のご予算感 <span className="text-[#94a3b8]">任意</span></FormLabel>
-                    <FormControl><Input placeholder="例：なるべく0円で、5万円まで 等" {...field} className="bg-white border-[#e2e8f0] text-sm h-9" /></FormControl>
+                    <FormControl><Input placeholder="例：基本制作の範囲で、オプションも相談したい 等" {...field} className="bg-white border-[#e2e8f0] text-sm h-9" /></FormControl>
                   </FormItem>
                 )} />
                 <FormField control={form.control} name="referralCode" render={({ field }) => (

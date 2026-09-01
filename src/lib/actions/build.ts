@@ -15,9 +15,7 @@ export async function submitBuild(data: BuildInput) {
   const input = parsed.data;
 
   // 1. Determine block limit based on plan
-  let blockLimit = 6;
-  if (input.planId === "plus") blockLimit = 10;
-  if (input.planId === "max") blockLimit = 12;
+  const blockLimit = 12;
 
   // 2. Generate site structure via AI
   const promptText = `

@@ -64,7 +64,7 @@ export function BuildForm() {
       <CardHeader>
         <CardTitle>サイト制作お申し込み</CardTitle>
         <CardDescription>
-          入力いただいた内容をもとに、AIがサイト構成と文章のベースを7〜8割自動生成します。
+          入力内容と事前調査をもとに、LPの構成・文章・デザイン案を作成します。AIによる整理後、公開前に人が確認します。
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -82,21 +82,21 @@ export function BuildForm() {
                     className="grid grid-cols-1 md:grid-cols-3 gap-4"
                   >
                     <FormItem className="flex items-center space-x-3 space-y-0 p-4 border rounded-md">
-                      <FormControl><RadioGroupItem value="mini" /></FormControl>
+                      <FormControl><RadioGroupItem value="standard" /></FormControl>
                       <FormLabel className="font-normal cursor-pointer">
-                        Mini Fix (¥30,000)<br/><span className="text-sm text-muted-foreground">1テーマ改善</span>
+                        基本LP制作 (¥150,000・税別)<br/><span className="text-sm text-muted-foreground">調査・設計・実装・修正1回</span>
                       </FormLabel>
                     </FormItem>
                     <FormItem className="flex items-center space-x-3 space-y-0 p-4 border rounded-md bg-primary/5">
-                      <FormControl><RadioGroupItem value="standard" /></FormControl>
+                      <FormControl><RadioGroupItem value="case-public" /></FormControl>
                       <FormLabel className="font-normal cursor-pointer">
-                        Standard Build (¥50,000)<br/><span className="text-sm text-muted-foreground">1ページ / 6ブロック</span>
+                        事例公開協力 (¥110,000・税別)<br/><span className="text-sm text-muted-foreground">制作事例として公開許可をいただける場合</span>
                       </FormLabel>
                     </FormItem>
                     <FormItem className="flex items-center space-x-3 space-y-0 p-4 border rounded-md">
-                      <FormControl><RadioGroupItem value="plus" /></FormControl>
+                      <FormControl><RadioGroupItem value="custom" /></FormControl>
                       <FormLabel className="font-normal cursor-pointer">
-                        Plus Build (¥80,000)<br/><span className="text-sm text-muted-foreground">2ページ / 10ブロック</span>
+                        オプション相談 (別途見積り)<br/><span className="text-sm text-muted-foreground">ページ追加・機能追加など</span>
                       </FormLabel>
                     </FormItem>
                   </RadioGroup>

@@ -1,613 +1,292 @@
-"use client";
-
-import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { motion, MotionConfig } from "framer-motion";
-import type { Variants } from "framer-motion";
-import { track } from "@vercel/analytics";
-import { 
-  ArrowRight, 
-  CheckCircle2, 
-  Sparkles, 
-  MessageSquare, 
-  Gift, 
-  MapPin, 
-  ClipboardList, 
-  Building2, 
-  Scissors, 
-  GraduationCap, 
-  Utensils, 
-  Tractor, 
-  Wrench,
+import Link from "next/link";
+import {
+  ArrowRight,
+  Check,
+  ChevronRight,
+  CircleCheck,
+  FileSearch,
+  HandHeart,
+  MapPinned,
+  MessageCircleMore,
+  MonitorSmartphone,
+  Paintbrush,
+  PenTool,
   Search,
-  HeartHandshake,
-  ExternalLink
+  ShieldCheck,
+  Sparkles,
 } from "lucide-react";
+import { TrackedLink } from "@/components/landing/TrackedLink";
+import styles from "./home.module.css";
 
-const fadeIn: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-};
+const researchLenses = [
+  {
+    icon: MapPinned,
+    number: "01",
+    title: "見つける",
+    lead: "Googleマップだけでは終わらない。",
+    body: "検索・SNS・ポータル・口コミを横断し、基本情報、実写真、顧客の言葉、店主のこだわりを集めます。",
+    tags: ["Googleマップ", "SNS", "口コミ", "検索"],
+  },
+  {
+    icon: FileSearch,
+    number: "02",
+    title: "読み解く",
+    lead: "強みを、載せる順番まで決める。",
+    body: "店主の言葉と口コミが一致する点を核に、競合との差、創出価値、欠けている情報、CTAを診断します。",
+    tags: ["特徴・こだわり", "差別化", "顧客価値", "CTA"],
+  },
+  {
+    icon: PenTool,
+    number: "03",
+    title: "先に見せる",
+    lead: "話す前に、試作で伝える。",
+    body: "調査結果をもとに営業提案用LPを制作。抽象的な提案書ではなく、その事業者らしい画面を見ながら話せます。",
+    tags: ["LP戦略", "デザイン", "実装", "試作公開"],
+  },
+];
 
-const staggerContainer: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
+const deliverables = [
+  "公開情報の横断調査・競合比較",
+  "訴求設計・ページ構成・文章整理",
+  "オリジナルLPデザインと実装",
+  "PC・タブレット・スマートフォン対応",
+  "問い合わせ導線・Googleマップ・SNS連携",
+  "ファビコン・OGP・基本SEO設定",
+  "人が描く温かみのあるイラスト",
+  "公開前確認と修正1回",
+];
+
+const workflow = [
+  ["01", "調査", "口コミ・検索・SNS・競合から、伝えるべき事実を集めます。"],
+  ["02", "診断", "強み、差別化、顧客価値、情報不足、CTAを整理します。"],
+  ["03", "試作", "事業者ごとの言葉と空気に合わせ、LPの完成像を作ります。"],
+  ["04", "対話", "試作を見ながら、事実確認と必要素材のすり合わせを行います。"],
+  ["05", "本制作", "いただいた写真と手描きイラストを反映し、公開品質に仕上げます。"],
+  ["06", "公開・保守", "表示・導線を確認して公開。必要に応じて継続保守します。"],
+];
+
+const faqs = [
+  ["写真が手元に少なくても依頼できますか？", "試作段階は公開情報と差し替え前提の枠で構成できます。本制作では、事業者ご本人から実際の写真をご提供いただきます。"],
+  ["AIだけで制作するサービスですか？", "いいえ。調査・整理・試作の効率化にはAIを使いますが、事実確認、訴求判断、デザイン品質、公開判断は人が行います。最終イラストも人が描きます。"],
+  ["公開後の修正はできますか？", "制作料金には公開前の修正1回が含まれます。公開後の大幅な追加・改修は別途お見積り、軽微な保守は月額保守の範囲で対応します。"],
+  ["納期はどのくらいですか？", "必要な写真・原稿確認事項などが揃ってから、1か月程度が目安です。内容や追加オプションにより変動する場合は事前にお伝えします。"],
+];
 
 export default function Home() {
-  return (
-    <MotionConfig reducedMotion="user">
-    <div className="flex flex-col min-h-screen bg-[#FAFAFA] text-slate-800 font-sans selection:bg-primary/20">
-      
-      {/* JSON-LD 構造化データ (Client Component内でもNext.jsのSSR時にレンダリングされます) */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "enDesign",
-            "url": "https://en-design-mvp.vercel.app",
-            "logo": "https://en-design-mvp.vercel.app/logo.png",
-            "description": "地域小規模事業者向けの無料Web診断と5万円からのホームページ制作サービス",
-          })
-            .replace(/</g, "\\u003c")
-        }}
-      />
+  const organizationJsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: "enDesign",
+    url: "https://en-design-mvp.vercel.app",
+    description:
+      "公開情報の横断調査から、事業者らしさが伝わるランディングページの試作・制作・公開までを支援するWeb制作サービス。",
+    areaServed: "Japan",
+  }).replace(/</g, "\\u003c");
 
-      {/* Header (Glassmorphism) */}
-      <header className="px-4 lg:px-8 h-16 flex items-center bg-white/85 backdrop-blur-xl sticky top-0 z-50 border-b border-slate-200/70 shadow-[0_8px_30px_rgba(15,23,42,0.04)]">
-        <Link className="flex items-center justify-center transition-opacity hover:opacity-80" href="/">
-          <div className="mr-2 flex h-9 w-9 items-center justify-center rounded-xl bg-slate-950 shadow-sm">
-            <Image src="/brand/en-symbol.svg" alt="" width={28} height={28} className="h-7 w-7" priority />
-          </div>
-          <span className="font-extrabold text-xl tracking-tight text-slate-900">enDesign</span>
+  return (
+    <div className={styles.page}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: organizationJsonLd }} />
+
+      <div className={styles.notice}>
+        <span>GOOD WORK DESERVES TO BE SEEN</span>
+        <p>口コミや実力はあるのに、Webで伝わりきっていない事業者へ。</p>
+      </div>
+
+      <header className={styles.header}>
+        <Link href="/" className={styles.logo} aria-label="enDesign トップページ">
+          <span className={styles.logoMark}>en</span>
+          <span>
+            <strong>enDesign</strong>
+            <small>RESEARCH × DESIGN × HUMAN TOUCH</small>
+          </span>
         </Link>
-        <nav className="ml-auto hidden md:flex gap-8">
-          <Link className="text-sm font-bold text-slate-600 hover:text-primary transition-colors" href="#features">選ばれる理由</Link>
-          <Link className="text-sm font-bold text-slate-600 hover:text-primary transition-colors" href="#free-value">無料でできること</Link>
-          <Link className="text-sm font-bold text-slate-600 hover:text-primary transition-colors" href="#works">制作実績</Link>
-          <Link className="text-sm font-bold text-slate-600 hover:text-primary transition-colors" href="#pricing">料金プラン</Link>
+        <nav className={styles.nav} aria-label="メインナビゲーション">
+          <Link href="#method">私たちの方法</Link>
+          <Link href="#case">制作事例</Link>
+          <Link href="#price">料金</Link>
+          <Link href="#flow">制作の流れ</Link>
         </nav>
-        <div className="ml-auto md:ml-8 flex items-center gap-4">
-          <Link href="/admin" className="text-sm font-bold text-slate-600 hover:text-primary transition-colors hidden sm:block">
-            ログイン
-          </Link>
-          <Link href="/check" onClick={() => track("diagnosis_cta_clicked", { location: "header" })}>
-            <Button size="sm" className="rounded-full px-6 shadow-md hover:shadow-lg transition-all bg-slate-900 text-white hover:bg-slate-800">
-              無料Web診断
-            </Button>
-          </Link>
-        </div>
+        <TrackedLink href="/check" location="header" className={styles.headerCta}>
+          無料診断を依頼する <ArrowRight aria-hidden="true" />
+        </TrackedLink>
       </header>
 
-      <main className="flex-1">
-        
-        {/* Hero Section (Diagnosis paper mockup) */}
-        <section className="w-full overflow-hidden border-b border-slate-200/70 bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_72%,#f8fafc_100%)] pt-20 pb-16 md:pt-28 md:pb-24 lg:pt-36 lg:pb-28 relative">
-          <div className="absolute inset-0 bg-cover bg-center opacity-95" style={{ backgroundImage: "url('/brand/hero-background.svg')" }} aria-hidden="true" />
-          <div className="absolute inset-0 paper-grid opacity-45" aria-hidden="true" />
-          <div className="absolute -right-20 top-20 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl" aria-hidden="true" />
-          <div className="absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-sky-100/80 blur-3xl" aria-hidden="true" />
-          <div className="container px-4 md:px-6 relative z-10 mx-auto max-w-6xl">
-            <motion.div 
-              initial="hidden" 
-              animate="visible" 
-              variants={staggerContainer}
-              className="grid gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:items-center"
-            >
-              <motion.div variants={fadeIn} className="space-y-7 text-center lg:text-left">
-                <div className="inline-flex items-center rounded-full border border-emerald-200 bg-white/80 px-4 py-1.5 text-sm font-bold text-primary shadow-sm">
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  無料診断 → AI下書き → 人が仕上げる
-                </div>
-                <h1 className="text-5xl font-extrabold tracking-[-0.055em] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.03] text-slate-950">
-                  いい仕事が、<br />
-                  <span className="text-gradient">ちゃんと届くように。</span>
-                </h1>
-                <p className="mx-auto max-w-[760px] text-slate-600 md:text-xl leading-relaxed font-medium lg:mx-0">
-                  Webに詳しくない地域事業者のための、無料Web診断と5万円からのホームページ制作。<br className="hidden md:block" />
-                  自分でできることは無料で。一人では不安なところだけ、低価格で一緒に整えます。
-                </p>
-
-                <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
-                  <Link
-                    href="/check"
-                    className="w-full sm:w-auto"
-                    onClick={() => track("diagnosis_cta_clicked", { location: "hero" })}
-                  >
-                    <Button size="lg" className="w-full text-base h-14 px-8 rounded-full shadow-[0_18px_45px_-22px_rgba(15,23,42,0.8)] hover:shadow-[0_22px_55px_-24px_rgba(15,23,42,0.9)] transition-all hover:-translate-y-1 bg-slate-950 text-white hover:bg-slate-800 group">
-                      無料Web診断をはじめる
-                      <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  </Link>
-                  <Link href="#pricing" className="w-full sm:w-auto">
-                    <Button size="lg" variant="outline" className="w-full text-base h-14 px-8 rounded-full bg-white/80 hover:bg-white transition-all border-slate-200">
-                      料金を見る
-                    </Button>
-                  </Link>
-                </div>
-
-                <dl className="grid grid-cols-3 gap-px overflow-hidden rounded-3xl border border-slate-200 bg-slate-200 text-left shadow-sm">
-                  {[
-                    ["0円", "診断だけOK"],
-                    ["5万円〜", "明朗会計"],
-                    ["月額なし", "不要な固定費なし"],
-                  ].map(([value, label]) => (
-                    <div key={label} className="bg-white/90 p-4 md:p-5">
-                      <dt className="text-lg font-extrabold tracking-tight text-slate-950 md:text-2xl">{value}</dt>
-                      <dd className="mt-1 text-xs font-bold text-slate-500 md:text-sm">{label}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </motion.div>
-
-              <motion.div variants={fadeIn} className="relative">
-                <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-emerald-200/50 via-white to-sky-100/70 blur-2xl" aria-hidden="true" />
-                <Image
-                  src="/brand/hero-illustration.svg"
-                  alt=""
-                  width={360}
-                  height={210}
-                  className="pointer-events-none relative z-20 mx-auto mb-5 hidden w-64 drop-shadow-xl md:block lg:absolute lg:-right-10 lg:-top-24 lg:mb-0 lg:w-72"
-                  priority
-                />
-                <div className="diagnosis-paper relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_30px_80px_-45px_rgba(15,23,42,0.8)]">
-                  <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50/90 px-5 py-4">
-                    <div>
-                      <p className="text-xs font-bold tracking-[0.18em] text-primary">FREE CHECK</p>
-                      <p className="mt-1 text-sm font-extrabold text-slate-900">無料Web診断カルテ</p>
-                    </div>
-                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">途中保存OK</span>
-                  </div>
-
-                  <div className="p-5 md:p-6">
-                    <div className="grid gap-4 rounded-3xl bg-slate-950 p-5 text-white">
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="text-xs font-bold text-slate-400">診断サマリー</p>
-                          <p className="mt-2 text-2xl font-extrabold tracking-tight">問い合わせ導線を先に整理</p>
-                        </div>
-                        <div className="rounded-2xl bg-white/10 px-4 py-3 text-center">
-                          <p className="text-[10px] font-bold tracking-[0.16em] text-slate-400">SCORE</p>
-                          <p className="text-3xl font-extrabold text-primary">72</p>
-                        </div>
-                      </div>
-                      <div className="h-2 overflow-hidden rounded-full bg-white/10">
-                        <div className="h-full w-[72%] rounded-full bg-primary" />
-                      </div>
-                    </div>
-
-                    <div className="mt-5 grid gap-3">
-                      {[
-                        ["Googleマップ", "店舗情報と写真を更新", "自分で直せる"],
-                        ["ファーストビュー", "料金・対象者を上部に追加", "制作で対応"],
-                        ["問い合わせ導線", "LINE/電話/フォームを一本化", "優先度高"],
-                      ].map(([title, desc, tag]) => (
-                        <div key={title} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white/85 p-4">
-                          <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-50">
-                            <CheckCircle2 className="h-4 w-4 text-primary" aria-hidden="true" />
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <div className="flex flex-wrap items-center gap-2">
-                              <p className="text-sm font-extrabold text-slate-900">{title}</p>
-                              <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-600">{tag}</span>
-                            </div>
-                            <p className="mt-1 text-xs font-medium leading-relaxed text-slate-500">{desc}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-5 rounded-3xl border border-emerald-200 bg-emerald-50 p-4">
-                      <p className="text-xs font-bold tracking-[0.16em] text-emerald-700">NEXT STEP</p>
-                      <p className="mt-2 text-sm font-bold leading-relaxed text-slate-900">
-                        まず無料診断で「自分で直すこと」と「任せること」を分けましょう。
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Features Section (Glassmorphism & Stagger) */}
-        <section id="features" className="w-full py-24 lg:py-32 bg-white relative">
-          <div className="container px-4 md:px-6 mx-auto max-w-6xl">
-            <motion.div 
-              initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
-              variants={fadeIn}
-              className="text-center mb-20"
-            >
-              <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl text-slate-900">enDesignが選ばれる理由</h2>
-              <p className="mt-6 text-slate-500 md:text-lg max-w-2xl mx-auto font-medium">
-                丸投げでも、自作でもない。一緒に伴走する「ちょうどいい」距離感。
-              </p>
-            </motion.div>
-            
-            <motion.div 
-              initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
-              variants={staggerContainer}
-              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-            >
-              {[
-                { icon: Search, title: "無料でWebの「もったいない」が分かる", desc: "まずは無料診断で、現在の課題を可視化します。" },
-                { icon: ClipboardList, title: "自分で直せる手順まで見える", desc: "診断結果をもとに、優先順位を整理。自分でできることはご自身で。" },
-                { icon: HeartHandshake, title: "5万円から一緒に作れる", desc: "不安な部分だけをプロにお任せ。明朗会計で安心です。" },
-                { icon: CheckCircle2, title: "月額で縛らない", desc: "高額なリース契約や不要な月額保守費用は一切いただきません。" },
-                { icon: Sparkles, title: "AIで下書き、人が仕上げる", desc: "AIで効率化しつつ、最後の言葉・写真・導線は人が丁寧に仕上げます。" },
-                { icon: Gift, title: "紹介クレジット", desc: "紹介した方にもされた方にもお得なクレジット制度をご用意。" },
-              ].map((feature, i) => (
-                <motion.div key={i} variants={fadeIn} className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="flex flex-col items-start p-8 rounded-3xl glass-card relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
-                    <div className="p-4 bg-gradient-to-br from-slate-100 to-white rounded-2xl shadow-inner border border-slate-100 mb-6 group-hover:scale-110 transition-transform duration-300">
-                      <feature.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <h3 className="text-xl font-bold mb-3 text-slate-900">{feature.title}</h3>
-                    <p className="text-slate-500 text-sm leading-relaxed font-medium">{feature.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Human-in-the-loop process */}
-        <section className="w-full border-y border-slate-200 bg-slate-950 py-24 text-white lg:py-32">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeIn}
-              className="max-w-3xl"
-            >
-              <p className="text-sm font-bold tracking-[0.18em] text-primary">HOW WE BUILD</p>
-              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
-                速さはAIに。<br />
-                最後の判断は、人に。
-              </h2>
-              <p className="mt-6 max-w-2xl text-base font-medium leading-relaxed text-slate-400 md:text-lg">
-                AIに全部を任せて公開するのではなく、整理と下書きに活用します。お客様に伝わる言葉と導線は、人が確認して仕上げます。
-              </p>
-            </motion.div>
-
-            <motion.ol
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              variants={staggerContainer}
-              className="mt-16 grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 md:grid-cols-3"
-            >
-              {[
-                {
-                  step: "01",
-                  icon: Search,
-                  title: "無料診断で整理",
-                  desc: "いま困っていることと、優先して直す場所を言葉にします。",
-                },
-                {
-                  step: "02",
-                  icon: Sparkles,
-                  title: "AIで下書き",
-                  desc: "診断内容をもとに、サイト構成と文章のたたき台を素早く作ります。",
-                },
-                {
-                  step: "03",
-                  icon: HeartHandshake,
-                  title: "人が仕上げる",
-                  desc: "言葉の温度、写真の見せ方、問い合わせまでの導線を確認します。",
-                },
-              ].map((item) => (
-                <motion.li key={item.step} variants={fadeIn} className="relative bg-slate-950 p-8 md:p-10">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-bold tracking-[0.2em] text-slate-600">{item.step}</span>
-                    <item.icon className="h-5 w-5 text-primary" aria-hidden="true" />
-                  </div>
-                  <h3 className="mt-10 text-xl font-bold text-white">{item.title}</h3>
-                  <p className="mt-3 text-sm font-medium leading-relaxed text-slate-400">{item.desc}</p>
-                </motion.li>
-              ))}
-            </motion.ol>
-          </div>
-        </section>
-
-        {/* Support & Community */}
-        <section id="free-value" className="w-full scroll-mt-16 py-24 bg-slate-50 border-y border-slate-200/50">
-          <div className="container px-4 md:px-6 mx-auto max-w-5xl">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeIn}
-              className="text-center mb-16"
-            >
-              <p className="text-sm font-bold tracking-[0.18em] text-primary">FREE SUPPORT</p>
-              <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl text-slate-900">
-                まずは無料の範囲で、課題を整理。
-              </h2>
-              <p className="mt-6 text-slate-500 md:text-lg max-w-2xl mx-auto font-medium">
-                相談や診断だけでも大丈夫です。自分で直せることと、手を借りたいことを分けられます。
-              </p>
-            </motion.div>
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="space-y-6">
-                <div className="inline-flex items-center p-2 bg-white rounded-xl shadow-sm border border-slate-100 mb-2">
-                  <MessageSquare className="h-5 w-5 text-primary mr-3" />
-                  <span className="font-bold text-slate-900 text-sm">無料チャット相談 ＆ FAQ蓄積</span>
-                </div>
-                <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl text-slate-900 leading-tight">
-                  困ったことは、<br/>まずチャットで。
-                </h2>
-                <p className="text-slate-500 leading-relaxed font-medium">
-                  「これってどうすればいいの？」というご相談や案内は<strong>完全無料</strong>で対応いたします。（※実作業が発生する場合は有料となります）
-                </p>
-                <p className="text-slate-500 leading-relaxed font-medium">
-                  また、皆様からいただいた「よくある質問」はFAQとして蓄積され、次に困っている同じ地域事業者の助けになります。
-                </p>
-              </motion.div>
-              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="space-y-6">
-                <div className="inline-flex items-center p-2 bg-white rounded-xl shadow-sm border border-slate-100 mb-2">
-                  <Gift className="h-5 w-5 text-blue-500 mr-3" />
-                  <span className="font-bold text-slate-900 text-sm">紹介クレジット制度</span>
-                </div>
-                <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl text-slate-900 leading-tight">
-                  助け合いが、<br/>お得に繋がる。
-                </h2>
-                <p className="text-slate-500 leading-relaxed font-medium">
-                  知人をご紹介いただき、その方が購入された場合に限り「紹介成立」となります。<br />
-                  紹介してくださった方には、enDesign内で使える<strong>紹介クレジットを付与</strong>。
-                </p>
-                <p className="text-slate-500 leading-relaxed font-medium">
-                  このクレジットはご自身のサイト改修に使っても良し、他の方へのプレゼントにしても良し。地域の輪を広げます。
-                </p>
-              </motion.div>
+      <main>
+        <section className={styles.hero}>
+          <div className={styles.heroCopy}>
+            <div className={styles.heroLabel}>
+              <span>WEB PRODUCTION FOR GOOD BUSINESSES</span>
+              <span>つくば発・全国対応</span>
             </div>
-          </div>
-        </section>
-
-        {/* Works Section */}
-        <section id="works" className="w-full scroll-mt-16 py-24 lg:py-32 bg-white relative">
-          <div className="container px-4 md:px-6 mx-auto max-w-6xl">
-            <motion.div
-              initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
-              variants={fadeIn}
-              className="text-center mb-20"
-            >
-              <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl text-slate-900">制作実績</h2>
-              <p className="mt-6 text-slate-500 md:text-lg max-w-2xl mx-auto font-medium">
-                幅広い業種のWebサイト・LPを制作しています。実際の制作事例をご覧ください。
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
-              variants={staggerContainer}
-              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-            >
-              {[
-                { name: "PIVOT&QUEST", type: "コーポレートサイト", industry: "教育支援", desc: "理念から事業実績まで、論理的な構成で信頼を伝えるコーポレートサイト。", url: "https://p-quest.com/" },
-                { name: "LIGHTHOUSE", type: "ランディングページ", industry: "学習塾", desc: "合格者の声と実績数で説得力を持たせた、無料診断ツール付きの塾LP。", url: "https://lp.p-quest.com/" },
-                { name: "BizDex", type: "ポータルサイト", industry: "人材・キャリア", desc: "年収データを3Dマップで可視化する、データ活用型のキャリア支援ポータル。", url: "https://bizdex.p-quest.com/" },
-                { name: "第一モンゴル観光", type: "ランディングページ", industry: "旅行・ツアー", desc: "大自然の開放感を大型ビジュアルで訴求する、ツアー予約向けLP。", url: "https://mongol.p-quest.com/" },
-                { name: "nicoas", type: "ランディングページ", industry: "学習塾", desc: "親しみやすいブランドカラーで個性を表現した、コーチング塾のLP。", url: "https://nicoas.p-quest.com/" },
-                // 将来サムネイル画像を追加する場合は各要素に thumbnail: string を足して <img> を描画する
-              ].map((work) => (
-                <motion.a
-                  key={work.url}
-                  href={work.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${work.name}のサイトを見る（新しいタブで開きます）`}
-                  variants={fadeIn}
-                  className="group flex flex-col p-8 rounded-3xl glass-card relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
-                >
-                  <div className="flex items-center gap-2 mb-5">
-                    <span className="inline-flex items-center rounded-full bg-slate-900 text-white px-3 py-1 text-xs font-bold">{work.type}</span>
-                    <span className="inline-flex items-center rounded-full bg-slate-100 text-slate-600 px-3 py-1 text-xs font-bold border border-slate-200">{work.industry}</span>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-slate-900">{work.name}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed font-medium flex-1">{work.desc}</p>
-                  <span className="mt-5 block break-all rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-[11px] font-semibold text-slate-500">
-                    {work.url.replace("https://", "")}
-                  </span>
-                  <span className="mt-6 inline-flex items-center text-sm font-bold text-primary">
-                    サイトを見る
-                    <ExternalLink className="ml-1.5 h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </span>
-                </motion.a>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Pricing Section */}
-        <section id="pricing" className="w-full scroll-mt-16 py-24 lg:py-32 bg-white">
-          <div className="container px-4 md:px-6 mx-auto max-w-6xl">
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-center mb-20">
-              <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl text-slate-900">料金プラン</h2>
-              <p className="mt-6 text-slate-500 md:text-lg max-w-2xl mx-auto font-medium">
-                無料診断の結果を見てから、制作を頼むか決められます。診断だけなら0円です。
-              </p>
-            </motion.div>
-            
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid md:grid-cols-3 gap-8 mb-20 items-center">
-              {/* Lite */}
-              <motion.div variants={fadeIn} className="flex flex-col p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-lg transition-shadow">
-                <h3 className="text-2xl font-bold text-slate-900">Free / Lite</h3>
-                <div className="mt-4 mb-8">
-                  <span className="text-4xl font-extrabold text-slate-900">¥0</span>
-                  <span className="text-slate-500 font-medium"> 〜</span>
-                </div>
-                <ul className="space-y-4 flex-1">
-                  <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-slate-400 mr-3 shrink-0" /><span className="text-slate-600 text-sm font-medium">Free Check（無料診断）: 0円</span></li>
-                  <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-slate-400 mr-3 shrink-0" /><span className="text-slate-600 text-sm font-medium">チャットでの相談・案内: 0円</span></li>
-                  <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-slate-400 mr-3 shrink-0" /><span className="text-slate-600 text-sm font-medium">Lite相談（通話等）: 5,000円</span></li>
-                </ul>
-              </motion.div>
-              
-              {/* Standard */}
-              <motion.div variants={fadeIn} className="flex flex-col p-8 rounded-3xl bg-slate-900 text-white shadow-2xl relative transform md:-translate-y-8 border border-slate-800">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-blue-500 text-white px-6 py-1.5 rounded-full text-sm font-bold shadow-lg">
-                  基本プラン
-                </div>
-                <h3 className="text-2xl font-bold">Standard Build</h3>
-                <p className="text-sm text-slate-400 mt-2 font-medium">必要な情報を1ページにまとめる制作プラン</p>
-                <div className="mt-6 mb-8">
-                  <span className="text-5xl font-extrabold text-white">¥50,000</span>
-                </div>
-                <ul className="space-y-4 flex-1 mb-8">
-                  <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 shrink-0" /><span className="text-slate-300 text-sm font-medium">1ページ構成（LP型）</span></li>
-                  <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 shrink-0" /><span className="text-slate-300 text-sm font-medium">6ブロック構成</span></li>
-                  <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 shrink-0" /><span className="text-slate-300 text-sm font-medium">写真10枚・簡易イラスト1点</span></li>
-                  <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 shrink-0" /><span className="text-slate-300 text-sm font-medium">修正2回まで</span></li>
-                </ul>
-                <Link href="/check" onClick={() => track("diagnosis_cta_clicked", { location: "pricing" })}>
-                  <Button className="w-full rounded-full h-12 bg-white text-slate-900 hover:bg-slate-100 font-bold">無料Web診断をはじめる</Button>
-                </Link>
-              </motion.div>
-
-              {/* Advanced */}
-              <motion.div variants={fadeIn} className="flex flex-col p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-lg transition-shadow">
-                <h3 className="text-2xl font-bold text-slate-900">Plus / Max</h3>
-                <div className="mt-4 mb-8">
-                  <span className="text-4xl font-extrabold text-slate-900">¥80,000</span>
-                  <span className="text-slate-500 font-medium"> 〜</span>
-                </div>
-                <ul className="space-y-4 flex-1">
-                  <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-slate-400 mr-3 shrink-0" /><span className="text-slate-600 text-sm font-medium">Plus Build: 80,000円（内容追加）</span></li>
-                  <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-slate-400 mr-3 shrink-0" /><span className="text-slate-600 text-sm font-medium">Max Build: 120,000円（充実構成）</span></li>
-                  <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-slate-400 mr-3 shrink-0" /><span className="text-slate-600 text-sm font-medium">※Mini Fix（修正のみ）: 30,000円〜</span></li>
-                </ul>
-              </motion.div>
-            </motion.div>
-
-            {/* Standard plan boundary */}
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm max-w-5xl mx-auto">
-              <div className="border-b border-slate-200 bg-slate-50 px-8 py-7 md:px-10">
-                <p className="text-sm font-bold tracking-[0.18em] text-primary">SCOPE</p>
-                <h3 className="mt-2 text-2xl font-extrabold text-slate-900 flex items-center">
-                  <Wrench className="h-6 w-6 mr-3 text-primary" />
-                  5万円でできること、できないこと
-                </h3>
-                <p className="mt-3 text-slate-600 text-sm font-medium leading-relaxed">
-                  追加費用が膨らまないよう、基本プランの境界を先にお伝えします。
-                </p>
-              </div>
-              <div className="grid md:grid-cols-2">
-                <div className="p-8 md:p-10">
-                  <p className="mb-6 text-sm font-bold text-emerald-700">基本料金に含まれるもの</p>
-                  <ul className="space-y-4 text-sm font-medium text-slate-700">
-                    {[
-                      "1ページ・6ブロックのLP型サイト",
-                      "写真10枚・簡易イラスト1点",
-                      "公開前の修正2回まで",
-                      "不要な月額保守契約なし",
-                    ].map((item) => (
-                      <li key={item} className="flex items-start">
-                        <CheckCircle2 className="h-5 w-5 text-primary mr-3 shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="border-t border-slate-200 bg-slate-50/70 p-8 md:border-l md:border-t-0 md:p-10">
-                  <p className="mb-6 text-sm font-bold text-slate-600">基本料金に含まれないもの</p>
-                  <ul className="grid gap-4 text-sm font-medium text-slate-700">
-                    {[
-                      "完全オリジナルデザイン",
-                      "EC・独自予約システムの構築",
-                      "複雑なアニメーション",
-                      "大量のページ制作",
-                      "SNS・広告の運用代行",
-                      "回数無制限の修正",
-                    ].map((item) => (
-                      <li key={item} className="flex items-start">
-                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-slate-400 mr-3 shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Target Industries */}
-        <section id="industries" className="w-full py-20 bg-slate-50 border-t border-slate-100">
-          <div className="container px-4 md:px-6 mx-auto max-w-5xl text-center">
-            <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 mb-12">こんな事業者様のお力になれます</h2>
-            <div className="flex flex-wrap justify-center gap-6 md:gap-10">
-              {[
-                { icon: MapPin, label: "整体・整骨院" },
-                { icon: Scissors, label: "美容室・サロン" },
-                { icon: GraduationCap, label: "塾・習い事" },
-                { icon: Building2, label: "工務店・職人" },
-                { icon: Utensils, label: "飲食店・カフェ" },
-                { icon: Tractor, label: "農家・生産者" }
-              ].map((industry, i) => (
-                <div key={i} className="flex flex-col items-center p-4">
-                  <div className="bg-white p-5 rounded-full mb-4 text-slate-600 shadow-sm border border-slate-100">
-                    <industry.icon className="h-8 w-8" />
-                  </div>
-                  <span className="text-sm font-bold text-slate-700">{industry.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Bottom CTA Section */}
-        <section className="w-full py-32 bg-slate-900 text-white relative overflow-hidden">
-          <div className="container px-4 md:px-6 mx-auto relative z-10">
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="flex flex-col items-center justify-center space-y-8 text-center max-w-3xl mx-auto">
-              <h2 className="text-4xl font-extrabold tracking-tight md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
-                さあ、まずは無料診断から。
-              </h2>
-              <p className="text-slate-300 md:text-xl font-medium">
-                質問に答えるだけで、Web課題と優先順位が見えてきます。まず自分で直すところからでも大丈夫です。
-              </p>
-              <Link
-                href="/check"
-                className="mt-8"
-                onClick={() => track("diagnosis_cta_clicked", { location: "bottom" })}
-              >
-                <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100 rounded-full h-16 px-12 text-lg font-bold shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_-15px_rgba(255,255,255,0.5)] transition-all hover:-translate-y-1">
-                  無料でWeb診断をはじめる
-                </Button>
+            <h1>
+              <span>いい仕事を、</span>
+              <span className={styles.heroAccent}>見つけてから作る。</span>
+            </h1>
+            <p className={styles.heroLead}>
+              enDesignは、依頼を待ってからヒアリングするだけの制作会社ではありません。
+              口コミ・SNS・検索・競合を先に調べ、その事業者にしかない価値を見つけ、
+              <strong> 試作LPという見える形</strong>にしてから対話を始めます。
+            </p>
+            <div className={styles.heroActions}>
+              <TrackedLink href="/check" location="hero" className={styles.primaryCta}>
+                まず無料でWeb診断 <ArrowRight aria-hidden="true" />
+              </TrackedLink>
+              <Link href="#method" className={styles.textCta}>
+                制作方法を見る <ChevronRight aria-hidden="true" />
               </Link>
-            </motion.div>
+            </div>
+            <dl className={styles.heroFacts}>
+              <div><dt>¥150,000</dt><dd>LP制作・税別</dd></div>
+              <div><dt>¥110,000</dt><dd>事例公開協力・税別</dd></div>
+              <div><dt>1 month</dt><dd>素材受領後の目安</dd></div>
+            </dl>
           </div>
-          {/* Decorative */}
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-slate-900 to-slate-900 -z-10" />
+
+          <div className={styles.heroVisual}>
+            <div className={styles.heroVisualWash} aria-hidden="true" />
+            <div className={styles.heroStamp}>
+              <span>RESEARCH FIRST</span>
+              <strong>調べることから、<br />デザインは始まる。</strong>
+            </div>
+            <Image
+              src="/brand/endesign-process-illustration.webp"
+              alt="口コミや写真、地図、Webサイト案を机の上で丁寧に整理するデザイナーの手描きイラスト"
+              width={1280}
+              height={853}
+              priority
+              sizes="(max-width: 920px) 100vw, 56vw"
+              className={styles.heroImage}
+            />
+            <div className={styles.heroNote}>
+              <span>FROM VOICES TO VALUE</span>
+              口コミの言葉と、店主のこだわりが重なる場所を探します。
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.difference}>
+          <div className={styles.differenceIntro}>
+            <p className={styles.eyebrow}>OUR DIFFERENCE</p>
+            <h2>制作の順番が、<br />少し違います。</h2>
+          </div>
+          <div className={styles.comparison}>
+            <div className={styles.comparisonMuted}>
+              <span>よくある制作</span><p>問い合わせ</p><i /><p>ヒアリング</p><i /><p>見積り</p><i /><p>ゼロから制作</p>
+            </div>
+            <div className={styles.comparisonMain}>
+              <span>enDesign</span><p>公開情報を調査</p><i /><p>強みと差別化を診断</p><i /><p>事業者専用のLPを試作</p><i /><p>画面を見ながら対話</p>
+            </div>
+          </div>
+          <p className={styles.differenceNote}>
+            抽象的な営業資料ではなく、あなたの事業を調べて作った画面がある。
+            だから「頼んだら何ができるのか」を、想像だけで判断する必要がありません。
+          </p>
+        </section>
+
+        <section id="method" className={styles.method}>
+          <div className={styles.sectionHeading}>
+            <div><p className={styles.eyebrow}>RESEARCH → STRATEGY → PROTOTYPE</p><h2>事業者らしさは、<br />情報の間にあります。</h2></div>
+            <p>評価点や営業時間を並べるだけでは、誰が作っても同じページになります。私たちが見るのは、店主の言葉、顧客の実感、競合との違い、写真に映る空気です。</p>
+          </div>
+          <div className={styles.lensGrid}>
+            {researchLenses.map((item) => (
+              <article key={item.number} className={styles.lensCard}>
+                <div className={styles.lensTop}><item.icon aria-hidden="true" /><span>{item.number}</span></div>
+                <p className={styles.lensTitle}>{item.title}</p>
+                <h3>{item.lead}</h3>
+                <p>{item.body}</p>
+                <ul>{item.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="case" className={styles.caseSection}>
+          <div className={styles.caseMedia}>
+            <div className={styles.browserBar} aria-hidden="true"><span /><span /><span /><p>営業提案用 LP PROTOTYPE</p></div>
+            <div className={styles.caseImageFrame}>
+              <Image src="/works/sower-proposal.webp" alt="筑波山麓のベーカリーカフェを想定した営業提案用LPのファーストビュー" fill sizes="(max-width: 900px) 100vw, 58vw" className={styles.caseImage} />
+            </div>
+            <span className={styles.caseBadge}>PROPOSAL DEMO / PUBLIC INFORMATION</span>
+          </div>
+          <div className={styles.caseCopy}>
+            <p className={styles.eyebrow}>ONE PROTOTYPE, ONE STORY</p>
+            <h2>「パン屋です」では、<br />終わらせない。</h2>
+            <p className={styles.caseLead}>公開情報から見えたのは、古い納屋、筑波山へ向かう朝の時間、焼きたてのパン、店内で過ごす静けさ。それらを「遠回りしたくなる朝」という一つの物語に編集しました。</p>
+            <div className={styles.casePoints}>
+              <div><Search aria-hidden="true" /><span><strong>調査</strong>写真・口コミ・営業情報を横断</span></div>
+              <div><Sparkles aria-hidden="true" /><span><strong>戦略</strong>価格ではなく、訪れる体験を主役に</span></div>
+              <div><Paintbrush aria-hidden="true" /><span><strong>表現</strong>実写真と温かなイラストを編集</span></div>
+              <div><MonitorSmartphone aria-hidden="true" /><span><strong>実装</strong>全幅で崩れないレスポンシブ設計</span></div>
+            </div>
+            <p className={styles.caseCaption}>※営業提案用の試作事例です。公開情報を基に構成し、写真・口コミ等の本公開利用には事業者の許諾が必要です。</p>
+          </div>
+        </section>
+
+        <section className={styles.valueSection}>
+          <div className={styles.valueTitle}><p className={styles.eyebrow}>WHAT WE CREATE</p><h2>ページの見た目だけでなく、<br />選ばれる理由をつくる。</h2></div>
+          <div className={styles.valueGrid}>
+            <article><MessageCircleMore aria-hidden="true" /><span>01</span><h3>顧客の言葉で伝わる</h3><p>口コミに繰り返し現れる言葉を、見出しや安心材料へ。内輪の表現だけにしません。</p></article>
+            <article><HandHeart aria-hidden="true" /><span>02</span><h3>人の温度が残る</h3><p>写真だけにも、AI画像だけにも頼らず、人が描くイラストを事業者の場面に合わせて差し込みます。</p></article>
+            <article><ShieldCheck aria-hidden="true" /><span>03</span><h3>事実の線を越えない</h3><p>公開情報、推測、本人確認事項を分け、架空の実績・資格・口コミを作らずに魅力を伝えます。</p></article>
+          </div>
+        </section>
+
+        <section id="price" className={styles.priceSection}>
+          <div className={styles.priceIntro}><p className={styles.eyebrow}>PRICE & SCOPE</p><h2>分かりにくい見積りに、<br />しません。</h2><p>基本制作範囲を先に明示し、追加が必要な場合は着手前にお伝えします。</p></div>
+          <div className={styles.priceCard}>
+            <div className={styles.priceMain}>
+              <p>LP制作 基本料金</p>
+              <div><strong>150,000</strong><span>円／税別</span></div>
+              <small>事例としての公開にご協力いただける場合</small>
+              <div className={styles.discountPrice}><strong>110,000</strong><span>円／税別</span></div>
+              <TrackedLink href="/check" location="pricing" className={styles.priceCta}>無料Web診断を依頼する <ArrowRight aria-hidden="true" /></TrackedLink>
+            </div>
+            <div className={styles.priceIncludes}>
+              <p>基本料金に含まれるもの</p>
+              <ul>{deliverables.map((item) => <li key={item}><Check aria-hidden="true" />{item}</li>)}</ul>
+            </div>
+          </div>
+          <div className={styles.maintenance}>
+            <div><span>DOMAIN / SERVER / CARE</span><h3>公開後の保守　月額5,000円／税別</h3></div>
+            <p>ドメイン・サーバーの管理、稼働確認、契約範囲内の軽微な更新に対応します。大幅なページ追加、機能開発、構成変更はオプションとして事前見積りします。</p>
+          </div>
+          <p className={styles.priceFootnote}>写真は原則として事業者様にご提供いただきます。公開前修正は1回。納期は必要素材の受領後から約1か月が目安です。</p>
+        </section>
+
+        <section id="flow" className={styles.flowSection}>
+          <div className={styles.sectionHeading}>
+            <div><p className={styles.eyebrow}>WORKFLOW</p><h2>調べるところから、<br />公開後まで。</h2></div>
+            <p>必要な場面ではヒアリングを行います。自動化で速くしながら、判断を人から奪わない進め方です。</p>
+          </div>
+          <ol className={styles.flowList}>{workflow.map(([number, title, body]) => <li key={number}><span>{number}</span><h3>{title}</h3><p>{body}</p></li>)}</ol>
+        </section>
+
+        <section className={styles.targetSection}>
+          <p className={styles.eyebrow}>WHO WE WORK WITH</p>
+          <div><h2>知識や実力はある。<br />でも、Webでは伝わりきっていない。</h2><ul>{["社労士", "税理士", "行政書士", "塾・教育", "採用に悩む企業"].map((item) => <li key={item}>{item}</li>)}</ul></div>
+          <p>口コミや紹介では評価されている一方、検索から来た人には違いが見えない。そんな事業者ほど、調査から始めるLP制作が活きます。</p>
+        </section>
+
+        <section className={styles.faqSection}>
+          <div><p className={styles.eyebrow}>FAQ</p><h2>ご依頼前に、<br />よくある質問。</h2></div>
+          <div className={styles.faqList}>{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span>＋</span></summary><p>{answer}</p></details>)}</div>
+        </section>
+
+        <section className={styles.finalCta}>
+          <div className={styles.finalCtaTop}><span>LET&apos;S FIND WHAT MAKES YOU DIFFERENT.</span><CircleCheck aria-hidden="true" /></div>
+          <h2>あなたの事業にしかない良さを、<br />まず私たちに調べさせてください。</h2>
+          <p>無料Web診断から始められます。制作を依頼するかは、診断内容を見てから決めてください。</p>
+          <TrackedLink href="/check" location="bottom" className={styles.finalButton}>無料Web診断を依頼する <ArrowRight aria-hidden="true" /></TrackedLink>
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="py-10 w-full bg-white border-t border-slate-100">
-        <div className="container mx-auto px-4 md:px-6 flex flex-col sm:flex-row items-center justify-between">
-          <div className="flex items-center mb-6 sm:mb-0">
-            <Image src="/brand/en-symbol.svg" alt="" width={22} height={22} className="mr-2 h-5 w-5 rounded-md" />
-            <span className="font-extrabold text-slate-900 text-lg">enDesign</span>
-            <span className="ml-4 text-xs font-medium text-slate-400">
-              © 2026 enDesign. All rights reserved.
-            </span>
-          </div>
-          <nav className="flex flex-wrap justify-center gap-6">
-            <Link className="text-xs font-bold text-slate-500 hover:text-primary transition-colors" href="/terms">利用規約</Link>
-            <Link className="text-xs font-bold text-slate-500 hover:text-primary transition-colors" href="/privacy">プライバシーポリシー</Link>
-            <Link className="text-xs font-bold text-slate-500 hover:text-primary transition-colors" href="/legal">特定商取引法表記</Link>
-          </nav>
-        </div>
+      <footer className={styles.footer}>
+        <div><Link href="/" className={styles.footerLogo}>enDesign</Link><p>いい仕事を、見つけてから作る。</p></div>
+        <nav aria-label="フッターナビゲーション"><Link href="/terms">利用規約</Link><Link href="/privacy">プライバシーポリシー</Link><Link href="/legal">特定商取引法表記</Link><Link href="/support">お問い合わせ</Link><Link href="/admin">管理者ログイン</Link></nav>
+        <small>© 2026 enDesign / PIVOT&amp;QUEST</small>
       </footer>
     </div>
-    </MotionConfig>
   );
 }

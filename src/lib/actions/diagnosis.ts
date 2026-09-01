@@ -53,7 +53,7 @@ export async function submitDiagnosis(data: DiagnosisInput) {
     const prompt = `
 あなたは地域小規模事業者向けの親身なWebコンサルタントです。
 以下の事業者情報とアンケート結果に基づき、Webサイトやオンライン集客の診断結果を生成してください。
-enDesignの思想は「自分でできることは無料で、一人では不安なところだけ低価格(5万円〜)で一緒に整える」です。
+enDesignの思想は「いい仕事を、見つけてから作る。」です。公開情報を横断調査し、事業者らしさ、顧客価値、競合との差、欠けている情報を整理したうえで、人の判断と手描きイラストを加えてLPにします。
 
 【事業者情報】
 - 業種: ${data.industry}
@@ -81,7 +81,7 @@ enDesignの思想は「自分でできることは無料で、一人では不安
 - improvementPoints: もったいないところ（3つ）
 - selfHelpActions: お金をかけずに自分で直せる行動リスト（3つ）
 - freeAdvice: お金をかけなくていいことへのアドバイス（3つ）
-- recommendedPlan: おすすめのプラン（Free Check / Lite相談(5000円) / Standard Build(5万円) / Plus Build(8万円) / Max Build(12万円)）
+- recommendedPlan: おすすめの次の一手（無料Web診断のみ / LP制作 基本15万円（税別） / 事例公開協力11万円（税別） / オプション別途見積り）
 - summary: 親身な総評メッセージ
     `;
 
