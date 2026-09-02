@@ -324,9 +324,9 @@
   }
   .sectionHeading h2 br, .priceIntro h2 br, .targetSection h2 br, .faqSection h2 br { display: none; }
   .valueTitle h2 {
-    font-size: 28px;
+    font-size: 26px;
     line-height: 1.5;
-    letter-spacing: -.045em;
+    letter-spacing: -.04em;
   }
   .valueTitle h2 br { display: initial; }
   .eyebrow { margin-bottom: 14px; white-space: normal; line-height: 1.5; }
