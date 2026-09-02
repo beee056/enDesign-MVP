@@ -111,7 +111,9 @@
 .heroNote span { color: var(--orange); }
 
 .eyebrow { margin: 0 0 18px; color: var(--orange); font-size: 10px; font-weight: 900; letter-spacing: .22em; white-space: nowrap; }
-.difference { padding: 96px 6vw; display: grid; grid-template-columns: .62fr 1.1fr .62fr; gap: 5vw; align-items: center; border-bottom: 1px solid var(--line); background: #f1e5d2; }
+.difference { padding: 80px 6vw; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .75fr); gap: 42px 6vw; align-items: center; border-bottom: 1px solid var(--line); background: #f1e5d2; }
+.differenceIntro { grid-column: 1 / -1; display: flex; align-items: end; justify-content: space-between; gap: 32px; }
+.differenceIntro h2 br { display: none; }
 .differenceIntro h2, .sectionHeading h2, .caseCopy h2, .valueTitle h2, .priceIntro h2, .targetSection h2, .faqSection h2, .finalCta h2 { margin: 0; font-family: var(--font-noto-serif-jp), Georgia, "Yu Mincho", serif; font-weight: 500; letter-spacing: -.055em; line-height: 1.18; }
 .differenceIntro h2 { font-size: clamp(36px, 4vw, 62px); }
 .comparison { display: grid; grid-template-columns: 1fr 1.1fr; gap: 16px; align-items: center; }
@@ -123,7 +125,7 @@
 .comparison i { display: block; width: 1px; height: 15px; margin: 5px 0 5px 5px; background: currentColor; opacity: .45; }
 .differenceNote { margin: 0; color: #42605c; font-size: 13px; line-height: 2; font-weight: 700; }
 
-.method, .flowSection { padding: 128px 5.5vw; background: var(--paper); }
+.method, .flowSection { padding: 104px 5.5vw; background: var(--paper); }
 .sectionHeading { display: grid; grid-template-columns: 1fr minmax(300px, .65fr); gap: 7vw; align-items: end; }
 .sectionHeading h2, .valueTitle h2, .priceIntro h2, .targetSection h2, .faqSection h2 { font-size: clamp(40px, 5vw, 76px); }
 .sectionHeading > p { max-width: 620px; margin: 0 0 4px; color: #54706b; font-size: 14px; line-height: 2; font-weight: 650; }
@@ -140,7 +142,7 @@
 .lensCard ul { margin: 28px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 7px; list-style: none; }
 .lensCard li { padding: 6px 9px; background: var(--mint); font-size: 9px; font-weight: 900; white-space: nowrap; }
 
-.caseSection { padding: 130px 5.5vw; display: grid; grid-template-columns: 1.18fr .82fr; gap: 6vw; align-items: center; background: var(--ink); color: white; }
+.caseSection { padding: 104px 5.5vw; display: grid; grid-template-columns: 1.12fr .88fr; gap: 5vw; align-items: center; background: var(--ink); color: white; }
 .caseMedia { position: relative; min-width: 0; padding: 0 0 28px 28px; }
 .browserBar { height: 45px; padding: 0 16px; display: flex; align-items: center; gap: 7px; background: #efe3cf; border: 1px solid rgba(255,255,255,.2); }
 .browserBar span { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
@@ -151,7 +153,8 @@
 .caseImage { object-fit: cover; object-position: top center; }
 .caseBadge { position: absolute; left: 0; bottom: 0; padding: 12px 16px; background: var(--orange); color: white; font-size: 8px; font-weight: 900; letter-spacing: .14em; white-space: nowrap; transform: rotate(-1deg); }
 .caseCopy .eyebrow { color: var(--mustard); }
-.caseCopy h2 { color: white; font-size: clamp(42px, 5vw, 74px); }
+.caseCopy h2 { color: white; font-size: clamp(40px, 4.25vw, 62px); }
+.caseCopy h2 br { display: none; }
 .caseLead { margin: 30px 0; color: #c7d5d2; font-size: 14px; line-height: 2; font-weight: 650; }
 .casePoints { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .casePoints > div { min-width: 0; padding: 15px; display: flex; gap: 10px; align-items: flex-start; border: 1px solid rgba(255,255,255,.16); }
@@ -160,7 +163,7 @@
 .casePoints strong { display: block; margin-bottom: 2px; color: white; font-size: 12px; }
 .caseCaption { margin: 22px 0 0; color: #8fa8a3; font-size: 9px; line-height: 1.8; }
 
-.valueSection { padding: 120px 5.5vw; background: #e5efe9; }
+.valueSection { padding: 96px 5.5vw; background: #e5efe9; }
 .valueTitle { display: flex; align-items: end; justify-content: space-between; gap: 30px; }
 .valueGrid { margin-top: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .valueGrid article { position: relative; min-height: 320px; padding: 34px; display: flex; flex-direction: column; background: var(--paper); border: 1px solid var(--line); }
@@ -172,7 +175,7 @@
 .valueGrid h3 { margin: auto 0 12px; font-family: Georgia, "Yu Mincho", serif; font-size: 28px; }
 .valueGrid p { margin: 0; font-size: 12px; line-height: 1.9; font-weight: 650; }
 
-.priceSection { padding: 130px 8vw; background: var(--paper); }
+.priceSection { padding: 104px 8vw; background: var(--paper); }
 .priceIntro { max-width: 800px; }
 .priceIntro > p:last-child { color: #54706b; font-size: 14px; }
 .priceCard { margin-top: 64px; display: grid; grid-template-columns: .78fr 1.22fr; border: 1px solid var(--ink); box-shadow: 12px 12px 0 var(--mint); }
@@ -189,9 +192,9 @@
 .priceIncludes ul { margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px 24px; list-style: none; }
 .priceIncludes li { display: flex; align-items: flex-start; gap: 10px; color: #345750; font-size: 12px; line-height: 1.65; font-weight: 750; }
 .priceIncludes svg { width: 18px; height: 18px; flex: 0 0 auto; color: var(--orange); }
-.maintenance { margin-top: 42px; padding: 28px 32px; display: grid; grid-template-columns: .8fr 1.2fr; gap: 5vw; align-items: center; border: 1px solid var(--line); background: #f1e5d2; }
+.maintenance { margin-top: 36px; padding: 26px 30px; display: grid; grid-template-columns: minmax(500px, 1.15fr) 1fr; gap: 4vw; align-items: center; border: 1px solid var(--line); background: #f1e5d2; }
 .maintenance span { color: var(--orange); font-size: 8px; font-weight: 900; letter-spacing: .2em; }
-.maintenance h3 { margin: 8px 0 0; font-family: Georgia, "Yu Mincho", serif; font-size: clamp(20px, 2vw, 29px); }
+.maintenance h3 { margin: 8px 0 0; font-family: Georgia, "Yu Mincho", serif; font-size: clamp(18px, 1.65vw, 24px); white-space: nowrap; }
 .maintenanceTax { margin-top: 7px !important; color: #6d817d !important; font-size: 10px !important; font-weight: 800 !important; }
 .maintenance p, .priceFootnote { margin: 0; color: #54706b; font-size: 11px; line-height: 1.9; font-weight: 650; }
 .priceFootnote { margin-top: 22px; text-align: center; }
@@ -203,13 +206,18 @@
 .flowList h3 { margin: 42px 0 10px; font-family: Georgia, "Yu Mincho", serif; font-size: 25px; }
 .flowList p { margin: 0; color: #54706b; font-size: 12px; line-height: 1.9; font-weight: 650; }
 
-.targetSection { padding: 110px 6vw; display: grid; grid-template-columns: .35fr 1.15fr .55fr; gap: 5vw; align-items: center; background: var(--mustard); }
+.targetSection { padding: 88px 6vw; display: grid; grid-template-columns: .18fr 1.42fr .58fr; gap: 4vw; align-items: center; background: var(--mustard); }
+.targetSection h2 { font-size: clamp(40px, 4.2vw, 58px); }
+.targetSection h2 br { display: none; }
 .targetSection .eyebrow { color: var(--ink); writing-mode: vertical-rl; }
 .targetSection ul { margin: 35px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
 .targetSection li { padding: 8px 12px; background: var(--paper); border: 1px solid var(--ink); font-size: 10px; font-weight: 900; white-space: nowrap; }
 .targetSection > p:last-child { margin: 0; font-size: 13px; line-height: 2; font-weight: 750; }
 
-.faqSection { padding: 120px 8vw; display: grid; grid-template-columns: .7fr 1.3fr; gap: 8vw; background: var(--paper); }
+.faqSection { padding: 94px 8vw; display: grid; grid-template-columns: 1fr; gap: 48px; background: var(--paper); }
+.faqSection > div:first-child { display: flex; align-items: end; justify-content: space-between; gap: 32px; }
+.faqSection h2 { font-size: clamp(40px, 4.4vw, 62px); }
+.faqSection h2 br { display: none; }
 .faqList details { border-top: 1px solid var(--line); }
 .faqList details:last-child { border-bottom: 1px solid var(--line); }
 .faqList summary { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer; list-style: none; font-family: Georgia, "Yu Mincho", serif; font-size: 17px; font-weight: 700; }
@@ -218,10 +226,10 @@
 .faqList details[open] summary span { transform: rotate(45deg); }
 .faqList details p { margin: 0; padding: 0 40px 25px 0; color: #54706b; font-size: 12px; line-height: 1.9; }
 
-.finalCta { padding: 105px 8vw; background: var(--orange); color: white; text-align: center; }
+.finalCta { padding: 88px 8vw; background: var(--orange); color: white; text-align: center; }
 .finalCtaTop { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 9px; font-weight: 900; letter-spacing: .2em; }
 .finalCtaTop svg { width: 18px; }
-.finalCta h2 { margin-top: 30px; color: white; font-size: clamp(42px, 6vw, 88px); }
+.finalCta h2 { margin: 26px auto 0; max-width: 1120px; color: white; font-size: clamp(40px, 4.25vw, 58px); line-height: 1.34; }
 .finalCta > p { margin: 28px auto 0; max-width: 680px; font-size: 13px; line-height: 1.9; font-weight: 700; }
 .finalButton { margin-top: 38px; min-height: 62px; padding: 0 30px; background: var(--paper); color: var(--ink); box-shadow: 8px 8px 0 var(--ink); }
 
@@ -239,7 +247,9 @@
   .heroCopy { padding-left: 4vw; }
   .heroFacts { grid-template-columns: 1fr 1fr; }
   .heroFacts div:last-child { display: none; }
-  .difference { grid-template-columns: .7fr 1.3fr; }
+  .difference { grid-template-columns: 1fr; }
+  .differenceIntro { grid-column: auto; display: block; }
+  .differenceIntro h2 br { display: initial; }
   .differenceNote { grid-column: 1 / -1; max-width: 760px; }
   .caseSection { gap: 4vw; }
   .casePoints { grid-template-columns: 1fr; }
@@ -266,6 +276,7 @@
   .valueGrid article:nth-child(2) { transform: none; }
   .priceCard { grid-template-columns: 1fr; }
   .maintenance { grid-template-columns: 1fr; gap: 18px; }
+  .maintenance h3 { white-space: normal; }
   .flowList { grid-template-columns: repeat(2, 1fr); }
   .targetSection { grid-template-columns: 1fr; }
   .targetSection .eyebrow { writing-mode: initial; }
@@ -319,7 +330,7 @@
   .flowList { grid-template-columns: 1fr; }
   .flowList li { min-height: 195px; }
   .faqList summary { min-height: 88px; font-size: 15px; }
-  .finalCta h2 { font-size: 42px; }
+  .finalCta h2 { font-size: 38px; line-height: 1.42; }
   .finalCta h2 br { display: none; }
   .footer { padding: 46px 20px; }
 }
