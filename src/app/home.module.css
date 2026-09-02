@@ -153,8 +153,8 @@
 .caseImage { object-fit: cover; object-position: top center; }
 .caseBadge { position: absolute; left: 0; bottom: 0; padding: 12px 16px; background: var(--orange); color: white; font-size: 8px; font-weight: 900; letter-spacing: .14em; white-space: nowrap; transform: rotate(-1deg); }
 .caseCopy .eyebrow { color: var(--mustard); }
-.caseCopy h2 { color: white; font-size: clamp(40px, 4.25vw, 62px); }
-.caseCopy h2 br { display: none; }
+.caseCopy h2 { color: white; font-size: clamp(38px, 3.7vw, 52px); }
+.caseCopy h2 br { display: initial; }
 .caseLead { margin: 30px 0; color: #c7d5d2; font-size: 14px; line-height: 2; font-weight: 650; }
 .casePoints { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .casePoints > div { min-width: 0; padding: 15px; display: flex; gap: 10px; align-items: flex-start; border: 1px solid rgba(255,255,255,.16); }
@@ -207,7 +207,7 @@
 .flowList p { margin: 0; color: #54706b; font-size: 12px; line-height: 1.9; font-weight: 650; }
 
 .targetSection { padding: 88px 6vw; display: grid; grid-template-columns: .18fr 1.42fr .58fr; gap: 4vw; align-items: center; background: var(--mustard); }
-.targetSection h2 { font-size: clamp(40px, 4.2vw, 58px); }
+.targetSection h2 { font-size: clamp(38px, 3.5vw, 48px); line-height: 1.28; }
 .targetSection h2 br { display: none; }
 .targetSection .eyebrow { color: var(--ink); writing-mode: vertical-rl; }
 .targetSection ul { margin: 35px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
