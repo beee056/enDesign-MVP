@@ -15,7 +15,10 @@
 
 .page :is(a, button, summary) { -webkit-tap-highlight-color: transparent; }
 .page :is(a, summary):focus-visible { outline: 3px solid var(--mustard); outline-offset: 4px; }
-.page h1, .page h2, .page h3 { color: var(--ink); }
+.page h1, .page h2, .page h3 {
+  color: var(--ink);
+  text-wrap: balance;
+}
 
 .notice {
   min-height: 34px;
@@ -310,18 +313,30 @@
   .heroImage { width: 122%; margin-left: -10%; }
   .heroStamp { top: 7%; right: 5%; width: 46%; }
   .heroNote { left: 5%; bottom: 4%; max-width: 250px; font-size: 9px; }
-  .difference, .method, .caseSection, .valueSection, .priceSection, .flowSection, .targetSection, .faqSection, .finalCta { padding: 82px 20px; }
+  .difference, .method, .caseSection, .priceSection, .flowSection, .targetSection, .faqSection, .finalCta { padding: 68px 20px; }
+  .valueSection { padding: 62px 20px 68px; }
   .comparison { grid-template-columns: 1fr; }
   .comparison p { font-size: 12px; }
   .comparisonMain { transform: none; }
-  .sectionHeading h2, .valueTitle h2, .priceIntro h2, .targetSection h2, .faqSection h2 { font-size: 39px; }
-  .eyebrow { white-space: normal; line-height: 1.5; }
+  .sectionHeading h2, .priceIntro h2, .targetSection h2, .faqSection h2 {
+    font-size: clamp(31px, 8.5vw, 35px);
+    line-height: 1.42;
+  }
+  .sectionHeading h2 br, .priceIntro h2 br, .targetSection h2 br, .faqSection h2 br { display: none; }
+  .valueTitle h2 {
+    font-size: 28px;
+    line-height: 1.5;
+    letter-spacing: -.045em;
+  }
+  .valueTitle h2 br { display: initial; }
+  .eyebrow { margin-bottom: 14px; white-space: normal; line-height: 1.5; }
   .lensGrid, .valueGrid, .priceCard, .flowList { margin-top: 48px; }
   .lensCard { padding: 30px 24px; }
   .caseMedia { padding-left: 12px; }
   .caseCopy h2 { font-size: 44px; }
   .caseBadge { font-size: 7px; }
-  .valueGrid article { min-height: 245px; padding: 26px; }
+  .valueGrid article { min-height: 0; padding: 24px; }
+  .valueGrid h3 { margin: 58px 0 12px; font-size: 25px; line-height: 1.45; }
   .priceMain, .priceIncludes { padding: 32px 24px; }
   .priceMain strong { font-size: 54px; }
   .discountPrice strong { font-size: 42px; }
@@ -330,7 +345,7 @@
   .flowList { grid-template-columns: 1fr; }
   .flowList li { min-height: 195px; }
   .faqList summary { min-height: 88px; font-size: 15px; }
-  .finalCta h2 { font-size: 38px; line-height: 1.42; }
+  .finalCta h2 { font-size: 34px; line-height: 1.46; }
   .finalCta h2 br { display: none; }
   .footer { padding: 46px 20px; }
 }
