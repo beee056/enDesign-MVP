@@ -1,80 +1,36 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
+import styles from "../policy.module.css";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "プライバシーポリシー | enDesign",
-  description: "enDesignのプライバシーポリシー（個人情報の取り扱い）について",
+  description: "enDesignにおける個人情報の取扱い方針です。",
 };
 
 export default function PrivacyPage() {
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl">
-      <div className="mb-10 text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">プライバシーポリシー</h1>
-        <p className="mt-4 text-lg text-slate-600">最終更新日: 2026年7月4日</p>
+    <main className={styles.page}>
+      <header className={styles.header}>
+        <Link className={styles.logo} href="/">enDesign</Link>
+        <Link className={styles.back} href="/">トップへ戻る</Link>
+      </header>
+      <section className={styles.hero}>
+        <p className={styles.eyebrow}>PRIVACY POLICY</p>
+        <h1>プライバシー<br />ポリシー</h1>
+        <p className={styles.updated}>最終更新日：2026年9月2日</p>
+      </section>
+      <div className={styles.body}>
+        <p className={styles.lead}>株式会社PIVOT&amp;QUEST（以下「当社」）は、enDesignに関して取得する個人情報を、以下の方針に基づき取り扱います。</p>
+        <section className={styles.section}><h2>1. 取得する情報</h2><p>氏名、事業者名、地域、メールアドレス、電話番号、Webサイト・SNS情報、相談内容、予算・時期、フォーム回答、契約・請求・支払情報、アクセス・通信記録等を取得する場合があります。</p></section>
+        <section className={styles.section}><h2>2. 利用目的</h2><ul><li>無料Web診断、相談、本人確認および連絡</li><li>調査、提案、見積り、契約、制作、公開、保守および請求</li><li>問い合わせ対応、品質・安全性の改善、不正利用防止</li><li>法令対応、紛争対応および権利保護</li><li>別途同意を得た事例掲載</li></ul></section>
+        <section className={styles.section}><h2>3. AI・外部サービスの利用</h2><p>構成・文章の下書き、情報整理、画像案、検証補助等に外部AIサービスを利用する場合があります。秘密情報・個人情報は、業務上必要な範囲および同意・契約上許容される範囲で取り扱い、人が事実・表現・品質を確認します。</p><p>制作、サーバー、フォーム、メール、電子契約、会計等を外部事業者へ委託する場合、必要な範囲で情報を取り扱わせ、契約・選定・監督を行います。</p></section>
+        <section className={styles.section}><h2>4. 第三者提供</h2><p>法令に基づく場合、生命・身体・財産の保護に必要な場合、業務委託に必要な場合、合併・事業承継等の場合を除き、本人の同意なく個人情報を第三者へ提供しません。</p></section>
+        <section className={styles.section}><h2>5. 安全管理・保存期間</h2><p>アクセス制御、認証、共有範囲の管理、バックアップ、端末管理、不要データ削除、事故時の調査・連絡等を行います。情報は利用目的、契約、法令上の保存義務に必要な期間保持し、その後削除または匿名化します。</p></section>
+        <section className={styles.section}><h2>6. 開示・訂正・利用停止等</h2><p>本人確認のうえ、保有個人データの利用目的通知、開示、訂正、追加、削除、利用停止等の請求に法令に従って対応します。</p></section>
+        <section className={styles.section}><h2>7. お問い合わせ</h2><p>本ポリシーに関するお問い合わせは、info@p-quest.com までご連絡ください。</p></section>
+        <p className={styles.note}>利用する外部サービスや国外移転の実態に重要な変更がある場合は、本ポリシーを更新します。</p>
       </div>
-
-      <Card className="border-slate-200 shadow-sm">
-        <CardContent className="p-8 prose prose-slate max-w-none">
-          <p>
-            enDesign（以下「当サービス」）は、ユーザーの皆様の個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下「本ポリシー」）を定めます。
-          </p>
-
-          <h3>1. 個人情報の収集方法</h3>
-          <p>
-            当サービスは、ユーザーが無料Web診断、お問い合わせ、SaaS機能の利用、または制作依頼を行う際に、氏名、事業者名、メールアドレス、電話番号、WebサイトURL、その他アンケートの回答内容などの個人情報をお尋ねすることがあります。
-          </p>
-
-          <h3>2. 個人情報を収集・利用する目的</h3>
-          <p>
-            当サービスが個人情報を収集・利用する目的は、以下のとおりです。
-          </p>
-          <ul>
-            <li>当サービスの提供・運営のため（無料診断結果の送付、見積もりの作成、Web制作業務を含む）</li>
-            <li>ユーザーからのお問い合わせに回答するため（本人確認を行うことを含む）</li>
-            <li>メンテナンス、重要なお知らせなど必要に応じたご連絡のため</li>
-            <li>利用規約に違反したユーザーや、不正・不当な目的でサービスを利用しようとするユーザーの特定をし、ご利用をお断りするため</li>
-            <li><strong>【重要】サービス改善およびFAQ（よくある質問）の拡充のため</strong><br/>
-            ユーザーからのご相談内容やサポート履歴は、個人や事業者を特定できない形に匿名化・一般化したうえで、AIへの学習データや他のユーザー向けの「よくある質問（FAQ）」データベースとして利用・公開される場合があります。</li>
-          </ul>
-
-          <h3>3. AI技術の利用について</h3>
-          <p>
-            当サービスは、業務効率化および診断結果の作成のために外部のAI（OpenAI社のChatGPT等）を利用しています。入力された情報の一部は、APIを通じてこれらのAIシステムに送信されます。ただし、APIを経由して送信されたデータが外部AIの学習モデルに直接利用されることはないよう、適切に設定された環境を利用しています。
-          </p>
-
-          <h3>4. 個人情報の第三者提供</h3>
-          <p>
-            当サービスは、次に掲げる場合を除いて、あらかじめユーザーの同意を得ることなく、第三者に個人情報を提供することはありません。ただし、個人情報保護法その他の法令で認められる場合を除きます。
-          </p>
-          <ul>
-            <li>人の生命、身体または財産の保護のために必要がある場合であって、本人の同意を得ることが困難であるとき</li>
-            <li>公衆衛生の向上または児童の健全な育成の推進のために特に必要がある場合であって、本人の同意を得ることが困難であるとき</li>
-            <li>国の機関もしくは地方公共団体またはその委託を受けた者が法令の定める事務を遂行することに対して協力する必要がある場合</li>
-          </ul>
-
-          <h3>5. 個人情報の開示・訂正・利用停止等</h3>
-          <p>
-            ユーザーは、当サービスに対してご自身の個人情報の開示、訂正、追加、削除、利用停止を求めることができます。ご希望の場合は、お問い合わせ窓口までご連絡ください。
-          </p>
-
-          <h3>6. プライバシーポリシーの変更</h3>
-          <p>
-            本ポリシーの内容は、法令その他本ポリシーに別段の定めのある事項を除いて、ユーザーに通知することなく変更することができるものとします。変更後のプライバシーポリシーは、本ウェブサイトに掲載したときから効力を生じるものとします。
-          </p>
-
-          <h3>7. お問い合わせ窓口</h3>
-          <p>
-            本ポリシーに関するお問い合わせは、当サービスのサポートチャットまたはお問い合わせフォームよりお願いいたします。
-          </p>
-
-          <div className="mt-12 pt-8 border-t border-slate-200">
-            <Link href="/" className="text-primary hover:underline font-medium">
-              ← トップページに戻る
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+      <footer className={styles.footer}><Link href="/">enDesign</Link><small>© PIVOT&amp;QUEST Inc.</small></footer>
+    </main>
   );
 }

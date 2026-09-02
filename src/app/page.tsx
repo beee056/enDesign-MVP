@@ -137,8 +137,8 @@ export default function Home() {
               </Link>
             </div>
             <dl className={styles.heroFacts}>
-              <div><dt>¥150,000</dt><dd>LP制作・税別</dd></div>
-              <div><dt>¥110,000</dt><dd>事例公開協力・税別</dd></div>
+              <div><dt>¥150,000</dt><dd>LP制作・税別<small>税込165,000円</small></dd></div>
+              <div><dt>¥110,000</dt><dd>事例公開協力・税別<small>税込121,000円</small></dd></div>
               <div><dt>1 month</dt><dd>素材受領後の目安</dd></div>
             </dl>
           </div>
@@ -239,8 +239,10 @@ export default function Home() {
             <div className={styles.priceMain}>
               <p>LP制作 基本料金</p>
               <div><strong>150,000</strong><span>円／税別</span></div>
+              <p className={styles.taxIncluded}>税込165,000円</p>
               <small>事例としての公開にご協力いただける場合</small>
               <div className={styles.discountPrice}><strong>110,000</strong><span>円／税別</span></div>
+              <p className={styles.taxIncluded}>税込121,000円</p>
               <TrackedLink href="/check" location="pricing" className={styles.priceCta}>無料Web診断を依頼する <ArrowRight aria-hidden="true" /></TrackedLink>
             </div>
             <div className={styles.priceIncludes}>
@@ -249,7 +251,7 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.maintenance}>
-            <div><span>DOMAIN / SERVER / CARE</span><h3>公開後の保守　月額5,000円／税別</h3></div>
+            <div><span>DOMAIN / SERVER / CARE</span><h3>公開後の運用・保守　月額5,000円／税別</h3><p className={styles.maintenanceTax}>税込5,500円</p></div>
             <p>ドメイン・サーバーの管理、稼働確認、契約範囲内の軽微な更新に対応します。大幅なページ追加、機能開発、構成変更はオプションとして事前見積りします。</p>
           </div>
           <p className={styles.priceFootnote}>写真は原則として事業者様にご提供いただきます。公開前修正は1回。納期は必要素材の受領後から約1か月が目安です。</p>

@@ -98,6 +98,7 @@
 .heroFacts div + div { padding-left: 14px; border-left: 1px solid var(--line); }
 .heroFacts dt { font-family: Georgia, serif; font-size: clamp(18px, 2vw, 31px); font-weight: 800; letter-spacing: -.03em; white-space: nowrap; }
 .heroFacts dd { margin: 5px 0 0; font-size: 10px; font-weight: 800; color: #647b77; white-space: nowrap; }
+.heroFacts dd small { display: block; margin-top: 3px; font-size: 9px; font-weight: 750; }
 
 .heroVisual { position: relative; min-width: 0; display: flex; align-items: flex-end; background: var(--mint); isolation: isolate; }
 .heroVisual::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(circle at 80% 12%, rgba(255,255,255,.9), transparent 34%), linear-gradient(135deg, transparent 0 68%, rgba(18,60,55,.09) 68% 69%, transparent 69%); }
@@ -181,6 +182,7 @@
 .priceMain strong { font-family: Georgia, serif; font-size: clamp(50px, 6vw, 88px); line-height: 1; letter-spacing: -.04em; }
 .priceMain span { font-size: 12px; font-weight: 900; white-space: nowrap; }
 .priceMain small { display: block; margin: 34px 0 10px; color: #b9cac7; font-size: 10px; }
+.priceMain .taxIncluded { margin: 8px 0 0; color: #b9cac7; font-size: 11px; font-weight: 800; letter-spacing: .04em; }
 .discountPrice strong { color: var(--mustard); font-size: clamp(38px, 4vw, 60px); }
 .priceCta { width: 100%; margin-top: 34px; background: var(--orange); color: white; }
 .priceIncludes { padding: clamp(34px, 4vw, 64px); background: white; }
@@ -190,6 +192,7 @@
 .maintenance { margin-top: 42px; padding: 28px 32px; display: grid; grid-template-columns: .8fr 1.2fr; gap: 5vw; align-items: center; border: 1px solid var(--line); background: #f1e5d2; }
 .maintenance span { color: var(--orange); font-size: 8px; font-weight: 900; letter-spacing: .2em; }
 .maintenance h3 { margin: 8px 0 0; font-family: Georgia, "Yu Mincho", serif; font-size: clamp(20px, 2vw, 29px); }
+.maintenanceTax { margin-top: 7px !important; color: #6d817d !important; font-size: 10px !important; font-weight: 800 !important; }
 .maintenance p, .priceFootnote { margin: 0; color: #54706b; font-size: 11px; line-height: 1.9; font-weight: 650; }
 .priceFootnote { margin-top: 22px; text-align: center; }
 
@@ -291,6 +294,7 @@
   .heroFacts { margin-top: 44px; }
   .heroFacts dt { font-size: 20px; }
   .heroFacts dd { font-size: 8px; }
+  .heroFacts dd small { font-size: 7px; }
   .heroVisual { min-height: 410px; }
   .heroImage { width: 122%; margin-left: -10%; }
   .heroStamp { top: 7%; right: 5%; width: 46%; }
