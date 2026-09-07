@@ -62,6 +62,9 @@ export default function Home() {
 
       <main>
         <section className={styles.hero}>
+          <div className={styles.heroBackdrop} aria-hidden="true">
+            <Image src="/brand/story/hero-river-journey.webp" alt="" fill priority sizes="(max-width: 840px) 120vw, 68vw" />
+          </div>
           <div className={styles.heroInner}>
             <div className={styles.heroCopy}>
               <p className={styles.eyebrow}>WEB SUPPORT FROM TSUKUBA</p>
@@ -70,7 +73,6 @@ export default function Home() {
               <div className={styles.heroActions}><TrackedLink href="/check" location="hero" className={styles.primaryCta}>無料でWeb診断を依頼する <span aria-hidden="true">→</span></TrackedLink><Link href="#approach" className={styles.textCta}>進め方を見る</Link></div>
               <ul className={styles.heroTrust}><li><b>01</b><span>相談だけでもOK</span></li><li><b>02</b><span>制作を前提にしません</span></li><li><b>03</b><span>無料相談</span></li></ul>
             </div>
-            <div className={styles.heroArt}><Image src="/brand/story/hero-river-journey.webp" alt="事業者の価値が川を渡り、必要な人へ届いていく様子を表した手描きイラスト" fill priority sizes="(max-width: 840px) 100vw, 52vw" /></div>
           </div>
         </section>
 
@@ -91,7 +93,7 @@ export default function Home() {
         </section>
 
         <section id="works" className={styles.worksSection}>
-          <div className={styles.sectionIntro}><p className={styles.eyebrow}>WORKS & PROTOTYPES</p><h2><span>業種を並べるのではなく、</span><span>その事業らしい物語をつくる。</span></h2><p>調査で見つけた言葉、写真、背景、顧客の実感を、ひとつの伝わる体験へ編集します。</p></div>
+          <div className={styles.sectionIntro}><p className={styles.eyebrow}>WORKS & PROTOTYPES</p><h2><span>業種を並べる、</span><span>だけではなく。</span><span>その事業らしい物語をつくる。</span></h2><p>調査で見つけた言葉、写真、背景、顧客の実感を、ひとつの伝わる体験へ編集します。</p></div>
           <div className={styles.worksGrid}>
             <article><div className={styles.browser}><span /><span /><span /><b>WEB SITE</b></div><div className={styles.workImage}><Image src="/works/corporate-case.webp" alt="地域工務店のコーポレートサイト制作イメージ" fill sizes="(max-width: 760px) 92vw, 44vw" /></div><div className={styles.workCaption}><p>地域工務店のコーポレートサイト</p><span>コーポレートサイト</span></div></article>
             <article><div className={styles.browser}><span /><span /><span /><b>LP DESIGN</b></div><div className={styles.workImage}><Image src="/works/bakery-case.webp" alt="ベーカリーカフェのLP制作イメージ" fill sizes="(max-width: 760px) 92vw, 44vw" /></div><div className={styles.workCaption}><p>ベーカリーカフェの店舗サイト</p><span>店舗LP</span></div></article>
