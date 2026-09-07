@@ -117,7 +117,7 @@ export default function Home() {
         </div>
 
         <section className={styles.valueSection}>
-          <div><p className={styles.eyebrow}>WHAT WE CREATE</p><h2><span>見た目より先に、</span><span>選ばれる理由をつくる。</span></h2></div>
+          <div><p className={styles.eyebrow}>WHAT WE CREATE</p><h2><span>見た目より先に、</span><span>選ばれる理由を</span><span>つくる。</span></h2></div>
           <div className={styles.valueList}><article><Image src="/brand/story/vector/18-icon-compass.svg" alt="" width={38} height={38} /><div><span>01 / RESEARCH</span><h3>顧客の言葉から強みを見つける</h3><p>口コミ、SNS、検索、競合を横断し、繰り返し現れる価値を探します。</p></div></article><article><Image src="/brand/story/vector/16-icon-handshake.svg" alt="" width={38} height={38} /><div><span>02 / HUMAN TOUCH</span><h3>写真と手描きの温度を残す</h3><p>実際の写真と、人が描くイラストを使い、事業者らしい場面をつくります。</p></div></article><article><Image src="/brand/story/vector/20-icon-thumb.svg" alt="" width={38} height={38} /><div><span>03 / HONESTY</span><h3>事実と推測を混ぜない</h3><p>架空の実績や口コミを作らず、本人確認が必要な情報を分けて扱います。</p></div></article></div>
         </section>
 
@@ -136,7 +136,7 @@ export default function Home() {
 
         <section className={styles.faqSection}><div className={styles.sectionIntro}><Image src="/brand/story/vector/27-icon-faq-q.svg" alt="" width={48} height={48} /><p className={styles.eyebrow}>FAQ</p><h2>よくある質問</h2></div><div className={styles.faqList}>{faqs.map(([question, answer]) => <details key={question}><summary>{question}<Image src="/brand/story/vector/47-icon-faq-plus.svg" alt="開閉" width={20} height={20} /></summary><p>{answer}</p></details>)}</div></section>
 
-        <section className={styles.finalCta}><Image src="/brand/story/final-open-sea.webp" alt="海へ向かって進む船と灯台の手描きイラスト" fill sizes="100vw" /><div className={styles.finalCtaContent}><CircleCheck aria-hidden="true" /><h2><span>まだ作ると決めていなくても、</span><span>大丈夫です。</span></h2><p>まずは、いま困っていることを一緒に整理しましょう。</p><TrackedLink href="/check" location="bottom" className={styles.finalButton}>無料でWeb診断を依頼する <ArrowRight aria-hidden="true" /></TrackedLink><small>相談だけでもOK・制作を前提にしません</small></div></section>
+        <section className={styles.finalCta}><Image src="/brand/story/final-open-sea.webp" alt="海へ向かって進む船と灯台の手描きイラスト" fill sizes="100vw" /><div className={styles.finalCtaContent}><CircleCheck aria-hidden="true" /><h2><span>まだ作ると</span><span>決めていなくても、</span><span>大丈夫です。</span></h2><p>まずは、いま困っていることを一緒に整理しましょう。</p><TrackedLink href="/check" location="bottom" className={styles.finalButton}>無料でWeb診断を依頼する <ArrowRight aria-hidden="true" /></TrackedLink><small>相談だけでもOK・制作を前提にしません</small></div></section>
       </main>
 
       <footer className={styles.footer}><div><Link href="/" className={styles.footerLogo} aria-label="enDesign トップページ"><Image src="/brand/logo.png" alt="enDesign" width={1565} height={820} /></Link><p>いい仕事が、ちゃんと届くように。</p></div><nav aria-label="フッターナビゲーション"><Link href="/terms">利用規約</Link><Link href="/privacy">プライバシーポリシー</Link><Link href="/legal">特定商取引法表記</Link><Link href="/support">お問い合わせ</Link><Link href="/admin">管理者ログイン</Link></nav><small>© 2026 enDesign / PIVOT&amp;QUEST</small></footer>
