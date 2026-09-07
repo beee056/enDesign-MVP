@@ -30,7 +30,7 @@ const notoSerifJP = Noto_Serif_JP({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://en-design-mvp.vercel.app"),
-  title: "enDesign｜いい仕事を、見つけてから作る。調査から始めるLP制作",
+  title: "enDesign｜いい仕事が、ちゃんと届くように。調査から始めるLP制作",
   description: "口コミ・SNS・検索・競合を先に調べ、事業者にしかない価値を見つけて試作LPへ。調査・戦略・デザイン・実装・手描きイラストまで一貫して行うWeb制作サービスです。",
   alternates: {
     canonical: "/",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "enDesign｜いい仕事を、見つけてから作る。",
+    title: "enDesign｜いい仕事が、ちゃんと届くように。",
     description: "口コミ・SNS・検索・競合の調査から始める、事業者らしさが伝わるLP制作。",
     url: "https://en-design-mvp.vercel.app",
     siteName: "enDesign",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "enDesign - いい仕事を、見つけてから作る。調査から始めるLP制作",
+        alt: "enDesign - いい仕事が、ちゃんと届くように。調査から始めるLP制作",
       },
     ],
     locale: "ja_JP",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "enDesign｜いい仕事を、見つけてから作る。",
+    title: "enDesign｜いい仕事が、ちゃんと届くように。",
     description: "口コミ・SNS・検索・競合の調査から始めるLP制作。",
     images: ["/twitter-image.png"],
   },
