@@ -8,12 +8,12 @@
 ## 1. Visual theme & atmosphere
 
 enDesignは、地域事業者の「いい仕事が、ちゃんと届くように。」を支えるWeb診断・制作サービス。
-見た目は派手なAI SaaSではなく、相談しやすい診断カルテ、町の職人の作業台、公開前チェックリストの空気を持つ。
+LPの正本はGoogle Driveの `00-enDesign-LP-full-mockup.png` と `enDesign_LPデザイン素材_2026-08-23`。川・船・島・灯台を、相談から公開までの道のりとして使う。管理画面や診断画面とは異なり、営業LPは親しみと物語を優先する。
 
 - Primary mood: 信頼できる、明朗会計、やさしい伴走感
 - Secondary mood: AIで速いが、最後は人が見る安心感
-- Signature element: 「診断カルテ」風のカード。白い紙面、細い罫線、淡いエメラルド、手順番号で課題が整理されていく印象
-- Avoid: 未来的すぎるネオン、過剰なグラデーション、抽象的なAI波形、根拠のない実績数値
+- Signature element: 手描きの川が各セクションをつなぎ、相談者と制作者が同じ船で進む視覚言語
+- Avoid: 未来的すぎるネオン、過剰なグラデーション、抽象的なAI波形、根拠のない実績数値、意味のないSVG図形、画像素材を無視した汎用SaaSレイアウト
 
 ## 2. Color palette & roles
 
@@ -35,7 +35,7 @@ Primary green is functional, not decorative. It should mean 「次に進める�
 
 ## 3. Typography rules
 
-Use the app's existing sans stack via Tailwind (`font-sans`). The voice is clear and practical.
+本文は可読性の高いゴシック、主要見出しは柔らかな明朝。見出しの改行は意味の塊単位で設計し、1文字だけ次行へ残る状態を禁止する。
 
 | Role | Size guide | Weight | Tracking | Use |
 |---|---:|---:|---:|---|
@@ -116,17 +116,20 @@ Motion should be calm. Use fade/translate for section reveals; avoid constant de
 
 ## 8. Responsive behavior
 
-- Mobile first. CTA stack vertically; cards become one column.
+- Mobile first. CTA stack vertically; cards become one column。
 - Header navigation hides secondary anchors on mobile but keeps the primary diagnosis CTA visible.
 - Touch targets should be at least 44px high.
 - Pricing card highlight should not rely on vertical offset on small screens.
-- Long Japanese headings need manual line breaks only where they improve meaning.
+- 日本語見出しは375px・390px・430pxで実表示を確認する。1文字残り、語の途中の不自然な折返し、横方向のはみ出しは公開ブロッカー。
+- 改行はJSXの意味単位 `span` とレスポンシブ文字サイズで制御し、`br` の継ぎ足し修正をしない。
+- 画像はアスペクト比を固定し、`object-fit` と表示枠を同時に確認する。文字入り画像を小さなカードへ押し込まない。
+- モバイルでは過剰な `min-height` を使わず、セクション余白は原則64px前後から設計する。
 
 ## 9. Agent prompt guide
 
 When improving UI, follow this brief:
 
-> Build enDesign as a calm, transparent Web診断カルテ for local business owners. Use a slate/white paper surface, emerald only for progress and primary actions, large honest Japanese headings, rounded diagnostic cards, and clear pricing boundaries. Make the AI+human workflow visible, but keep the service human and practical.
+> Build enDesign as a warm illustrated journey for local business owners. Use the river, boat, islands and lighthouse from the approved Drive asset set; pair them with honest Japanese copy, transparent pricing and clear CTAs. Keep the service human, practical and easy to read on a 375px phone.
 
 Quality check before shipping:
 
