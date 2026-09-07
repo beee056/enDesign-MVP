@@ -47,10 +47,13 @@
 .hero {
   position: relative;
   isolation: isolate;
+  overflow: hidden;
   background: linear-gradient(180deg, #fffaf0 0%, #fffdf7 76%, #f4ead7 100%);
 }
 .hero::after { content: ""; position: absolute; inset: auto 0 0; z-index: -1; height: 74px; background: var(--cream); clip-path: polygon(0 68%, 20% 88%, 45% 56%, 72% 90%, 100% 62%, 100% 100%, 0 100%); }
-.heroInner { max-width: 1440px; min-height: 720px; margin: auto; padding: 68px clamp(24px, 5.5vw, 88px) 92px; display: grid; grid-template-columns: minmax(410px, .82fr) minmax(520px, 1.18fr); align-items: center; gap: 18px; }
+.heroBackdrop { position: absolute; z-index: -1; top: 0; right: -3vw; width: min(980px, 68vw); height: 100%; pointer-events: none; -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.18) 10%, #000 28%, #000 92%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.18) 10%, #000 28%, #000 92%, transparent 100%); }
+.heroBackdrop img { object-fit: contain; object-position: right center; }
+.heroInner { max-width: 1440px; min-height: 720px; margin: auto; padding: 68px clamp(24px, 5.5vw, 88px) 92px; display: flex; align-items: center; }
 .heroCopy { position: relative; z-index: 2; }
 .hero h1 { max-width: 650px; font-size: clamp(3.35rem, 5.6vw, 5.9rem); font-weight: 600; line-height: 1.22; letter-spacing: -.07em; }
 .hero h1 span:last-child { color: var(--ink); white-space: nowrap; }
@@ -62,8 +65,6 @@
 .heroTrust li { min-width: 0; padding: 18px 12px 0; display: flex; align-items: center; justify-content: center; gap: 8px; color: #49666b; font-size: .7rem; font-weight: 700; text-align: center; }
 .heroTrust li + li { border-left: 1px solid var(--line); }
 .heroTrust b { color: var(--coral); font: 800 .72rem Georgia, serif; letter-spacing: .08em; }
-.heroArt { position: relative; width: min(760px, 54vw); aspect-ratio: 3 / 2; justify-self: end; }
-.heroArt img { object-fit: contain; mix-blend-mode: multiply; }
 .heroCloud { top: 66px; left: 43%; width: 150px; opacity: .72; }
 .heroSun { top: 52px; right: 4.5%; width: 95px; }
 .heroBirds { top: 150px; right: 37%; width: 86px; }
@@ -217,7 +218,8 @@
 @media (max-width: 1050px) {
   .nav { display: none; }
   .header { grid-template-columns: 1fr auto; }
-  .heroInner { min-height: 650px; grid-template-columns: minmax(370px, .9fr) minmax(430px, 1.1fr); padding-inline: 4vw; }
+  .heroInner { min-height: 650px; padding-inline: 4vw; }
+  .heroBackdrop { right: -16vw; width: 78vw; opacity: .72; }
   .hero h1 { font-size: clamp(3.2rem, 6.2vw, 4.6rem); }
   .partnerSection { grid-template-columns: .7fr 1.3fr; }
   .priceSection { grid-template-columns: 1fr; }
@@ -227,11 +229,12 @@
 }
 
 @media (max-width: 840px) {
-  .heroInner { padding-top: 56px; grid-template-columns: 1fr; }
-  .heroCopy { text-align: center; }
-  .hero h1, .heroLead { margin-inline: auto; }
-  .heroActions, .heroTrust { justify-content: center; margin-inline: auto; }
-  .heroArt { width: min(720px, 96vw); justify-self: center; }
+  .heroInner { min-height: 0; padding-top: 56px; }
+  .heroCopy { width: 100%; text-align: left; }
+  .hero h1, .heroLead { margin-inline: 0; }
+  .heroActions, .heroTrust { justify-content: flex-start; margin-inline: 0; }
+  .heroBackdrop { top: auto; right: -22%; bottom: -2%; width: 124%; height: 48%; opacity: .72; -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 88%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 88%, transparent 100%); }
+  .heroBackdrop img { object-position: right bottom; }
   .concernGrid { grid-template-columns: 1fr 1fr; }
   .stepGrid { gap: 26px; }
   .stepCard:not(:last-child)::after { right: -22px; }
@@ -254,17 +257,17 @@
   .headerCta { min-height: 42px; padding-inline: 14px; font-size: .72rem; }
   .headerCta svg { display: none; }
   .eyebrow { margin-bottom: 13px; font-size: .62rem; }
-  .heroInner { min-height: 0; padding: 48px 20px 72px; gap: 18px; }
-  .hero h1 { font-size: clamp(2.62rem, 12.4vw, 3.25rem); line-height: 1.28; letter-spacing: -.075em; }
-  .hero h1 span:last-child { white-space: normal; }
-  .heroLead { margin-top: 23px; font-size: .92rem; line-height: 1.85; text-align: left; }
+  .heroInner { min-height: 760px; padding: 54px 20px 300px; }
+  .hero h1 { max-width: 100%; font-size: clamp(2.25rem, 10.4vw, 2.75rem); line-height: 1.32; letter-spacing: -.065em; text-wrap: balance; }
+  .hero h1 span { white-space: nowrap; }
+  .heroLead { margin-top: 22px; max-width: 34em; font-size: clamp(.86rem, 3.8vw, .94rem); line-height: 1.9; font-weight: 520; text-align: left; }
   .heroActions { margin-top: 25px; flex-direction: column; align-items: stretch; gap: 15px; }
   .primaryCta { width: 100%; min-height: 56px; padding-inline: 16px; font-size: .85rem; }
   .textCta { align-self: center; }
   .heroTrust { margin-top: 32px; grid-template-columns: 1fr; border-top: 0; }
   .heroTrust li { min-height: 44px; padding: 0; justify-content: flex-start; border-top: 1px solid var(--line); }
   .heroTrust li + li { border-left: 0; }
-  .heroArt { width: 110vw; margin-left: -5vw; }
+  .heroBackdrop { right: -29%; bottom: -1%; width: 140%; height: 43%; opacity: .88; }
   .heroCloud { top: 20px; left: 6%; width: 86px; }
   .heroSun { top: 88px; right: -16px; width: 66px; }
   .heroBirds { display: none; }
@@ -272,8 +275,11 @@
   .storyJourney::before { inset-inline: -34%; background-size: 165% 1180px; opacity: .26; }
   .concernSection, .approachSection, .worksSection, .flowSection, .faqSection { padding: 64px 20px; }
   .sectionIntro { margin-bottom: 38px; }
-  .sectionIntro h2, .approachHeading h2, .partnerCopy h2, .valueSection h2, .targetSection h2 { font-size: clamp(1.82rem, 8.4vw, 2.12rem); line-height: 1.46; letter-spacing: -.045em; }
+  .sectionIntro h2, .approachHeading h2, .partnerCopy h2, .valueSection h2, .targetSection h2 { max-width: 100%; font-size: clamp(1.7rem, 7.5vw, 2rem); line-height: 1.45; letter-spacing: -.04em; text-wrap: balance; }
   .sectionIntro h2 span, .approachHeading h2 span, .partnerCopy h2 span, .valueSection h2 span, .targetSection h2 span { white-space: normal; }
+  .worksSection .sectionIntro h2 { font-size: clamp(1.78rem, 7.8vw, 2.08rem); line-height: 1.4; }
+  .worksSection .sectionIntro h2 span:first-child,
+  .worksSection .sectionIntro h2 span:nth-child(2) { white-space: nowrap; }
   .sectionIntro > p:last-child { margin-top: 14px; font-size: .88rem; line-height: 1.8; }
   .concernGrid { gap: 10px; }
   .concernCard { padding: 12px 10px 18px; border-radius: 44% 44% 18px 18px / 18% 18% 18px 18px; }
