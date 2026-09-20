@@ -24,7 +24,7 @@ const principles = [
 ] as const;
 
 const deliverables = [
-  "公開情報の横断調査・競合比較", "訴求設計・構成・文章整理", "オリジナルLPデザインと実装", "スマートフォン・PC対応",
+  "公開情報の横断調査・競合比較", "訴求設計・構成・文章整理", "最大7セクションのLPデザインと実装", "スマートフォン・PC対応",
   "問い合わせ・MAP・SNS導線", "ファビコン・OGP・基本SEO", "人が描くオリジナルイラスト", "公開前確認と修正1回",
 ];
 
@@ -34,15 +34,15 @@ const workflow = [
   ["03", "試作", "その事業者らしい言葉と見た目で、LPの完成像を作ります。"],
   ["04", "対話", "試作を見ながら、事実確認と必要素材をすり合わせます。"],
   ["05", "本制作", "ご提供写真と手描きイラストを反映し、公開品質に仕上げます。"],
-  ["06", "公開・保守", "表示と導線を確認して公開し、必要に応じて運用を支えます。"],
+  ["06", "公開・管理", "表示と導線を確認して公開し、ドメイン・サーバーを継続管理します。"],
 ];
 
 const faqs = [
   ["相談だけでも本当に大丈夫ですか？", "はい。制作を前提にしない無料Web診断から始められます。現状を整理したうえで、制作が必要かどうかも含めてお伝えします。"],
   ["写真が手元に少なくても相談できますか？", "相談・試作段階では進められます。本制作では、実際の事業の魅力を正確に伝えるため、原則として事業者様から写真をご提供いただきます。"],
   ["AIだけで制作するサービスですか？", "いいえ。調査や整理の効率化にはAIを使いますが、事実確認、訴求判断、デザイン品質、公開判断は人が行います。最終イラストも人が描きます。"],
-  ["公開後の修正はできますか？", "制作料金には公開前の修正1回が含まれます。公開後の軽微な更新は保守範囲で、大幅な追加・改修は事前のお見積りで対応します。"],
-  ["納期はどのくらいですか？", "必要な写真や確認事項が揃ってから、約1か月が目安です。追加オプションなどで変わる場合は、着手前にお伝えします。"],
+  ["公開後の修正はできますか？", "制作料金には公開前の修正1回が含まれます。公開後の軽微な更新は月額公開管理費の範囲で、大幅な追加・改修は事前のお見積りで対応します。"],
+  ["納期はどのくらいですか？", "必要な写真や確認事項が揃ってから、約1か月が目安です。追加ページ・追加機能等で変わる場合は、着手前にお伝えします。"],
 ];
 
 export default function Home() {
@@ -98,7 +98,7 @@ export default function Home() {
             <article><div className={styles.browser}><span /><span /><span /><b>WEB SITE</b></div><div className={styles.workImage}><Image src="/works/corporate-case.webp" alt="地域工務店のコーポレートサイト制作イメージ" fill sizes="(max-width: 760px) 92vw, 44vw" /></div><div className={styles.workCaption}><p>地域工務店のコーポレートサイト</p><span>コーポレートサイト</span></div></article>
             <article><div className={styles.browser}><span /><span /><span /><b>LP DESIGN</b></div><div className={styles.workImage}><Image src="/works/bakery-case.webp" alt="ベーカリーカフェのLP制作イメージ" fill sizes="(max-width: 760px) 92vw, 44vw" /></div><div className={styles.workCaption}><p>ベーカリーカフェの店舗サイト</p><span>店舗LP</span></div></article>
           </div>
-          <p className={styles.worksNote}>※制作イメージを含みます。公開情報を使用した提案物は、納品前に事業者本人の確認と許諾を行います。</p>
+          <p className={styles.worksNote}>※制作イメージを含みます。契約前の提案物で第三者の公開情報を使用する場合は、公開前に事業者本人の確認と許諾を行います。契約後の制作実績利用は、契約時の包括同意に基づきます。</p>
         </section>
         </div>
 
@@ -109,7 +109,7 @@ export default function Home() {
 
         <section id="price" className={styles.priceSection}>
           <div className={styles.lighthouseArt}><Image src="/brand/story/lighthouse-island.webp" alt="料金と公開後の運用を見通す灯台の手描きイラスト" fill sizes="(max-width: 760px) 70vw, 28vw" /></div>
-          <div className={styles.priceContent}><div className={styles.priceHeading}><p className={styles.eyebrow}>PRICE & SCOPE</p><h2>料金と制作範囲</h2><p>含まれる内容と追加費用の境界を、制作前に確認します。</p></div><div className={styles.pricePanel}><div className={styles.priceNumbers}><p>LP制作 基本料金</p><strong>150,000<small>円／税別</small></strong><span>税込165,000円</span><hr /><p>事例公開にご協力いただける場合</p><strong className={styles.discount}>110,000<small>円／税別</small></strong><span>税込121,000円</span></div><div className={styles.includes}><p>基本料金に含まれるもの</p><ul>{deliverables.map((item) => <li key={item}><b aria-hidden="true">✓</b>{item}</li>)}</ul><div className={styles.optionBoundary}><p>追加費用になるもの</p>{["ページ・機能の追加", "写真撮影・大幅な原稿作成", "公開後の構成変更"].map((item) => <span key={item}><b aria-hidden="true">—</b>{item}</span>)}</div></div></div><div className={styles.careBox}><div><span>DOMAIN / SERVER / CARE</span><h3>公開後の運用・保守</h3></div><strong>月額5,000円<small>／税別</small></strong><p>税込5,500円。ドメイン・サーバー管理、稼働確認、契約範囲内の軽微な更新に対応します。</p></div><p className={styles.priceNote}>写真は原則として事業者様にご提供いただきます。公開前修正は1回。納期は必要素材の受領後から約1か月が目安です。ページ追加や大幅な機能追加は、着手前に別途お見積りします。</p></div>
+          <div className={styles.priceContent}><div className={styles.priceHeading}><p className={styles.eyebrow}>PRICE & SCOPE</p><h2>料金と制作範囲</h2><p>含まれる内容と追加費用の境界を、制作前に確認します。</p></div><div className={styles.pricePanel}><div className={styles.priceNumbers}><p>LP制作 基本料金</p><strong>150,000<small>円／税込</small></strong><span>最大7セクション・公開前修正1回</span><hr /><p>社名入り詳細事例・取材・成果確認にご協力いただける場合</p><strong className={styles.discount}>110,000<small>円／税込</small></strong><span>契約時に追加の包括同意をいただきます</span></div><div className={styles.includes}><p>基本料金に含まれるもの</p><ul>{deliverables.map((item) => <li key={item}><b aria-hidden="true">✓</b>{item}</li>)}</ul><div className={styles.optionBoundary}><p>追加費用になるもの</p>{["ページ・機能の追加", "写真撮影・大幅な原稿作成", "公開後の構成変更"].map((item) => <span key={item}><b aria-hidden="true">—</b>{item}</span>)}</div></div></div><div className={styles.careBox}><div><span>DOMAIN / SERVER / PUBLISHING</span><h3>公開管理契約（公開中は必須）</h3></div><strong>月額5,000円<small>／税込</small></strong><p>当社名義で取得するドメイン、サーバー、公開維持、稼働確認、月30分までの軽微な更新を含みます。</p></div><p className={styles.priceNote}>制作物の権利、ドメイン、ソース・編集データは当社が保有し、お客様には契約中のWebサイト利用を許諾します。公開中は月額公開管理契約が必要です。解約・未払いによる一時停止後、所定期間内に解消されない場合は公開と契約を終了します。</p></div>
         </section>
 
         <section id="flow" className={styles.flowSection}>
