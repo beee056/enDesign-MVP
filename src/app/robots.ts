@@ -12,6 +12,6 @@ export default function robots(): MetadataRoute.Robots {
         '/sign-in/'         // ログイン画面
       ],
     },
-    sitemap: 'https://en-design-mvp.vercel.app/sitemap.xml',
+    sitemap: 'https://endesign.p-quest.com/sitemap.xml',
   }
 }

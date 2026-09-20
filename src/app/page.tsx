@@ -47,7 +47,7 @@ const faqs = [
 
 export default function Home() {
   const organizationJsonLd = JSON.stringify({
-    "@context": "https://schema.org", "@type": "ProfessionalService", name: "enDesign", url: "https://en-design-mvp.vercel.app",
+    "@context": "https://schema.org", "@type": "ProfessionalService", name: "enDesign", url: "https://endesign.p-quest.com",
     description: "公開情報の調査から、事業者らしさが伝わるLPの試作・制作・公開までを支援するWeb制作サービス。", areaServed: "Japan",
   }).replace(/</g, "\\u003c");
 

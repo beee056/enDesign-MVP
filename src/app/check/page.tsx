@@ -1,16 +1,26 @@
-import { DiagnosisForm } from "@/components/check/DiagnosisForm";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { QuickDiagnosis } from "@/components/check/QuickDiagnosis";
+import styles from "./check.module.css";
+
+export const metadata: Metadata = {
+  title: "2〜3分の無料Web診断｜enDesign",
+  description: "7つの質問に答えるだけで、Webの優先課題と次にできることがその場で分かります。個人情報の入力は不要です。",
+  alternates: { canonical: "/check" },
+};
 
 export default function CheckPage() {
   return (
-    <div className="container mx-auto py-10 px-4 md:px-8">
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold mb-2">無料Web診断</h1>
-        <p className="text-muted-foreground">
-          5分で完了。あなたの事業の「もったいない」を見つけます。
-        </p>
-      </div>
-      
-      <DiagnosisForm />
+    <div className={styles.page}>
+      <header className={styles.header}>
+        <Link href="/" className={styles.logo} aria-label="enDesign トップページ">
+          <Image src="/brand/logo.png" alt="enDesign" width={1565} height={820} priority />
+        </Link>
+        <p>2〜3分・個人情報の入力なし</p>
+      </header>
+      <main><QuickDiagnosis /></main>
+      <footer className={styles.footer}>© 2026 enDesign / PIVOT&amp;QUEST</footer>
     </div>
   );
 }

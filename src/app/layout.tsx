@@ -29,7 +29,7 @@ const notoSerifJP = Noto_Serif_JP({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://en-design-mvp.vercel.app"),
+  metadataBase: new URL("https://endesign.p-quest.com"),
   title: "enDesign｜いい仕事が、ちゃんと届くように。調査から始めるLP制作",
   description: "口コミ・SNS・検索・競合を先に調べ、事業者にしかない価値を見つけて試作LPへ。調査・戦略・デザイン・実装・手描きイラストまで一貫して行うWeb制作サービスです。",
   alternates: {
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "enDesign｜いい仕事が、ちゃんと届くように。",
     description: "口コミ・SNS・検索・競合の調査から始める、事業者らしさが伝わるLP制作。",
-    url: "https://en-design-mvp.vercel.app",
+    url: "https://endesign.p-quest.com",
     siteName: "enDesign",
     images: [
       {
