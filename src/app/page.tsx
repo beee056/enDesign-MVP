@@ -41,7 +41,8 @@ const faqs = [
   ["相談だけでも本当に大丈夫ですか？", "はい。制作を前提にしない無料Web診断から始められます。現状を整理したうえで、制作が必要かどうかも含めてお伝えします。"],
   ["写真が手元に少なくても相談できますか？", "相談・試作段階では進められます。本制作では、実際の事業の魅力を正確に伝えるため、原則として事業者様から写真をご提供いただきます。"],
   ["AIだけで制作するサービスですか？", "いいえ。調査や整理の効率化にはAIを使いますが、事実確認、訴求判断、デザイン品質、公開判断は人が行います。最終イラストも人が描きます。"],
-  ["公開後の修正はできますか？", "制作料金には公開前の修正1回が含まれます。月額公開基盤利用料に修正・更新は含まれません。公開後の変更は、内容を確認して別途お見積りします。"],
+  ["公開後の修正はできますか？", "初期制作・公開設定費には公開前の修正1回が含まれます。月額公開基盤利用料に修正・更新は含まれません。公開後の変更は、内容を確認して別途お見積りします。"],
+  ["解約するとドメインはどうなりますか？", "契約時にお客様専用として新規取得した独立ドメインは、未払金がなく、契約終了後30日以内にお申し出いただいた場合、事務手数料22,000円（税込）と移管実費で移管手続に協力します。登録事業者等の制限により移管できない場合があり、Webサイトのソース・編集データ等は対象外です。"],
   ["納期はどのくらいですか？", "必要な写真や確認事項が揃ってから、約1か月が目安です。追加ページ・追加機能等で変わる場合は、着手前にお伝えします。"],
 ];
 
@@ -109,7 +110,7 @@ export default function Home() {
 
         <section id="price" className={styles.priceSection}>
           <div className={styles.lighthouseArt}><Image src="/brand/story/lighthouse-island.webp" alt="料金と公開基盤利用料を示す灯台の手描きイラスト" fill sizes="(max-width: 760px) 70vw, 28vw" /></div>
-          <div className={styles.priceContent}><div className={styles.priceHeading}><p className={styles.eyebrow}>PRICE & SCOPE</p><h2>料金と制作範囲</h2><p>含まれる内容と追加費用の境界を、制作前に確認します。</p></div><div className={styles.pricePanel}><div className={styles.priceNumbers}><p>LP制作 基本料金</p><strong>150,000<small>円／税込</small></strong><span>最大7セクション・公開前修正1回</span><hr /><p>社名入り詳細事例・取材・成果確認にご協力いただける場合</p><strong className={styles.discount}>110,000<small>円／税込</small></strong><span>契約時に追加の包括同意をいただきます</span></div><div className={styles.includes}><p>基本料金に含まれるもの</p><ul>{deliverables.map((item) => <li key={item}><b aria-hidden="true">✓</b>{item}</li>)}</ul><div className={styles.optionBoundary}><p>追加費用になるもの</p>{["ページ・機能の追加", "写真撮影・大幅な原稿作成", "公開後の構成変更"].map((item) => <span key={item}><b aria-hidden="true">—</b>{item}</span>)}</div></div></div><div className={styles.careBox}><div><span>DOMAIN / SERVER / SSL</span><h3>月額公開基盤利用料（公開中は必須）</h3></div><strong>月額5,000円<small>／税込</small></strong><p>制作物の利用許諾、当社名義のドメイン、サーバー、SSL環境による継続公開の料金です。修正・更新・監視・解析・SEO・バックアップ／復元保証・運用相談・操作支援・お客様都合の問い合わせ対応は含みません。</p></div><p className={styles.priceNote}>制作物の権利、ドメイン、ソース・編集データは当社が保有し、お客様には契約中のWebサイト利用を許諾します。公開後の内容確認、外部サービス管理、不具合の発見、修正依頼はお客様にて行っていただきます。</p></div>
+          <div className={styles.priceContent}><div className={styles.priceHeading}><p className={styles.eyebrow}>PRICE & SCOPE</p><h2>料金と制作範囲</h2><p>含まれる内容と追加費用の境界を、制作前に確認します。</p></div><div className={styles.pricePanel}><div className={styles.priceNumbers}><p>初期制作・公開設定費</p><strong>150,000<small>円／税込</small></strong><span>最大7セクション・公開前修正1回</span><hr /><p>社名入り詳細事例・取材・成果確認にご協力いただける場合</p><strong className={styles.discount}>110,000<small>円／税込</small></strong><span>契約時に追加の包括同意をいただきます</span></div><div className={styles.includes}><p>初期制作・公開設定費に含まれるもの</p><ul>{deliverables.map((item) => <li key={item}><b aria-hidden="true">✓</b>{item}</li>)}</ul><div className={styles.optionBoundary}><p>追加費用になるもの</p>{["ページ・機能の追加", "写真撮影・大幅な原稿作成", "公開後の構成変更"].map((item) => <span key={item}><b aria-hidden="true">—</b>{item}</span>)}</div></div></div><div className={styles.careBox}><div><span>DOMAIN / SERVER / SSL</span><h3>月額公開基盤利用料（公開中は必須）</h3></div><strong>月額5,000円<small>／税込</small></strong><p>制作物の利用許諾、ドメイン取得・更新、DNS設定、ホスティング、SSL環境の維持と、当社管理部分に起因する公開障害の通常の復旧確認・作業を含みます。修正・更新・定期監視・解析・SEO・バックアップ／復元保証・運用相談・操作支援は含みません。常時監視・即時復旧・復旧時間・サービス水準は保証しません。</p></div><p className={styles.priceNote}>買い切り型ではなく、契約中に制作物と公開環境をご利用いただくサービスです。ソース・編集データは当社が保有します。契約時にお客様専用として新規取得した独立ドメインは、精算完了と終了後30日以内の申出を条件に、事務手数料22,000円（税込）と実費で移管手続に協力します。登録事業者等の制限により移管できない場合があります。</p></div>
         </section>
 
         <section id="flow" className={styles.flowSection}>
