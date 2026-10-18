@@ -9,6 +9,55 @@ import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
+interface DiagnosisComments {
+  summary?: string;
+  goodPoints: string[];
+  improvementPoints: string[];
+  selfHelpActions: string[];
+  freeAdvice: string[];
+  recommendedPlan?: string;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function getOptionalString(value: unknown): string | undefined {
+  return typeof value === "string" ? value : undefined;
+}
+
+function getStringArray(value: unknown): string[] {
+  return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : [];
+}
+
+function parseDiagnosisComments(value: string | null): DiagnosisComments {
+  const emptyComments: DiagnosisComments = {
+    goodPoints: [],
+    improvementPoints: [],
+    selfHelpActions: [],
+    freeAdvice: [],
+  };
+
+  if (!value) return emptyComments;
+
+  try {
+    const parsed: unknown = JSON.parse(value);
+    if (!isRecord(parsed)) return emptyComments;
+
+    return {
+      summary: getOptionalString(parsed.summary),
+      goodPoints: getStringArray(parsed.goodPoints),
+      improvementPoints: getStringArray(parsed.improvementPoints),
+      selfHelpActions: getStringArray(parsed.selfHelpActions),
+      freeAdvice: getStringArray(parsed.freeAdvice),
+      recommendedPlan: getOptionalString(parsed.recommendedPlan),
+    };
+  } catch (error) {
+    console.error("Failed to parse diagnosis recommendations", error);
+    return emptyComments;
+  }
+}
+
 export default async function DiagnosisResultPage({ params }: { params: { id: string } }) {
   // DBから診断結果と事業者情報を取得
   const diagnosisRecord = await db.query.diagnoses.findFirst({
@@ -23,20 +72,9 @@ export default async function DiagnosisResultPage({ params }: { params: { id: st
     where: eq(businesses.id, diagnosisRecord.businessId!),
   });
 
-  // JSON形式で保存されているAIからの推薦コメントをパース
-  let aiComments: any = {};
-  if (diagnosisRecord.recommendations) {
-    try {
-      aiComments = JSON.parse(diagnosisRecord.recommendations);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  const goodPoints: string[] = Array.isArray(aiComments.goodPoints) ? aiComments.goodPoints : [];
-  const improvementPoints: string[] = Array.isArray(aiComments.improvementPoints) ? aiComments.improvementPoints : [];
-  const selfHelpActions: string[] = Array.isArray(aiComments.selfHelpActions) ? aiComments.selfHelpActions : [];
-  const freeAdvice: string[] = Array.isArray(aiComments.freeAdvice) ? aiComments.freeAdvice : [];
+  // JSON形式で保存されているAIからの推薦コメントを検証してパース
+  const aiComments = parseDiagnosisComments(diagnosisRecord.recommendations);
+  const { goodPoints, improvementPoints, selfHelpActions, freeAdvice } = aiComments;
 
   return (
     <div className="container mx-auto py-10 px-4 md:px-8 max-w-5xl space-y-12">
