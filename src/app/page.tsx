@@ -42,7 +42,7 @@ const faqs = [
   ["写真が手元に少なくても相談できますか？", "相談・試作段階では進められます。本制作では、実際の事業の魅力を正確に伝えるため、原則として事業者様から写真をご提供いただきます。"],
   ["AIだけで制作するサービスですか？", "いいえ。調査や整理の効率化にはAIを使いますが、事実確認、訴求判断、デザイン品質、公開判断は人が行います。最終イラストも人が描きます。"],
   ["公開後の修正はできますか？", "できますが別料金です。制作費に含む修正は、初稿の確認期限までに修正点を一度にまとめていただく公開前1回のみです。最初の修正連絡後の追加・小分け連絡、2回目以降、内容確定後・公開後の文言変更や画像差し替えは、軽微な内容も含め別途お見積りします。"],
-  ["解約するとドメインはどうなりますか？", "独自ドメインは原則として当社名義・当社アカウントで取得・管理します。そのため、お客様だけでAuthCodeの取得や他社への移管はできず、当社の手続・協力が必要です。終了時は、移管制限等がない限り、所定の精算後に原則14日以内に移管へ協力します。共有ドメイン・サブドメインは移管対象外です。"],
+  ["解約するとドメインはどうなりますか？", "独自ドメインは原則として当社名義・当社アカウントで取得・管理します。そのため、お客様だけでAuthCodeの取得や他社への移管はできず、当社の手続・協力が必要です。終了時は、移管制限等がない限り、所定の精算後に原則14日以内に移管へ協力します。お客様名義のドメインを使用する場合は、お客様が契約・更新を管理します。"],
   ["納期はどのくらいですか？", "必要な写真や確認事項が揃ってから、約1か月が目安です。追加ページ・追加機能等で変わる場合は、着手前にお伝えします。"],
 ];
 
@@ -110,7 +110,13 @@ export default function Home() {
 
         <section id="price" className={styles.priceSection}>
           <div className={styles.lighthouseArt}><Image src="/brand/story/lighthouse-island.webp" alt="料金と公開基盤利用料を示す灯台の手描きイラスト" fill sizes="(max-width: 760px) 70vw, 28vw" /></div>
-          <div className={styles.priceContent}><div className={styles.priceHeading}><p className={styles.eyebrow}>PRICE & SCOPE</p><h2>料金と制作範囲</h2><p>含まれる内容と追加費用の境界を、制作前に確認します。</p></div><div className={styles.pricePanel}><div className={styles.priceNumbers}><p>初期制作・公開設定費</p><strong>150,000<small>円／税込</small></strong><span>最大7セクション・公開前修正1回</span><hr /><p>社名入り詳細事例・取材・成果確認にご協力いただける場合</p><strong className={styles.discount}>110,000<small>円／税込</small></strong><span>契約時に追加の包括同意をいただきます</span></div><div className={styles.includes}><p>初期制作・公開設定費に含まれるもの</p><ul>{deliverables.map((item) => <li key={item}><b aria-hidden="true">✓</b>{item}</li>)}</ul><div className={styles.optionBoundary}><p>追加費用になるもの</p>{["修正1回後の追加・小分け連絡", "内容確定後・公開後の文言・画像差し替え", "ページ・機能追加、撮影・大幅な原稿作成"].map((item) => <span key={item}><b aria-hidden="true">—</b>{item}</span>)}</div></div></div><p className={styles.priceNote}>修正1回とは、初稿の確認期限までに修正点を一度にまとめていただく1回です。最初の修正連絡後の追加・小分け連絡、2回目以降、内容確定後・公開後の修正は、軽微な文言変更や画像差し替えも別料金です。追加修正は標準16,500円（税込）から、作業前に金額と納期をお知らせします。</p><div className={styles.careBox}><div><span>DOMAIN / SERVER / SSL</span><h3>月額公開基盤利用料（公開中は必須）</h3></div><strong>月額5,500円<small>／税込</small></strong><p>独自ドメインの取得・更新、DNS設定、ホスティング、SSL環境の維持と、当社管理部分に起因する公開障害の通常の復旧確認・作業を含みます。修正・更新・定期監視・解析・SEO・バックアップ／復元保証・運用相談・操作支援は含みません。常時監視・即時復旧・復旧時間・サービス水準は保証しません。</p></div><p className={styles.priceNote}>制作費と公開基盤利用料は別契約です。Stripeの初回決済日を利用開始日として、利用開始日から1年間、支払総額66,000円（税込）を月額5,500円で支払う契約です。満了日の30日前までに不更新の申出がなければ1年間自動更新します。期間中の中途解約は原則できず、当社が同意する中途終了では残月分をご精算いただきます。独自ドメインは原則として当社名義・当社アカウントで取得・管理します。お客様だけではAuthCode取得や他社移管を行えず、当社の手続・協力が必要です。制作物の権利・利用範囲・引渡しは、制作契約または見積書で定めます。</p></div>
+          <div className={styles.priceContent}>
+            <div className={styles.priceHeading}><p className={styles.eyebrow}>PRICE & SCOPE</p><h2>料金と制作範囲</h2><p>含まれる内容と追加費用の境界を、制作前に確認します。</p></div>
+            <div className={styles.pricePanel}><div className={styles.priceNumbers}><p>初期制作・公開設定費</p><strong>150,000<small>円／税込</small></strong><span>最大7セクション・公開前修正1回</span><hr /><p>社名入り詳細事例・取材・成果確認にご協力いただける場合</p><strong className={styles.discount}>110,000<small>円／税込</small></strong><span>契約時に追加の包括同意をいただきます</span></div><div className={styles.includes}><p>初期制作・公開設定費に含まれるもの</p><ul>{deliverables.map((item) => <li key={item}><b aria-hidden="true">✓</b>{item}</li>)}</ul><div className={styles.optionBoundary}><p>追加費用になるもの</p>{["修正1回後の追加・小分け連絡", "内容確定後・公開後の文言・画像差し替え", "ページ・機能追加、撮影・大幅な原稿作成"].map((item) => <span key={item}><b aria-hidden="true">—</b>{item}</span>)}</div></div></div>
+            <p className={styles.priceNote}>修正1回とは、初稿の確認期限までに修正点を一度にまとめていただく1回です。最初の修正連絡後の追加・小分け連絡、2回目以降、内容確定後・公開後の修正は、軽微な文言変更や画像差し替えも別料金です。追加修正は標準16,500円（税込）から、作業前に金額と納期をお知らせします。</p>
+            <div className={styles.careBox}><div><span>DOMAIN / SERVER / SSL</span><h3>月額公開基盤利用料（公開中は必須）</h3></div><strong>月額5,500円<small>／税込</small></strong><p>年額5,000円（税込）までの通常ドメイン1件の取得・更新、DNS設定、ホスティング、SSL環境の維持と、当社管理部分に起因する公開障害の通常の復旧確認・作業を含みます。上限を超えるドメイン費や、お客様が用意するドメイン・サーバーの外部利用料と環境固有作業は別途です。</p></div>
+            <p className={styles.priceNote}>制作費と公開基盤利用料は別契約です。Stripeの初回決済日を利用開始日として、利用開始日から1年間、支払総額66,000円（税込）を月額5,500円で支払う契約です。満了日の30日前までに不更新の申出がなければ1年間自動更新します。期間中の中途解約は原則できず、当社が同意する中途終了では残月分をご精算いただきます。独自ドメインは原則としてムームードメインを利用し、当社名義・当社アカウントで取得・管理します。お客様だけではAuthCode取得や他社移管を行えず、当社の手続・協力が必要です。制作物の権利・利用範囲・引渡しは、制作契約または見積書で定めます。</p>
+          </div>
         </section>
 
         <section id="flow" className={styles.flowSection}>
