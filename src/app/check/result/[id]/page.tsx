@@ -58,10 +58,12 @@ function parseDiagnosisComments(value: string | null): DiagnosisComments {
   }
 }
 
-export default async function DiagnosisResultPage({ params }: { params: { id: string } }) {
+export default async function DiagnosisResultPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
   // DBから診断結果と事業者情報を取得
   const diagnosisRecord = await db.query.diagnoses.findFirst({
-    where: eq(diagnoses.id, params.id),
+    where: eq(diagnoses.id, id),
   });
 
   if (!diagnosisRecord) {

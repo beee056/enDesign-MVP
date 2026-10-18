@@ -6,10 +6,12 @@ import { BlockRenderer } from "@/components/blocks/BlockRenderer";
 
 export const dynamic = "force-dynamic";
 
-export default async function TenantSitePage({ params }: { params: { slug: string } }) {
+export default async function TenantSitePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+
   // スラグからサイト情報を取得
   const siteRecord = await db.query.sites.findFirst({
-    where: eq(sites.slug, params.slug),
+    where: eq(sites.slug, slug),
   });
 
   if (!siteRecord) {
