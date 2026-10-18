@@ -84,7 +84,7 @@ export function BuildForm() {
                     <FormItem className="flex items-center space-x-3 space-y-0 p-4 border rounded-md">
                       <FormControl><RadioGroupItem value="standard" /></FormControl>
                       <FormLabel className="font-normal cursor-pointer">
-                        基本LP制作 (¥150,000・税込)<br/><span className="text-sm text-muted-foreground">調査・設計・実装・修正1回</span>
+                        基本LP制作 (¥150,000・税込)<br/><span className="text-sm text-muted-foreground">調査・設計・実装・公開前修正1回（期限までにまとめて1回）</span>
                       </FormLabel>
                     </FormItem>
                     <FormItem className="flex items-center space-x-3 space-y-0 p-4 border rounded-md bg-primary/5">
