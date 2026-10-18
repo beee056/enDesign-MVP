@@ -1,6 +1,6 @@
 import { db } from "@/db";
-import { tenants, users } from "@/db/schema";
-import { desc, eq } from "drizzle-orm";
+import { tenants } from "@/db/schema";
+import { desc } from "drizzle-orm";
 import {
   Table,
   TableBody,

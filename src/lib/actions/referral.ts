@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db";
-import { referrals, referralCredits, creditTransfers, users } from "@/db/schema";
+import { referrals, referralCredits, creditTransfers } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 /**
